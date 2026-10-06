@@ -96,14 +96,17 @@ tokens (an earlier build found a needle at 1,039,833 tokens); start to ready 65 
 ## Run it
 
 Two GB10 nodes with a direct RoCE link. On each node, a throwaway `nvcr.io/nvidia/pytorch:26.07-py3` container with
-the `deepseek-v41-tp2` branch installed (`pip install -e`). Start rank 1 (worker) first, then rank 0 (head):
+the `deepseek-v41-tp2` branch installed (`pip install -e`). Start rank 0 (head) first — it owns the TCPStore master
+(`comm.py: is_master = rank == 0`) — then wait for its store port to LISTEN (default `29551`) before starting rank 1
+(worker). A fixed sleep races on a cold start: rank 0 dies with `DistStoreError: Timed out … 1/2 clients joined` and
+rank 1 with `NCCL error 6` at `nccl.barrier()`:
 
 ```
 TF_DS_REPLAY=1 TF_DS_PREFILL_CHUNK=2048 TF_DS_RANK_CACHE=<CACHE_DIR> TF_DS_RANK_CACHE_READERS=32 \
 TF_DS_WARM_LENGTHS=1,17,33,131,514,1024,2113 \
 NCCL_IB_HCA=<HCA_PORT_0>,<HCA_PORT_1> NCCL_IB_GID_INDEX=5 NCCL_SOCKET_IFNAME=<IFACE> \
 tensorfold serve <MODEL_DIR> --tp 2 --rank R --master <HEAD_IP> --host 127.0.0.1 --port 18891 \
-  --context 262144 --vision --parallel 4 --mtp-drafts 5 --temperature 0
+  --context 262144 --vision --parallel 4 --mtp-drafts 5
 ```
 
 - `<MODEL_DIR>`: the Mia-AiLab EXL3 checkpoint. Engram tables: `TF_DS_ENGRAM=<ENGRAM_DIR>` (DeepSeek's original shards
@@ -111,6 +114,9 @@ tensorfold serve <MODEL_DIR> --tp 2 --rank R --master <HEAD_IP> --host 127.0.0.1
 - `NCCL_IB_HCA` lists both RoCE ports when both are cabled (prompt-chunk gathers 153 → 106 ms); one port works too.
 - `TF_DS_RANK_CACHE` keeps each rank's weights in one file (~106 GB a rank, written on the first start).
 - `--context` up to 1048576. `TF_API_KEY_FILE=<file>` makes every route but `/health` require a key.
+- `--temperature` sets the server-side **default** a client inherits when it omits the field. Greedy (`0`) makes long
+  agentic turns loop in `reasoning_content` and return empty `content` (`finish_reason: "length"`); omit it to keep the
+  engine default (1.0), and pin `0` only for the deterministic MMLU/GSM8K runs.
 - Benchmark: `python3 tools/dsv41/kit_bench.py --base http://127.0.0.1:18891 --model <name> decode|concurrent|sustained|prefill|depth`
 - Quality: `python3 tools/dsv41/quality_eval.py --base http://127.0.0.1:18891 --model <name> --mmlu <MMLU_TEST_PARQUET> \
   --gsm8k <GSM8K_TEST_JSONL> --max-tokens-on 4096` (MMLU "all" test from cais/mmlu, GSM8K test from openai/grade-school-math)
