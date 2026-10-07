@@ -136,7 +136,7 @@ TF_DS_REPLAY=1 TF_DS_PREFILL_CHUNK=2048 TF_DS_RANK_CACHE=<CACHE_DIR> TF_DS_RANK_
 TF_DS_WARM_LENGTHS=1,17,33,131,514,1024,2113 \
 NCCL_IB_HCA=<HCA_PORT_0>,<HCA_PORT_1> NCCL_IB_GID_INDEX=5 NCCL_SOCKET_IFNAME=<IFACE> \
 tensorfold serve <MODEL_DIR> --tp 2 --rank R --master <HEAD_IP> --host 127.0.0.1 --port 18891 \
-  --context 1048576 --vision --parallel 4 --mtp-drafts 5 --temperature 0
+  --context 1048576 --vision --parallel 4 --mtp-drafts 5
 ```
 
 - `<MODEL_DIR>`: the Mia-AiLab EXL3 checkpoint. Engram tables: `TF_DS_ENGRAM=<ENGRAM_DIR>` (DeepSeek's original shards
@@ -146,6 +146,9 @@ tensorfold serve <MODEL_DIR> --tp 2 --rank R --master <HEAD_IP> --host 127.0.0.1
 - `--context 1048576` is the measured, served window from v0.5 (v0.1.0–v0.4.1 ran 262144).
 - `TF_RDMA_DEVICES=<HCA_PORT_0>,<HCA_PORT_1>` names the RoCE ports of the link between the two nodes when a node has
   more active ports than that link (the RDMA gather needs the same device count on every rank). `TF_API_KEY_FILE=<file>` makes every route but `/health` require a key.
+- `--temperature` sets the server-side **default** a client inherits when it omits the field. Greedy (`0`) makes long
+  agentic turns loop in `reasoning_content` and return empty `content` (`finish_reason: "length"`); omit it to keep the
+  engine default (1.0), and pin `0` only for the deterministic MMLU/GSM8K runs.
 - Benchmark: `python3 tools/dsv41/kit_bench.py --base http://127.0.0.1:18891 --model <name> decode|concurrent|sustained|prefill|depth`
 - Quality: `python3 tools/dsv41/quality_eval.py --base http://127.0.0.1:18891 --model <name> --mmlu <MMLU_TEST_PARQUET> \
   --gsm8k <GSM8K_TEST_JSONL> --max-tokens-on 4096` (MMLU "all" test from cais/mmlu, GSM8K test from openai/grade-school-math)
