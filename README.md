@@ -13,6 +13,21 @@ Design, full report and attribution: [`tools/dsv41/`](https://github.com/berthol
 Clean-room: the model math is re-implemented from DeepSeek's MIT inference code and tech report; no code from other
 DeepSeek-V4.1 recipes or kits was read or copied ([ATTRIBUTION.md](https://github.com/bertholomus/TensorFold/blob/deepseek-v41-tp2/tools/dsv41/ATTRIBUTION.md)).
 
+## v0.5.1 (2026-10-07): fixes for reasoning loops on long agentic turns (#6), no speed change
+
+Engine `90b68e0` on top of v0.5's `808eb4a`. Replies and speed rows are unchanged on our served configuration.
+
+- **fp32 GEMMs stay fp32 in NVIDIA's PyTorch container.** `nvcr.io/nvidia/pytorch:26.07-py3` sets
+  `TORCH_ALLOW_TF32_CUBLAS_OVERRIDE=1`, which ran the prompt chunks' fp32 router, indexer and mHC GEMMs in TF32. That
+  gave other bits than our lane and the gates, and the loop in #6 at seed 3001. The engine now sets the switch to 0 at
+  start (it prints a line when it was 1) and refuses to start if fp32 GEMMs still run in TF32.
+- **Opt-in reasoning loop guard** (default off). When 3 windows of 1,024 reply tokens in a row have fewer than 2% new
+  token 8-grams, the server closes the thinking and the reply goes on to its answer. `TF_LOOP_GUARD=1` makes it the
+  server default; a request sets it with `"loop_guard": true` / `false`. Replies that do not loop are untouched. The
+  signal is from Capicua25x's loop detector (#9).
+- Clients on long agentic turns: send the tool schemas the conversation uses. In our runs that alone avoided the loop
+  (0 / 60 seeds).
+
 ## v0.5 (2026-10-07): 1M context on the shipped configuration, faster long prompts, measured against v0.4
 
 Decode and prefill are what we worked on this time. The same release suite on the served lane for both builds
@@ -164,6 +179,7 @@ Hosts and addresses are placeholders; substitute your own.
 - **Mia-AiLab** — the EXL3 2.9 bpw quant this recipe serves (MIT).
 - **ashhart** — [TensorFold](https://github.com/ashhart/TensorFold) (Apache-2.0), the engine this family plugs into.
 - **turboderp** — [EXL3 / exllamav3](https://github.com/turboderp-org/exllamav3) (MIT), the weight format.
+- **Capicua25x** — the #6 report and repro, and the 8-gram novelty loop signal (#9).
 - **BertholomusAI** (Albert Lee, [bertholomus](https://github.com/bertholomus)) — the `deepseek_v41` TP2 family, its
   kernels, the deployment and the measurements.
 
