@@ -207,9 +207,10 @@ container image with the RoCE devices, `--network host --ipc host --ulimit memlo
 `vision/` (the tower's attention kernel from the container's PyTorch, and the image routing bias from DeepSeek's
 original weights).
 
-**The kit is not public yet.** This release does not ship the kit or a one-command way to build it. The recording
-tools are in `tools/dsv41-zig/rec`, and the packer is TensorFold 1.0's `tools/zig`. Publishing the kit is the next
-release's work.
+**The kit** is in the Hugging Face card repo, folder `kit-v0.6.0/` of
+[bertholomus/DeepSeek-V4.1-Flash-TensorFold-TP2-2xGB10](https://huggingface.co/bertholomus/DeepSeek-V4.1-Flash-TensorFold-TP2-2xGB10),
+with its licenses. It holds no weights: its README shows how to make the image routing bias from your own copy of
+DeepSeek's original checkpoint and how to recompute the RoPE tables; both are checked by digest.
 
 Start rank 1, then rank 0:
 
