@@ -15,6 +15,14 @@ The Python engine of v0.1.0-v0.5.1 stays on [branch `deepseek-v41-tp2`](https://
 Clean-room: the model math is re-implemented from DeepSeek's MIT inference code and tech report; no code from other
 DeepSeek-V4.1 recipes or kits was read or copied.
 
+## v0.6.1 (2026-10-09): the kernel kit in git, no engine change
+
+The kit the Zig engine loads is now in this repository's `kit/`, byte for byte the kit our served lane loads (engine
+`ce20a545`, served `65f295ec`), with `MANIFEST`, `KIT-LICENSES.md` and `kit/tools/verify_kit.sh`. The engine branch
+gains the builders (`5e10970a`: `tools/dsv41-zig/build_kit.sh`, `build_inputs.sh`); its code is unchanged. Our served
+lane started from this kit in a fresh folder gives the same replies as before on every gate (images 9/9 and 18/18,
+51 image probes, 14 prompt lengths).
+
 ## v0.6.0 (2026-10-09): the engine moves to TensorFold 1.0's native Zig engine, images included
 
 Engine `ce20a545` on branch [`deepseek-v41-zig`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-zig), on upstream TensorFold v1.0.2. The whole `dsv41` family (prompt
@@ -207,10 +215,20 @@ container image with the RoCE devices, `--network host --ipc host --ulimit memlo
 `vision/` (the tower's attention kernel from the container's PyTorch, and the image routing bias from DeepSeek's
 original weights).
 
-**The kit** is in the Hugging Face card repo, folder `kit-v0.6.0/` of
-[bertholomus/DeepSeek-V4.1-Flash-TensorFold-TP2-2xGB10](https://huggingface.co/bertholomus/DeepSeek-V4.1-Flash-TensorFold-TP2-2xGB10),
-with its licenses. It holds no weights: its README shows how to make the image routing bias from your own copy of
-DeepSeek's original checkpoint and how to recompute the RoPE tables; both are checked by digest.
+**The kit** is in this repository's [`kit/`](kit/) folder (plain git, with `MANIFEST` and `KIT-LICENSES.md`).
+Five of its files are generated, not committed: the four RoPE tables (136 MB each) and the image routing bias (43
+small DeepSeek weight tensors). Make them and check every file against `MANIFEST`, inside the
+`nvcr.io/nvidia/pytorch:26.07-py3` container with the `deepseek-v41-tp2` engine's `src/` at hand:
+
+```
+kit/tools/verify_kit.sh --rope <MODEL_DIR> <deepseek-v41-tp2>/src --bias <ORIGINAL_CHECKPOINT_DIR>
+```
+
+Or download the complete kit, generated files included, from folder `kit/` of
+[bertholomus/DeepSeek-V4.1-Flash-TensorFold-TP2-2xGB10](https://huggingface.co/bertholomus/DeepSeek-V4.1-Flash-TensorFold-TP2-2xGB10)
+and run `kit/tools/verify_kit.sh`. Both copies hold the same bytes. To build the kit from source instead, the
+engine branch has `tools/dsv41-zig/build_kit.sh` (the kit) and `tools/dsv41-zig/build_inputs.sh` (each node's rank
+cache, token map and extension build); see their headers.
 
 Start rank 1, then rank 0:
 

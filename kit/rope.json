@@ -1,0 +1,8 @@
+{
+ "rows": 1114112,
+ "half": 32,
+ "rope-plain-cos.f32": "ee15897f6f340a6e86e1a27acc1eede22a774dff311b0823717ab6f9bb2b029e",
+ "rope-plain-sin.f32": "bbba9940e95990bb73de48ac3d5c5e1e4468fb6223f2b108b51133179d8f2d28",
+ "rope-compressed-cos.f32": "e1c30aeb3eb357ebf0590025251ad488c93af14814321cb36df5c47ca869f203",
+ "rope-compressed-sin.f32": "77092e22e8840e0052e66927796033a88f8f994dd4a525c0854db441b98a46dd"
+}
