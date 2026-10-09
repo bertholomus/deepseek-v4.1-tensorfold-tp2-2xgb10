@@ -205,7 +205,13 @@ That gives `tensorfold` (the server, rank 0) and `tf-dsv41-lanes` (rank 1, follo
 container image with the RoCE devices, `--network host --ipc host --ulimit memlock=-1`. They read a kernel kit
 `<KIT>`: the family's Triton kernels as compiled binaries (`aot/`, `cubins/`), the RoPE tables, `engram.json`, and
 `vision/` (the tower's attention kernel from the container's PyTorch, and the image routing bias from DeepSeek's
-original weights). Start rank 1, then rank 0:
+original weights).
+
+**The kit is not public yet.** This release does not ship the kit or a one-command way to build it. The recording
+tools are in `tools/dsv41-zig/rec`, and the packer is TensorFold 1.0's `tools/zig`. Publishing the kit is the next
+release's work.
+
+Start rank 1, then rank 0:
 
 ```
 # rank 1
