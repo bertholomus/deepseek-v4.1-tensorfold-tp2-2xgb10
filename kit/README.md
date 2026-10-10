@@ -37,5 +37,8 @@ themselves are not here: serve [Mia-AiLab/DeepSeek-V4.1-Flash-EXL3-2.9bpw](https
   your own copy of deepseek-ai/DeepSeek-V4.1-Flash (standard library only). Expected sha256 `0cbdebfb...` (see `MANIFEST`).
 - `PYTHONPATH=<deepseek-v41-tp2 checkout>/src python3 tools/make_rope.py <EXL3_MODEL_DIR> .` recomputes the four RoPE
   tables on the CPU and checks them against `rope.json`.
+- `tools/make_topk_sel.py compile|merge` compiles `_topk_sel` variants no recording captured (N=KK=256: prompts of
+  exactly 512 or 513 tokens) from the deepseek-v41-tp2 source, offline in the engine image, and adds them to the kit.
+  It first checks that every `_topk_sel` variant already here comes out byte for byte; see its header.
 - The engine branch's `tools/dsv41-zig/build_kit.sh` builds the whole kit from source on two GB10 nodes, and
   `tools/dsv41-zig/build_inputs.sh` makes each node's inputs (rank weight cache, token map); see their headers.
