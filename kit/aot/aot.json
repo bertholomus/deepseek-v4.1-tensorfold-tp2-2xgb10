@@ -17696,6 +17696,49 @@
   },
   {
    "fn": "_topk_sel",
+   "hash": "a2c0ea5eb9a9c7aa6028441066bea0a479431badcf841a4892fe735ac8bb805a",
+   "name": "_topk_sel",
+   "num_warps": 4,
+   "num_ctas": 1,
+   "shared": 2048,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "KEYS",
+     "type": "*i64",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "VIS",
+     "type": "*i64",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "OUT",
+     "type": "*i64",
+     "div16": true,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "N": {
+     "int": 256
+    },
+    "KK": {
+     "int": 256
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_topk_sel",
    "hash": "a5c6553b17a83903625c28c761aad0dfb20f48bac6dd56e062e1d7abe088db42",
    "name": "_topk_sel",
    "num_warps": 8,
