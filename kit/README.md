@@ -37,5 +37,9 @@ themselves are not here: serve [Mia-AiLab/DeepSeek-V4.1-Flash-EXL3-2.9bpw](https
   your own copy of deepseek-ai/DeepSeek-V4.1-Flash (standard library only). Expected sha256 `0cbdebfb...` (see `MANIFEST`).
 - `PYTHONPATH=<deepseek-v41-tp2 checkout>/src python3 tools/make_rope.py <EXL3_MODEL_DIR> .` recomputes the four RoPE
   tables on the CPU and checks them against `rope.json`.
+- `tools/gen_general_index_score.py` compiles one general `_index_score` variant per constexpr set already in
+  `aot/aot.json` (no alignment assumption on VIS/OUT/KB/CAND/TMAX or n/cs/nt; without them, prompts around 133k-136k
+  tokens end in `MissingTritonVariant`), offline in the engine-py image, and adds them to the kit. `--verify` first
+  checks that an existing variant comes out with the same SASS; see its header.
 - The engine branch's `tools/dsv41-zig/build_kit.sh` builds the whole kit from source on two GB10 nodes, and
   `tools/dsv41-zig/build_inputs.sh` makes each node's inputs (rank weight cache, token map); see their headers.
