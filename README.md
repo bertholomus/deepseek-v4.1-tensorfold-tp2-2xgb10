@@ -251,6 +251,11 @@ tensorfold serve <MODEL_DIR> --host 127.0.0.1 --port 18891 --name DeepSeek-V4.1-
 - Images in formats other than PNG need `python3` with Pillow in the container (the NVIDIA image has it).
 - `<CACHE_DIR>` keeps each rank's weights in one file (written on the first start); `<TOKEN_MAP>` and the cache are
   the ones the `deepseek-v41-tp2` engine writes.
+- `TF_RDMA_GID_INDEX=<index>` picks the RoCEv2 GID index the native TP2 ring opens (default `5`, so existing setups
+  are unchanged; single-rail ASUS GX10 pairs want `3`). Find the index with `ibv_devinfo -v` or `show_gids`, and set
+  it on both ranks. Both ranks must run the same engine build: the ring's peer description grew in the same change
+  (128 to 144 bytes), and a mixed pair cannot talk. At connect the ring logs `gid_index=` and the negotiated
+  `path_mtu=` per rail.
 
 Hosts and addresses are placeholders; substitute your own.
 
