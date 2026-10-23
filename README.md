@@ -1,19 +1,87 @@
-# DeepSeek-V4.1-Flash on 2× DGX Spark (GB10) — our TensorFold TP2 engine
+# DeepSeek-V4.1-Flash-1017 on 2× DGX Spark (GB10) — our TensorFold TP2 engine
 
-**Bertholomus AI recipe: DeepSeek-V4.1-Flash served tensor-parallel over two NVIDIA DGX Spark / GB10 nodes by the
+**Bertholomus AI recipe: DeepSeek-V4.1-Flash-1017 served tensor-parallel over two NVIDIA DGX Spark / GB10 nodes by the
 model family we wrote for [TensorFold](https://github.com/ashhart/TensorFold) (by ashhart).**
 
-> **Weights:** [Mia-AiLab/DeepSeek-V4.1-Flash-EXL3-2.9bpw](https://huggingface.co/Mia-AiLab/DeepSeek-V4.1-Flash-EXL3-2.9bpw)
-> (MIT), an EXL3 quant by Mia-AiLab of [deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash)
-> (MIT, © 2023 DeepSeek). We did not make or modify these weights; this repository holds no weights. The Engram tables
-> are read at run time from DeepSeek's original shards 47 and 48.
+> **Weights (v0.7.0 on):** [bertholomus/DeepSeek-V4.1-Flash-1017-EXL3-2.5bpw](https://huggingface.co/bertholomus/DeepSeek-V4.1-Flash-1017-EXL3-2.5bpw)
+> (MIT), our EXL3 quant of [deepseek-ai/DeepSeek-V4.1-Flash-1017](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017)
+> (MIT, © 2023 DeepSeek), sized for two nodes. Up to v0.6.1 this recipe served
+> [Mia-AiLab/DeepSeek-V4.1-Flash-EXL3-2.9bpw](https://huggingface.co/Mia-AiLab/DeepSeek-V4.1-Flash-EXL3-2.9bpw)
+> (MIT), an EXL3 quant by Mia-AiLab of [deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash).
+> This repository holds no weights. The Engram tables are read at run time from DeepSeek's original shards 47 and 48.
 
-**Engine (v0.6.0 on):** [bertholomus/TensorFold, branch `deepseek-v41-zig`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-zig), Bertholomus AI's `dsv41`
-family on TensorFold 1.0.2's native Zig engine. Attribution: [`tools/dsv41-zig/ATTRIBUTION.md`](https://github.com/bertholomus/TensorFold/blob/deepseek-v41-zig/tools/dsv41-zig/ATTRIBUTION.md).
-The Python engine of v0.1.0-v0.5.1 stays on [branch `deepseek-v41-tp2`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-tp2)
+**Engine (v0.7.0 on):** [bertholomus/TensorFold, branch `deepseek-v41-zig-tp2`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-zig-tp2),
+Bertholomus AI's `dsv41` family on TensorFold 1.0.12's native Zig engine: our four-node branch at its v0.3.1, with nine
+changes on top. Attribution: [`ATTRIBUTION.md`](https://github.com/bertholomus/TensorFold/blob/deepseek-v41-zig-tp2/ATTRIBUTION.md)
+of the branch, and this repository's `ATTRIBUTION.md` and `NOTICE`. v0.6.0 and v0.6.1 ran
+[branch `deepseek-v41-zig`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-zig) (TensorFold 1.0.2). The
+Python engine of v0.1.0-v0.5.1 stays on [branch `deepseek-v41-tp2`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-tp2)
 (design, report and attribution in [`tools/dsv41/`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-tp2/tools/dsv41)).
 Clean-room: the model math is re-implemented from DeepSeek's MIT inference code and tech report; no code from other
 DeepSeek-V4.1 recipes or kits was read or copied.
+
+**Run it:** [`RUNNING.md`](RUNNING.md): the engine build, the weights and run-time inputs, the kernel kit (`kit/`),
+and the launch (`scripts/serve.sh`, `config.env.example`). Our measurements: [`results/`](results/README.md). The
+four-node recipe: [bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10).
+
+## v0.7.0 (2026-10-23): DeepSeek-V4.1-Flash-1017 at 2.5 bpw, on the four-node engine line
+
+- **New weights:** our EXL3 quant of DeepSeek-V4.1-Flash-1017, 2.52 bpw over the quantized weights, about 185 GB:
+  routed experts 2.5 bpw; attention, shared experts, the KV compressor, the indexer's queries and Engram's key/value
+  projection 4 bpw; the indexer's keys 8; the head 6; the DSpark drafter 4 and 6; embeddings, router gates, norms and
+  the vision tower 16-bit. [Its card](https://huggingface.co/bertholomus/DeepSeek-V4.1-Flash-1017-EXL3-2.5bpw) gives
+  the bits by part and how close it stays to DeepSeek's original: KL and top-1 agreement over 122 rows, beside our
+  4.0 bpw quant (`results/served-v070/kl-report.md`). Tool-call turns lose the most at 2.5 bpw.
+- **New engine line:** `deepseek-v41-zig-tp2` is the four-node branch `deepseek-v41-zig-tp4` at its v0.3.1
+  (TensorFold 1.0.12) with nine changes: vLLM's `cache_salt`; three fixes the two-node branch `deepseek-v41-zig` had
+  taken (#17, #38, and upstream TensorFold #973's template append, two commits); DeepSeek-V4.1 tool calls read from
+  their own tags (a port of #25); an assistant turn's marker text kept as text with `TENSORFOLD_REPLY_IDS`; and a
+  parser fix for a `<tool_call>` whose text only starts with a DSML opener. It brings the four-node line's server
+  work to two nodes: structured output (`response_format`, `guided_choice`, `guided_regex`) and forced tool calls in
+  DeepSeek's DSML, through the kit's grammar library; the prompt shield (`TENSORFOLD_PLAIN_SPECIALS=1`); kept prompt
+  states that resume big conversations and image turns (`--prompt-cache-gib 2`); the stream keepalive; `cache_salt`;
+  and the draft head's accepted chains on `/metrics`.
+- **New kit** (`kit/`, 367 files, `kit/README.md`): the four-node kit v0.3.1 with five Triton kernel variants of our
+  v0.6.1 kit (Lucas Peters's `_topk_sel` for N = KK = 256 among them, #13), the 1017 checkpoint's image bias and the
+  grammar library.
+- **New launch:** `scripts/serve.sh` and `config.env.example`: 1,048,576 tokens a request in a shared window of
+  2,097,152 positions, 4 streams, `--parallel 4`. The RDMA ring opens GID index 5 of each device, and the launch's
+  preflight checks it on both nodes; this engine line does not read `TF_RDMA_GID_INDEX` (`RUNNING.md`, section 2).
+
+Gates, all passed on the served build (47 checks, `results/served-v070/gate/result.txt`): exact chat 71/71 against
+DeepSeek's reference encoding; the six API gates; 16 replies as a burst and staggered == solo; images 6/6, 9/9, and
+four at a time 18/18 == solo; forced tool calls 10/10 and automatic ones 6/6, each forced row a call of an offered
+tool within its schema; structured output 11/11, and bursts and staggered runs of 12 == solo; the prompt shield 14/14;
+the keepalive; kept states, the fill and the resume probe; and 1M: 3/3 needles found in a 1,039,836-token prompt, the
+second and third asks resuming 1,038,336 tokens of it from the kept state. A second launch at the same settings gave
+the same replies on every check. The lowest free memory: 9.4 GiB on rank 0's node during the 1M prompt, 13.1 GiB on
+rank 1's. Start to ready: 18 s (24 to 25 s for the gate's launches).
+
+Four long prompts at once, on the served port after the promotion (`tools/long_check.py` and `tools/long_cold.py`,
+`results/served-v070/long/` and `long-cold/`): four prompts of 159,925 tokens, each with a needle, sent together gave
+the same replies as each one sent alone from a cold start (5 of 5, a seeded-sampled reply among them) and as each one
+resumed from its kept state; drafting off gave the same reply as drafting on, and every needle was found. The lowest
+free memory meanwhile: 10.1 GiB on rank 0's node, 11.6 GiB on rank 1's.
+
+Measured on two GB10 nodes (TP2), the served build at the served settings, our own client (`tools/kit_bench.py`),
+greedy, DSpark drafting, median of 3 unless noted (`results/served-v070/rows/`). The v0.6.0 column is v0.6.0's own
+table below, on the 2.9 bpw weights of DeepSeek-V4.1-Flash:
+
+| `--context 1048576 --parallel 4` | v0.6.0 tok/s | v0.7.0 tok/s |
+|---|---|---|
+| Decode, set a: code / prose / structured (512 tokens) | 89.8 / 59.0 / 106.6 | 106.9 / 61.0 / 119.2 |
+| Decode, set b: code / prose / structured (384 tokens) | 103.1 / 64.1 / 143.2 | 113.6 / 68.3 / 161.4 |
+| 2 streams, set b, aggregate (v0.7.0: median of 9) | 83.1 | 96.2 |
+| 4 streams, set b, aggregate (median of 9) | 118.9 | 135.2 |
+| 4 streams sustained 90 s, set b, aggregate | 142.0 | 153.1 |
+| Prompt 8K / 32K / 64K / 128K (v0.6.0: one run each, 8K best of 2) | 2,433 / 2,495 / 2,461 / 2,354 | 2,452 / 2,490 / 2,462 / 2,428 |
+| Decode after a 128K prompt (median of 3 seeded prompts) | 100.1 | 101.5 |
+| Prompt 93,335 tokens | | 2,136 |
+
+The prompt rows repeat each length's words behind a fresh prefix (`--fixed-words`), so the second and third
+reps read Engram rows the first one warmed; the first reps alone gave 2,453 / 2,488 / 2,462 / 2,428 tok/s. The three
+prompts after 128K decoded at 39.1 / 101.5 / 123.6 tok/s. The 93,335-token prompt is the served port's own
+bench after the promotion (`results/served-v070/prefill-93335.json`).
 
 ## v0.6.1 (2026-10-09): the kernel kit in git, no engine change
 
@@ -201,111 +269,39 @@ Single stream 512 tokens code / prose / structured 60.5 / 38.0 / 74.5 tok/s (set
 73.2–80.5 tok/s; prefill 1,247–1,365 tok/s at 8K–128K; decode after a 128K prompt 61.8 tok/s; served window 262,144
 tokens (the engine accepts up to 1,048,576; an earlier build found one needle at 1,039,833 tokens); start to ready 65 s.
 
-## Run it (v0.6.0, the Zig engine)
-
-Build the `deepseek-v41-zig` branch with Zig 0.17.0 inside `nvcr.io/nvidia/pytorch:26.07-py3` (CUDA nvcc, sm_121):
-
-```
-zig build install native -Dtarget=aarch64-linux-gnu -Doptimize=ReleaseSafe -Dnvcc=/usr/local/cuda/bin/nvcc -Dsm=121 --prefix <OUT>
-```
-
-That gives `native/bin/tensorfold-native` (the server, rank 0) and `bin/tf-dsv41-lanes` (rank 1, following rank 0);
-`bin/tensorfold` is a test CLI, not the server. Both ranks run in the same
-container image with the RoCE devices, `--network host --ipc host --ulimit memlock=-1`. They read a kernel kit
-`<KIT>`: the family's Triton kernels as compiled binaries (`aot/`, `cubins/`), the RoPE tables, `engram.json`, and
-`vision/` (the tower's attention kernel from the container's PyTorch, and the image routing bias from DeepSeek's
-original weights).
-
-**The kit** is in this repository's [`kit/`](kit/) folder (plain git, with `MANIFEST` and `KIT-LICENSES.md`).
-Five of its files are generated, not committed: the four RoPE tables (136 MB each) and the image routing bias (43
-small DeepSeek weight tensors). Make them and check every file against `MANIFEST`, inside the
-`nvcr.io/nvidia/pytorch:26.07-py3` container with the `deepseek-v41-tp2` engine's `src/` at hand:
-
-```
-kit/tools/verify_kit.sh --rope <MODEL_DIR> <deepseek-v41-tp2>/src --bias <ORIGINAL_CHECKPOINT_DIR>
-```
-
-Or download the complete kit, generated files included, from folder `kit/` of
-[bertholomus/DeepSeek-V4.1-Flash-TensorFold-TP2-2xGB10](https://huggingface.co/bertholomus/DeepSeek-V4.1-Flash-TensorFold-TP2-2xGB10)
-and run `kit/tools/verify_kit.sh`. Both copies hold the same bytes. To build the kit from source instead, the
-engine branch has `tools/dsv41-zig/build_kit.sh` (the kit) and `tools/dsv41-zig/build_inputs.sh` (each node's rank
-cache, token map and extension build); see their headers.
-
-Start rank 1, then rank 0:
-
-```
-# rank 1
-TF_DS_REPLAY_FLOOR=1 NCCL_IB_HCA=<HCA_PORT_0>,<HCA_PORT_1> NCCL_IB_GID_INDEX=5 NCCL_SOCKET_IFNAME=<IFACE> \
-tf-dsv41-lanes <MODEL_DIR> <CACHE_DIR> 1 2 <HEAD_IP> 29620 <KIT> --engram <ENGRAM_DIR> --token-map <TOKEN_MAP> \
-  --pool 1048576 --rdma <HCA_PORT_0>,<HCA_PORT_1> --graphs 1 --side 1 --prefetch 1 --aio 1
-
-# rank 0
-TF_DS_REPLAY_FLOOR=1 TF_TP_WORLD=2 TF_TP_MASTER=<HEAD_IP> TF_TP_PORT=29620 TF_DS_RANK_CACHE=<CACHE_DIR> \
-TF_DS_KIT=<KIT> TENSORFOLD_CUDA_KERNELS=<KIT>/aot TF_DS_ENGRAM=<ENGRAM_DIR> TF_DS_TOKEN_MAP=<TOKEN_MAP> \
-TF_RDMA_DEVICES=<HCA_PORT_0>,<HCA_PORT_1> TF_DS_GRAPHS=1 TF_DS_HC_SIDE=1 TF_DS_L2_PREFETCH=1 TF_DS_ENGRAM_AIO=1 \
-NCCL_IB_HCA=<HCA_PORT_0>,<HCA_PORT_1> NCCL_IB_GID_INDEX=5 NCCL_SOCKET_IFNAME=<IFACE> \
-tensorfold-native serve <MODEL_DIR> --host 127.0.0.1 --port 18891 --name DeepSeek-V4.1-Flash-TF --api-key-file <KEY_FILE> \
-  --context 1048576 --parallel 4 --thinking --max-tokens 32768 --temperature 1.0 --top-p 0.95 --top-k 20 --backend cuda
-```
-
-- `TF_DS_REPLAY_FLOOR=1` goes to both ranks.
-- Rank 1 must match rank 0's settings: `TF_DS_STREAMS=N` on rank 0 needs `--streams N` on rank 1, and rank 1's
-  `--pool` equals rank 0's `--context`. With different values the two ranks wait on each other (#25).
-- Images in formats other than PNG need `python3` with Pillow in the container (the NVIDIA image has it).
-- `<CACHE_DIR>` keeps each rank's weights in one file (written on the first start); `<TOKEN_MAP>` and the cache are
-  the ones the `deepseek-v41-tp2` engine writes.
-- `TF_RDMA_GID_INDEX=<index>` picks the RoCEv2 GID index the native TP2 ring opens (default `5`, so existing setups
-  are unchanged; single-rail ASUS GX10 pairs want `3`). Find the index with `ibv_devinfo -v` or `show_gids`, and set
-  it on both ranks. Both ranks must run the same engine build: the ring's peer description grew in the same change
-  (128 to 144 bytes), and a mixed pair cannot talk. At connect the ring logs `gid_index=` and the negotiated
-  `path_mtu=` per rail.
-
-Hosts and addresses are placeholders; substitute your own.
-
-## Run it (v0.1.0-v0.5.1, the Python engine)
-
-Two GB10 nodes with a direct RoCE link. On each node, a throwaway `nvcr.io/nvidia/pytorch:26.07-py3` container with
-the `deepseek-v41-tp2` branch installed (`pip install -e`). Start rank 0 (head) first — it owns the TCPStore master
-(`comm.py: is_master = rank == 0`) — then wait for its store port to LISTEN (default `29551`) before starting rank 1
-(worker). A fixed sleep races on a cold start: rank 0 dies with `DistStoreError: Timed out … 1/2 clients joined` and
-rank 1 with `NCCL error 6` at `nccl.barrier()`:
-
-```
-TF_DS_REPLAY=1 TF_DS_PREFILL_CHUNK=2048 TF_DS_RANK_CACHE=<CACHE_DIR> TF_DS_RANK_CACHE_READERS=32 \
-TF_DS_WARM_LENGTHS=1,17,33,131,514,1024,2113 \
-NCCL_IB_HCA=<HCA_PORT_0>,<HCA_PORT_1> NCCL_IB_GID_INDEX=5 NCCL_SOCKET_IFNAME=<IFACE> \
-tensorfold serve <MODEL_DIR> --tp 2 --rank R --master <HEAD_IP> --host 127.0.0.1 --port 18891 \
-  --context 1048576 --vision --parallel 4 --mtp-drafts 5
-```
-
-- `<MODEL_DIR>`: the Mia-AiLab EXL3 checkpoint. Engram tables: `TF_DS_ENGRAM=<ENGRAM_DIR>` (DeepSeek's original shards
-  47/48), or a folder next to `<MODEL_DIR>` whose name contains "Engram".
-- `NCCL_IB_HCA` lists both RoCE ports when both are cabled (prompt-chunk gathers 153 → 106 ms); one port works too.
-- `TF_DS_RANK_CACHE` keeps each rank's weights in one file (~106 GB a rank, written on the first start).
-- `--context 1048576` is the measured, served window from v0.5 (v0.1.0–v0.4.1 ran 262144).
-- `TF_RDMA_DEVICES=<HCA_PORT_0>,<HCA_PORT_1>` names the RoCE ports of the link between the two nodes when a node has
-  more active ports than that link (the RDMA gather needs the same device count on every rank). `TF_API_KEY_FILE=<file>` makes every route but `/health` require a key.
-- `--temperature` sets the server-side **default** a client inherits when it omits the field. Greedy (`0`) makes long
-  agentic turns loop in `reasoning_content` and return empty `content` (`finish_reason: "length"`); omit it to keep the
-  engine default (1.0), and pin `0` only for the deterministic MMLU/GSM8K runs.
-- Benchmark: `python3 tools/dsv41/kit_bench.py --base http://127.0.0.1:18891 --model <name> decode|concurrent|sustained|prefill|depth`
-- Quality: `python3 tools/dsv41/quality_eval.py --base http://127.0.0.1:18891 --model <name> --mmlu <MMLU_TEST_PARQUET> \
-  --gsm8k <GSM8K_TEST_JSONL> --max-tokens-on 4096` (MMLU "all" test from cais/mmlu, GSM8K test from openai/grade-school-math)
-
-Hosts and addresses are placeholders; substitute your own.
-
 ## Credits
 
-- **DeepSeek** — DeepSeek-V4.1-Flash, its inference code and tech report (MIT, © 2023 DeepSeek).
-- **Mia-AiLab** — the EXL3 2.9 bpw quant this recipe serves (MIT).
+- **DeepSeek** — DeepSeek-V4.1-Flash-1017 and DeepSeek-V4.1-Flash, their inference code and tech report (MIT,
+  © 2023 DeepSeek).
+- **turboderp** — [EXL3 / exllamav3](https://github.com/turboderp-org/exllamav3) (MIT), the weight format and the
+  converter that made our quant.
+- **Fabiano Anemone** ([@anoane](https://github.com/anoane)) — ExLlamaV3's DeepSeek-V4 support
+  ([pull request 449](https://github.com/turboderp-org/exllamav3/pull/449), MIT), which our quant's conversion used.
+- **Mia-AiLab** — the EXL3 2.9 bpw quant this recipe served up to v0.6.1 (MIT).
 - **ashhart** — [TensorFold](https://github.com/ashhart/TensorFold) (Apache-2.0), the engine this family plugs into.
-- **turboderp** — [EXL3 / exllamav3](https://github.com/turboderp-org/exllamav3) (MIT), the weight format.
-- **Capicua25x** — the #6 report and repro, and the 8-gram novelty loop signal (#9).
+- **The engine branch's contributors** — Lucas Peters ([@lucas-peters](https://github.com/lucas-peters), #4),
+  LeetJoe ([@LeetJoe](https://github.com/LeetJoe), #17), [@lepetitprince716-prog](https://github.com/lepetitprince716-prog)
+  (#18), [@willjriley](https://github.com/willjriley) (#20, the base of #25), Manrique
+  ([@hashd1ve](https://github.com/hashd1ve), #25, #26, #28 and #29), Scott Woolsey Biggart
+  ([@swbiggart](https://github.com/swbiggart), #30), [@mrsergiopascal](https://github.com/mrsergiopascal) (#31),
+  [@Blackwellboy](https://github.com/Blackwellboy) (#33, #34 and #38) and Nathan McBride
+  ([@nmcbride](https://github.com/nmcbride), upstream TensorFold #973); `ATTRIBUTION.md` says what each one did.
+- **Lucas Peters** ([@lucas-peters](https://github.com/lucas-peters)) — the kit's `_topk_sel` variant for
+  N = KK = 256 (#13).
+- **Capicua25x** — the #6 report and repro, the 8-gram novelty loop signal (#9), and issue #18, which the engine's
+  loop guard follows.
+- **den13501** — issue #12, which the stream keepalive follows; **ahinore** — the four-node recipe's issue #3, which
+  the shield's assistant-turn quoting follows.
+- **willjriley**, **dylandoesai** and **plyldavid-maker** — issues #23 and #24 (the server's path in the build) and
+  #25 (both ranks need the same settings), which `RUNNING.md` and `scripts/serve.sh` follow.
+- **Niklas Lenz** ([niklaslenz.com](https://niklaslenz.com)) — the launch script's local node and preflight, from their
+  bring-up of the four-node recipe.
 - **Bertholomus AI** (Albert Lee, [bertholomus](https://github.com/bertholomus)) — the `deepseek_v41` TP2 family and
-  its Zig port `dsv41`, their kernels, the deployment and the measurements.
+  its Zig port `dsv41`, their kernels, the quant, the deployment and the measurements.
 
 Not affiliated with or endorsed by DeepSeek, NVIDIA, the TensorFold authors, Mia-AiLab or MiaAI-Lab.
 
 ## License
 
-Recipe documentation: Apache-2.0 (`LICENSE`). The weights stay under their own MIT license.
+Recipe documentation, scripts and tools: Apache-2.0 (`LICENSE`); `NOTICE` and `ATTRIBUTION.md` list what the recipe
+uses. The kit's files keep their own licenses (`kit/KIT-LICENSES.md`). The weights stay under their own MIT license.

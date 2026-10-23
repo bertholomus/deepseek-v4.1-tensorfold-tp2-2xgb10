@@ -1,0 +1,67 @@
+{
+ "solo_ok": {
+  "ok": 3,
+  "of": 12
+ },
+ "by_case": {
+  "schema-greedy": false,
+  "schema-seeded": false,
+  "object-greedy": false,
+  "object-seeded": false,
+  "choice-greedy": false,
+  "choice-seeded": false,
+  "regex-greedy": false,
+  "regex-seeded": false,
+  "schema-thinking": false,
+  "plain-greedy": true,
+  "plain-seeded": true,
+  "tools-required": true
+ },
+ "burst": {
+  "equal_to_solo": 12,
+  "of": 12
+ },
+ "staggered": {
+  "equal_to_solo": 12,
+  "of": 12
+ },
+ "verdict": "FAIL (schema-greedy: {\"status\": 400, \"error\": \"{\\\"error\\\": {\\\"message\\\": \\\"structured output ... is not supported by this engine yet\\\"}}\"}; schema-seeded: {\"status\": 400, \"error\": \"{\\\"error\\\": {\\\"message\\\": \\\"structured output ... is not supported by this engine yet\\\"}}\"}; object-greedy: {\"status\": 400, \"error\": \"{\\\"error\\\": {\\\"message\\\": \\\"structured output ... is not supported by this engine yet\\\"}}\"}; object-seeded: {\"status\": 400, \"error\": \"{\\\"error\\\": {\\\"message\\\": \\\"structured output ... is not supported by this engine yet\\\"}}\"}; choice-greedy: {\"status\": 400, \"error\": \"{\\\"error\\\": {\\\"message\\\": \\\"structured output ... is not supported by this engine yet\\\"}}\"}; choice-seeded: {\"status\": 400, \"error\": \"{\\\"error\\\": {\\\"message\\\": \\\"structured output ... is not supported by this engine yet\\\"}}\"}; regex-greedy: {\"status\": 400, \"error\": \"{\\\"error\\\": {\\\"message\\\": \\\"structured output ... is not supported by this engine yet\\\"}}\"}; regex-seeded: {\"status\": 400, \"error\": \"{\\\"error\\\": {\\\"message\\\": \\\"structured output ... is not supported by this engine yet\\\"}}\"}; schema-thinking: {\"status\": 400, \"error\": \"{\\\"error\\\": {\\\"message\\\": \\\"structured output ... is not supported by this engine yet\\\"}}\"})"
+}
+di_structured_check: FAIL (schema-greedy: {"status": 400, "error": "{\"error\": {\"message\": \"structured output ... is not supported by this engine yet\"}}"}; schema-seeded: {"status": 400, "error": "{\"error\": {\"message\": \"structured output ... is not supported by this engine yet\"}}"}; object-greedy: {"status": 400, "error": "{\"error\": {\"message\": \"structured output ... is not supported by this engine yet\"}}"}; object-seeded: {"status": 400, "error": "{\"error\": {\"message\": \"structured output ... is not supported by this engine yet\"}}"}; choice-greedy: {"status": 400, "error": "{\"error\": {\"message\": \"structured output ... is not supported by this engine yet\"}}"}; choice-seeded: {"status": 400, "error": "{\"error\": {\"message\": \"structured output ... is not supported by this engine yet\"}}"}; regex-greedy: {"status": 400, "error": "{\"error\": {\"message\": \"structured output ... is not supported by this engine yet\"}}"}; regex-seeded: {"status": 400, "error": "{\"error\": {\"message\": \"structured output ... is not supported by this engine yet\"}}"}; schema-thinking: {"status": 400, "error": "{\"error\": {\"message\": \"structured output ... is not supported by this engine yet\"}}"})
+{
+ "solo_ok": {
+  "ok": 12,
+  "of": 12
+ },
+ "by_case": {
+  "schema-greedy": true,
+  "schema-seeded": true,
+  "object-greedy": true,
+  "object-seeded": true,
+  "choice-greedy": true,
+  "choice-seeded": true,
+  "regex-greedy": true,
+  "regex-seeded": true,
+  "schema-thinking": true,
+  "plain-greedy": true,
+  "plain-seeded": true,
+  "tools-required": true
+ },
+ "burst": {
+  "equal_to_solo": 12,
+  "of": 12
+ },
+ "staggered": {
+  "equal_to_solo": 12,
+  "of": 12
+ },
+ "reference": {
+  "answered_there": 2,
+  "equal": 2,
+  "refused_there": 10,
+  "refused_or_in_spec_here": 10
+ },
+ "verdict": "PASS"
+}
+di_structured_check: PASS
+selftest: PASS (as served: 3/12 as specified, structured output refused, FAIL as it must; candidate: PASS, 2/2 == as served, 10/10 refused there and in spec or refused here)

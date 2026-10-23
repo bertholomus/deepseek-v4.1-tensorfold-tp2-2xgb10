@@ -1,0 +1,2 @@
+long l1c on 18896 (engine bd1b05fb2a30, window 2097152, long_cold.py 64c61c0389605162): PASS: cold alone == burst 5/5, cold drafting off == burst True, needles 4/4 cold; cached tokens [0, 0, 0, 0, 0, 0]; cold 338.6 s, serial 67.8 s; lowest MemAvailable node0/node1 12.4/13.7 GiB (floor 9)
+lane health after: ok

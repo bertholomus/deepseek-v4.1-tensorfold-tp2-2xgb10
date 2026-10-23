@@ -1,0 +1,2 @@
+long l1 on 18896 (engine bd1b05fb2a30, window 2097152, long_check.py e1a0252c0650b4ae): PASS: burst == solo 5/5, drafted == serial True, needles 4/4 burst and 4/4 solo; burst 272.7 s, solo 5.3 s, serial 1.3 s; cached tokens in solo [159744, 159744, 159744, 159744, 159744]; lowest MemAvailable node0/node1 10.1/11.6 GiB (floor 9)
+lane health after: ok

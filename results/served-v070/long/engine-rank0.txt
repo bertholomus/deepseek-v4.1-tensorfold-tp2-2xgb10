@@ -1,0 +1,1 @@
+bd1b05fb2a30 fix(server): a <tool_call> whose text only starts with a DSML opener is no DSML block (on a16a167e, the TP4 line's v0.3.1; TP2-25: kit-tp2-v031)

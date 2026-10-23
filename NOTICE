@@ -1,0 +1,77 @@
+DeepSeek-V4.1-Flash TP2 recipe for TensorFold on two NVIDIA GB10 (DGX Spark) nodes
+Copyright 2026 BertholomusAI (Albert Lee, https://github.com/bertholomus)
+
+This recipe (scripts, tools and documents) is licensed under the Apache License, Version 2.0. See LICENSE.
+
+It contains no model weights and no third-party source code. chat/chat_template.jinja is ours, written to render
+what DeepSeek's reference encoding renders. Its kit/ folder holds compiled code: our own kernels, TensorFold's EXL3
+kernels with our additions, PyTorch's attention kernel for the vision tower, unmodified, and libtfgrammar, the
+grammar library built from xgrammar, in binary form; kit/KIT-LICENSES.md gives each file's source and license, and
+kit/LICENSES/ and kit/grammar/ hold the license texts. It runs, or was built with reference to, the third-party work
+below. ATTRIBUTION.md says what was taken from each one and how.
+
+TensorFold
+  Copyright 2026 TensorFold contributors. Apache License 2.0 from TensorFold 0.6.0; code written before 0.6.0
+  keeps its MIT notice (MIT License, Copyright (c) 2026 TensorFold contributors).
+  https://github.com/ashhart/TensorFold
+  The serving engine. Our engine for this model is branch deepseek-v41-zig-tp2 of our fork
+  (https://github.com/bertholomus/TensorFold), which keeps TensorFold's LICENSE and upstream license texts, lists the
+  upstream files it changes in its NOTICE and every outside source in its ATTRIBUTION.md.
+  The branch carries pull requests to our fork by Lucas Peters (#4), lepetitprince716-prog (#18), Manrique (#26,
+  and #28 and #29 ported), Scott Woolsey Biggart (#30), mrsergiopascal (#31) and Blackwellboy (#33 and #34), and,
+  new in v0.7.0, by LeetJoe (#17) and Blackwellboy (#38), a port of Manrique's #25 (the native side of willjriley's
+  #20), and Nathan McBride's upstream TensorFold pull request #973. ATTRIBUTION.md credits each of them.
+  kit/cubins/ holds TensorFold's EXL3 kernels, compiled, with our additions; their code written before TensorFold
+  0.6.0 keeps its MIT notice, kit/LICENSES/TensorFold-MIT.txt (TensorFold's LICENSES/MIT.txt, unmodified).
+
+DeepSeek-V4.1-Flash-1017 and DeepSeek-V4.1-Flash
+  Copyright (c) 2023 DeepSeek. MIT License (inference code and weights).
+  https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017
+  https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash
+  The model. Its inference code and tech report were read for the model math. No code was copied. Its reference
+  encoding (encoding.py) is what chat/chat_template.jinja renders and what our exact-chat check compares against; no
+  code was copied. The original shards 47 and 48 (Engram tables) are loaded at run time and not included here. The
+  gates' bias_vl tensors are made into kit/vision/gate_bias_vl.safetensors by kit/tools/make_bias_vl.py; git does not
+  hold that file.
+
+DeepSeek-V4.1-Flash-1017-EXL3-2.5bpw
+  EXL3 quantization by BertholomusAI. MIT License, inherited from the base model.
+  https://huggingface.co/bertholomus/DeepSeek-V4.1-Flash-1017-EXL3-2.5bpw
+  The weights the engine serves since v0.7.0. Not included here. tools/serving_1017.py adds six of its tensors under
+  the engine's names and types, and the chat template, to a download of it. Made with ExLlamaV3's converter and
+  Fabiano Anemone's DeepSeek-V4 support for it (https://github.com/turboderp-org/exllamav3/pull/449, MIT).
+
+DeepSeek-V4.1-Flash-EXL3-2.9bpw
+  EXL3 quantization by Mia-AiLab. MIT License, inherited from the base model.
+  https://huggingface.co/Mia-AiLab/DeepSeek-V4.1-Flash-EXL3-2.9bpw
+  The weights the engine served up to v0.6.1. Not included here.
+
+NVIDIA PyTorch container (PyTorch, Triton, NCCL, Pillow)
+  Used at run time as supplied by NVIDIA (nvcr.io/nvidia/pytorch:26.07-py3), under NVIDIA's own license and the
+  components' licenses. Not redistributed here, except the one PyTorch kernel below.
+
+PyTorch and NVIDIA CUTLASS
+  PyTorch: BSD-3-Clause; its copyright holders are listed in kit/LICENSES/PyTorch-BSD-3-Clause.txt.
+  CUTLASS: Copyright (c) 2017 - 2025 NVIDIA CORPORATION & AFFILIATES. BSD-3-Clause.
+  kit/vision/torch_fmha_sm120.cubin is PyTorch's memory-efficient attention kernel, built on CUTLASS, extracted
+  unmodified from the container's libtorch_cuda.so. License texts: kit/LICENSES/.
+
+Triton
+  Copyright 2018-2020 Philippe Tillet; Copyright 2020-2022 OpenAI. MIT License.
+  Compiled our kernels in kit/aot/. License text: kit/LICENSES/Triton-MIT.txt.
+
+ExLlamaV3
+  Copyright (c) 2025 Turboderp. MIT License.
+  The EXL3 format the kernels in kit/cubins/ read (through TensorFold's EXL3 module), and the converter that made
+  our quant. License text: kit/LICENSES/ExLlamaV3-MIT.txt.
+
+xgrammar, with dlpack and picojson
+  xgrammar: Copyright (c) 2024 by XGrammar Contributors. Apache License 2.0. https://github.com/mlc-ai/xgrammar
+  Its NOTICE: "XGrammar Copyright (c) 2024 by XGrammar Contributors".
+  dlpack: Copyright 2017 by Contributors. Apache License 2.0. https://github.com/dmlc/dlpack
+  picojson: Copyright 2009-2010 Cybozu Labs, Inc. and 2011-2014 Kazuho Oku. BSD 2-Clause License.
+  https://github.com/kazuho/picojson
+  kit/grammar/libtfgrammar.so is TensorFold's shim (zig/src/grammar/tf_grammar.cc of TensorFold 1.0.12, Apache
+  License 2.0) compiled with xgrammar v0.2.8's C++ sources and the headers xgrammar bundles (dlpack, picojson), for
+  structured output and forced tool calls. License texts: kit/grammar/ (xgrammar's license and NOTICE, dlpack's
+  license) and kit/LICENSES/picojson-BSD-2-Clause.txt.

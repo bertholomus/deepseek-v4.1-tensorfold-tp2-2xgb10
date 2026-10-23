@@ -1,0 +1,11 @@
+# The served lane's run-time inputs for the 2.5 bpw weights (engine bd1b05f, whose source tree is ENGINE_COMMIT's
+# parent af07f7b), and how the public quant reaches them. Each weight file's name holds the first 20 hex digits of the
+# sha256 of its index (the tensors' names, types, shapes and offsets): tf-dsv41-rank-cache --index-only, rank 0 and
+# rank 1 of 2, run on the files of our upload of bertholomus/DeepSeek-V4.1-Flash-1017-EXL3-2.5bpw (weights.sha256)
+# with tools/serving_1017.py's two files, prints the same two indexes.
+rank-cache/rank0of2-993f2e3eefa9d95965c2.bin   93,039,271,545 bytes
+rank-cache/rank1of2-d3e682794d090d0f1480.bin   93,039,698,730 bytes
+dsv41_token_map.json  sha256 de40bcdd71f24430ba82752ef385093be962adbf845a1c97db39161597d5dc28 (the four-node recipe's since its v0.1.1)
+# tools/serving_1017.py on the public quant writes (the same two files as on the four-node recipe's 4.0 bpw quant):
+serving-1017.safetensors  sha256 d88fe41f756f96693475f8c9fc113ae20442e78712a890c93c068e527e708d1f  132,711,008 bytes
+chat_template.jinja       sha256 b581d19d13f5c678d72ae197781c016c8331174cf69118017f20dadbb7e2e6a4  23,438 bytes

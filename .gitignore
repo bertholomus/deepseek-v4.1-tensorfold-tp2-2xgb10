@@ -1,0 +1,5 @@
+# Site settings: real hosts, addresses and paths. Never commit.
+/config.env
+# Made by kit/verify_kit.sh (kit/README.md): the RoPE tables and the image bias (model weights). Never commit.
+/kit/rope-*.f32
+/kit/vision/gate_bias_vl.safetensors

@@ -1,0 +1,29 @@
+{
+ "cmd": "depth",
+ "base": "http://127.0.0.1:18896",
+ "model": "DeepSeek-V4.1-Flash-1017-TP2",
+ "unix": 1792778602.6070004,
+ "result": [
+  {
+   "length": 131072,
+   "prompt_tokens": 131072,
+   "ttft_s": 54.04144862189423,
+   "tokens": 256,
+   "decode_tps": 39.065902647069336
+  },
+  {
+   "length": 131072,
+   "prompt_tokens": 131072,
+   "ttft_s": 53.9851666749455,
+   "tokens": 256,
+   "decode_tps": 101.48302561980944
+  },
+  {
+   "length": 131072,
+   "prompt_tokens": 131072,
+   "ttft_s": 54.009257387020625,
+   "tokens": 256,
+   "decode_tps": 123.6000474604774
+  }
+ ]
+}

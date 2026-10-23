@@ -1,0 +1,4 @@
+{"length": 131072, "prompt_tokens": 131072, "ttft_s": 54.04144862189423, "tokens": 256, "decode_tps": 39.065902647069336}
+{"length": 131072, "prompt_tokens": 131072, "ttft_s": 53.9851666749455, "tokens": 256, "decode_tps": 101.48302561980944}
+{"length": 131072, "prompt_tokens": 131072, "ttft_s": 54.009257387020625, "tokens": 256, "decode_tps": 123.6000474604774}
+

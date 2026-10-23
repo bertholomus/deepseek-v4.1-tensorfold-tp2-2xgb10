@@ -1,0 +1,29 @@
+{
+ "answered": {
+  "solo": 28,
+  "of": 28
+ },
+ "by_case": {
+  "k20": 4,
+  "k56": 4,
+  "k0": 4,
+  "km1": 4,
+  "k0all": 4,
+  "k100": 4,
+  "k1000": 4
+ },
+ "burst": {
+  "equal_to_solo": 28,
+  "of": 28
+ },
+ "staggered": {
+  "equal_to_solo": 28,
+  "of": 28
+ },
+ "equal_to_reference": {
+  "equal": 28,
+  "of_answered_there": 28
+ },
+ "verdict": "PASS"
+}
+di_sampler_check: PASS

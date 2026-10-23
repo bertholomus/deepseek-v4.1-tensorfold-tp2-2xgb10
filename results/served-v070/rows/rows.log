@@ -1,0 +1,8 @@
+2026-10-23T17:50:28Z tp2_rows: rows s3: rows 1 2 3 4 5 6 on node0 127.0.0.1:18896 (engine bd1b05fb2a30, window 2097152, streams 4, parallel 4, rows 16)
+2026-10-23T17:50:28Z tp2_rows: s3: row 1: kit_bench.py decode --tokens 512 --reps 3 --set a
+2026-10-23T17:51:25Z tp2_rows: s3: row 2: kit_bench.py decode --tokens 384 --reps 3 --set b
+2026-10-23T17:52:02Z tp2_rows: s3: row 3: kit_bench.py concurrent --streams 2,4 --tokens 256 --reps 9 --set b
+2026-10-23T17:53:58Z tp2_rows: s3: row 4: kit_bench.py sustained --streams 4 --tokens 256 --seconds 90 --set b
+2026-10-23T17:55:35Z tp2_rows: s3: row 5: kit_bench.py prefill --lengths 8192,32768,65536,131072 --reps 3 --fixed-words
+2026-10-23T18:00:28Z tp2_rows: s3: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256
+2026-10-23T18:03:23Z tp2_rows: rows s3: rows 1 2 3 4 5 6: 6 of 6 ran; lowest MemAvailable node0/node1 10.3/11.6 GiB (floor 9) (table.md)

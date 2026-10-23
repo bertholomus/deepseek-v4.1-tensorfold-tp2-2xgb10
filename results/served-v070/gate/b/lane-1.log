@@ -1,0 +1,9 @@
+info: the keyed indexer layers' rows of 32768 columns or more split over the nodes (TF_DS_IDX_SPLIT)
+info: rank cache: 83.2 GiB of expert entries read whole in 7.5 s
+{"rank": 1, "loaded_s": 15.0, "pool": 2097152, "drafts": true, "arena_used": 5455816244, "arena_reserved": 5572136192}
+warning: _index_score: a launch whose specialization no captured variant has runs variant fa1370b0f6cb (assumes less)
+{"rank": 1, "follow": "PeerDown"}
+
+[2026-10-23 16:05:19] node1:209:209 [0] init.cc:449 NCCL WARN Spectrum-X (SPCX) NCCL plugin is not supported on device:RDMA_DEV0, skipping ..
+
+[2026-10-23 16:05:19] node1:209:209 [0] init.cc:449 NCCL WARN Spectrum-X (SPCX) NCCL plugin is not supported on device:RDMA_DEV1, skipping ..

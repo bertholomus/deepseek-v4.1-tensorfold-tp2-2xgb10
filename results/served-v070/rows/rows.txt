@@ -1,0 +1,14 @@
+# The TP2-25 speed rows (thread "DS lanes 1016", 2026-10-22): tp2_25.sh rows and tp2_25.sh sweep run them with
+# kit_bench.py (the served TP4 tools' copy), one row a line: K|kit_bench.py's arguments|what it measures.
+# Rows 1-6 (the default) are the publish table's: the TP2 recipe's v0.6.0 table (decode set a and set b, 2 and 4
+# streams, 4 streams sustained, the prompt rows, decode after a 128K prompt), with 64K among the prompt lengths and
+# 9 reps of each stream count. Rows 7 and 8 keep 8 and 16 streams in flight: for launch shapes of 8 or more streams
+# only (lever 1). gate/tp2_rows.py reads each row's JSON (rows-K.json) and this file's copy in the run's directory.
+1|decode --tokens 512 --reps 3 --set a|decode, set a (512 tokens)
+2|decode --tokens 384 --reps 3 --set b|decode, set b (384 tokens)
+3|concurrent --streams 2,4 --tokens 256 --reps 9 --set b|2 and 4 streams at once, set b
+4|sustained --streams 4 --tokens 256 --seconds 90 --set b|4 streams sustained 90 s, set b
+5|prefill --lengths 8192,32768,65536,131072 --reps 3 --fixed-words|prompt 8K, 32K, 64K and 128K
+6|depth --lengths 131072,131072,131072 --tokens 256|decode after a 128K prompt (3 seeded prompts)
+7|sustained --streams 8 --tokens 256 --seconds 90 --set b|8 streams sustained 90 s, set b
+8|sustained --streams 16 --tokens 256 --seconds 90 --set b|16 streams sustained 90 s, set b

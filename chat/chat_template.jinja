@@ -1,0 +1,420 @@
+{#- DeepSeek-V4.1-Flash-1017 chat template.
+    It renders what DeepSeek's encoding/encoding.py for this checkpoint (MIT) renders with
+    encode_messages(messages, thinking_mode, reasoning_effort=reasoning_effort), drop_thinking on.
+    It reads:
+      messages               roles system (developer as system), user, assistant, tool and latest_reminder, with the
+                             fields the reference reads: content (text, or a list of text, image_url and tool_result
+                             parts), reasoning_content, tool_calls, tool_call_id, task, wo_eos, and tools and
+                             response_format on a system message.
+      tools                  the request's tools, put on the first message when it is a system message, else on an
+                             empty system message before it (the reference shows tools only on a system message).
+      thinking_mode          "thinking" or "chat"; else enable_thinking, else thinking; default "chat".
+      reasoning_effort       an integer 1-100, or "low" 50, "high" 75, "max" 100 (the reference's names), or "minimal"
+                             25, "medium" 62, "xhigh" 88 (the served lane's numbers); default "high". Shown only in
+                             thinking mode, before the first turn.
+      add_generation_prompt  the closing "<｜Assistant｜>" header (or task token) after the last message only when true.
+      drop_thinking          default true: turns before the last user turn lose their reasoning; any tools turn it off.
+    A request cannot set: tool-call arguments as a JSON string (servers pass an object; a string, or a server's
+    {"_invalid_arguments": raw}, renders as one "arguments" parameter); an image (it is the "<｜deepseek_image｜>"
+    placeholder in the text, put there by the server).
+    Two passes over the messages, each in linear time: the last user turn first, then the prompt. -#}
+{%- set bos = '<｜begin▁of▁sentence｜>' -%}
+{%- set eos = '<｜end▁of▁sentence｜>' -%}
+{%- set sys_tok = '<｜System｜>' -%}
+{%- set user_tok = '<｜User｜>' -%}
+{%- set assistant_tok = '<｜Assistant｜>' -%}
+{%- set reminder_tok = '<｜latest_reminder｜>' -%}
+{%- set image_tok = '<｜deepseek_image｜>' -%}
+{%- set think_open = '<think>' -%}
+{%- set think_close = '</think>' -%}
+{%- set task_tokens = {'action': '<｜action｜>', 'query': '<｜query｜>', 'authority': '<｜authority｜>', 'domain': '<｜domain｜>', 'title': '<｜title｜>', 'read_url': '<｜read_url｜>'} -%}
+{%- set effort_numbers = {'minimal': 25, 'low': 50, 'medium': 62, 'high': 75, 'xhigh': 88, 'max': 100} -%}
+{%- set kept_roles = ['system', 'user', 'assistant', 'tool', 'latest_reminder', 'direct_search_results'] -%}
+{%- set tools_head = '## Tools\n\nYou have access to a set of tools to help answer the user' ~ "'" ~ 's question. You can invoke tools by writing a "<｜DSML｜ calls>" block like the following:\n\n<｜DSML｜ calls>\n<｜DSML｜ invoke name="$TOOL_NAME">\n<｜DSML｜ parameter name="$PARAMETER_NAME" string="true|false">$PARAMETER_VALUE</｜DSML｜ parameter>\n...\n</｜DSML｜ invoke>\n<｜DSML｜ invoke name="$TOOL_NAME2">\n...\n</｜DSML｜ invoke>\n</｜DSML｜ calls>\n\nString parameters should be specified as is and set `string="true"`. For all other types (numbers, booleans, arrays, objects), pass the value in JSON format and set `string="false"`.\n\nIf thinking_mode is enabled (triggered by <think>), you MUST output your complete reasoning inside <think>...</think> BEFORE any tool calls or final response.\n\nOtherwise, output directly after </think> with tool calls or final response.\n\n### Available Tool Schemas\n\n' -%}
+{%- set tools_tail = '\n\nYou MUST strictly follow the above defined tool name and parameter schemas to invoke tool calls.\n' -%}
+{#- thinking mode and reasoning effort -#}
+{%- if thinking_mode is defined and thinking_mode is not none -%}
+  {%- set mode = thinking_mode -%}
+{%- elif enable_thinking is defined and enable_thinking is not none -%}
+  {%- set mode = 'thinking' if enable_thinking else 'chat' -%}
+{%- elif thinking is defined and thinking is not none -%}
+  {%- set mode = 'thinking' if thinking else 'chat' -%}
+{%- else -%}
+  {%- set mode = 'chat' -%}
+{%- endif -%}
+{%- if mode != 'chat' and mode != 'thinking' -%}
+  {{- raise_exception('thinking_mode must be "chat" or "thinking"') -}}
+{%- endif -%}
+{%- set effort = reasoning_effort if reasoning_effort is defined and reasoning_effort is not none else 'high' -%}
+{%- if effort is string and effort in effort_numbers -%}
+  {%- set budget = effort_numbers[effort] -%}
+{%- elif effort is integer and effort >= 1 and effort <= 100 -%}
+  {%- set budget = effort -%}
+{%- else -%}
+  {{- raise_exception('reasoning_effort must be an integer 1-100 or one of minimal, low, medium, high, xhigh, max') -}}
+{%- endif -%}
+{%- set top_tools = tools if tools is defined and tools else none -%}
+{%- if top_tools and (messages | length == 0 or messages[0].role not in ['system', 'developer']) -%}
+  {%- set msgs = [{'role': 'system', 'content': ''}] + messages -%}
+{%- else -%}
+  {%- set msgs = messages -%}
+{%- endif -%}
+{%- set total = msgs | length -%}
+{#- 1. the last user turn (find_last_user_index), with tool results and the user messages after them as one user turn
+    (merge_tool_messages), and whether any message has tools (which turns drop_thinking off) -#}
+{%- set p = namespace(last=-1, tools=top_tools is not none, open=false, task=none, real=false, blocks=0, start=-1) -%}
+{%- for m in msgs -%}
+  {%- set k = loop.index0 -%}
+  {%- set role = 'system' if m.role == 'developer' else m.role -%}
+  {%- set content = m.content if m.content is defined and m.content is not none else '' -%}
+  {%- if role == 'user' or role == 'tool' -%}
+    {%- if not (p.open and (role == 'tool' or p.task is none)) -%}
+      {%- if p.open and (p.real or p.blocks == 0) -%}
+        {%- set p.last = p.start -%}
+      {%- endif -%}
+      {%- set p.open = true -%}
+      {%- set p.start = k -%}
+      {%- set p.real = false -%}
+      {%- set p.blocks = 0 -%}
+      {%- set p.task = m.task if role == 'user' and m.task is defined and m.task is not none else none -%}
+      {%- if role == 'user' and m.tools is defined and m.tools -%}
+        {%- set p.tools = true -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- if role == 'tool' or content is string -%}
+      {%- set p.blocks = p.blocks + 1 -%}
+      {%- if role == 'user' -%}
+        {%- set p.real = true -%}
+      {%- endif -%}
+    {%- else -%}
+      {%- for b in content if b is mapping -%}
+        {%- set p.blocks = p.blocks + 1 -%}
+        {%- if b.type in ['text', 'image', 'image_url'] -%}
+          {%- set p.real = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- if p.open and (p.real or p.blocks == 0) -%}
+      {%- set p.last = p.start -%}
+    {%- endif -%}
+    {%- set p.open = false -%}
+    {%- if role == 'system' and k > 0 -%}
+      {%- set sr = namespace(real=true) -%}
+      {%- if content is not string and content | length > 0 -%}
+        {%- set sr.real = false -%}
+        {%- for b in content if b is mapping and b.type in ['text', 'image', 'image_url'] -%}
+          {%- set sr.real = true -%}
+        {%- endfor -%}
+      {%- endif -%}
+      {%- if sr.real -%}
+        {%- set p.last = k -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- if m.tools is defined and m.tools -%}
+      {%- set p.tools = true -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if p.open and (p.real or p.blocks == 0) -%}
+  {%- set p.last = p.start -%}
+{%- endif -%}
+{%- set last = p.last -%}
+{%- set drop = (drop_thinking if drop_thinking is defined and drop_thinking is not none else true) and not p.tools -%}
+{#- 2. the prompt (render_message for each turn; in thinking mode with drop_thinking, a message of another role before
+    the last user turn is left out, as _drop_thinking_messages does) -#}
+{{- bos -}}
+{%- set r = namespace(count=0, open=false, blocks=[], task=none, start=-1, ids=[], prev_task=none) -%}
+{%- for m in msgs -%}
+  {%- set k = loop.index0 -%}
+  {%- set role = 'system' if m.role == 'developer' else m.role -%}
+  {%- set content = m.content if m.content is defined and m.content is not none else '' -%}
+  {%- set task = m.task if m.task is defined and m.task is not none else none -%}
+  {%- if not (role not in kept_roles and mode == 'thinking' and drop and k < last) -%}
+    {#- the role of the turn after this message, none after the last -#}
+    {%- set nx = namespace(raw=none, role=none) -%}
+    {%- if k + 1 < total -%}
+      {%- set nx.raw = 'system' if msgs[k + 1].role == 'developer' else msgs[k + 1].role -%}
+      {%- if nx.raw not in kept_roles and mode == 'thinking' and drop and k + 1 < last -%}
+        {%- for j in range(k + 2, total) -%}
+          {%- set rj = 'system' if msgs[j].role == 'developer' else msgs[j].role -%}
+          {%- if nx.role is none and not (rj not in kept_roles and j < last) -%}
+            {%- set nx.role = 'user' if rj == 'tool' else rj -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- set nx.role = 'user' if nx.raw == 'tool' else nx.raw -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- set closing = nx.role in ['assistant', 'latest_reminder'] or (nx.role is none and add_generation_prompt is defined and add_generation_prompt) -%}
+    {%- if role == 'user' or role == 'tool' -%}
+      {#- a user turn: this message's parts join the open turn, which ends where the next message does not join it -#}
+      {%- if not r.open -%}
+        {%- set r.open = true -%}
+        {%- set r.blocks = [] -%}
+        {%- set r.start = k -%}
+        {%- set r.task = task if role == 'user' else none -%}
+      {%- endif -%}
+      {%- if role == 'tool' -%}
+        {%- if content is string -%}
+          {%- set text = content -%}
+        {%- else -%}
+          {%- set tp = namespace(parts=[]) -%}
+          {%- for b in content if b is mapping -%}
+            {%- if b.type == 'text' -%}
+              {%- set tp.parts = tp.parts + [b.text if b.text is defined and b.text is not none else ''] -%}
+            {%- elif b.type == 'image' or b.type == 'image_url' -%}
+              {%- set tp.parts = tp.parts + [image_tok] -%}
+            {%- else -%}
+              {%- set tp.parts = tp.parts + ['[Unsupported ' ~ (b.type if b.type is defined and b.type is not none else 'None') ~ ']'] -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- set text = tp.parts | join('\n\n') -%}
+        {%- endif -%}
+        {%- set r.blocks = r.blocks + [{'kind': 'tool', 'id': m.tool_call_id if m.tool_call_id is defined and m.tool_call_id is not none else '', 'text': text}] -%}
+      {%- elif content is string -%}
+        {%- set r.blocks = r.blocks + [{'kind': 'text', 'id': '', 'text': content}] -%}
+      {%- else -%}
+        {%- for b in content if b is mapping -%}
+          {%- if b.type == 'text' -%}
+            {%- set r.blocks = r.blocks + [{'kind': 'text', 'id': '', 'text': b.text if b.text is defined and b.text is not none else ''}] -%}
+          {%- elif b.type == 'image' or b.type == 'image_url' -%}
+            {%- set r.blocks = r.blocks + [{'kind': 'text', 'id': '', 'text': image_tok}] -%}
+          {%- elif b.type == 'tool_result' -%}
+            {%- set inner = b.content if b.content is defined and b.content is not none else '' -%}
+            {%- if inner is string -%}
+              {%- set text = inner -%}
+            {%- else -%}
+              {%- set tp = namespace(parts=[]) -%}
+              {%- for c in inner if c is mapping -%}
+                {%- if c.type == 'text' -%}
+                  {%- set tp.parts = tp.parts + [c.text if c.text is defined and c.text is not none else ''] -%}
+                {%- elif c.type == 'image' or c.type == 'image_url' -%}
+                  {%- set tp.parts = tp.parts + [image_tok] -%}
+                {%- else -%}
+                  {%- set tp.parts = tp.parts + ['[Unsupported ' ~ (c.type if c.type is defined and c.type is not none else 'None') ~ ']'] -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- set text = tp.parts | join('\n\n') -%}
+            {%- endif -%}
+            {%- set r.blocks = r.blocks + [{'kind': 'tool', 'id': b.tool_use_id if b.tool_use_id is defined and b.tool_use_id is not none else '', 'text': text}] -%}
+          {%- else -%}
+            {%- set r.blocks = r.blocks + [{'kind': 'other', 'id': '', 'text': '[Unsupported ' ~ (b.type if b.type is defined and b.type is not none else 'None') ~ ']'}] -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+      {%- if not (nx.raw == 'tool' or (nx.raw == 'user' and r.task is none)) -%}
+        {#- the turn ends here: its tool results in the order of the calls before them (sort_tool_results_by_call_order) -#}
+        {%- set results = r.blocks | selectattr('kind', 'equalto', 'tool') | list -%}
+        {%- set so = namespace(keys=[], sorted=results, at=0) -%}
+        {%- if results | length > 1 and r.ids | select | list | length > 0 -%}
+          {%- for b in results -%}
+            {%- set key = namespace(k=0) -%}
+            {%- for cid in r.ids -%}
+              {%- if cid and cid == b.id -%}
+                {%- set key.k = loop.index0 -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- set so.keys = so.keys + [key.k] -%}
+          {%- endfor -%}
+          {%- set so.sorted = [] -%}
+          {%- for n in range(r.ids | length) -%}
+            {%- for b in results -%}
+              {%- if so.keys[loop.index0] == n -%}
+                {%- set so.sorted = so.sorted + [b] -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+        {%- endif -%}
+        {%- if r.count == 0 and mode == 'thinking' -%}
+          {{- sys_tok ~ 'Reasoning Effort: ' ~ budget ~ ' (range 1-100, the higher the value, the more thorough the reasoning)\n\n' -}}
+        {%- endif -%}
+        {{- user_tok -}}
+        {%- for b in r.blocks -%}
+          {%- if not loop.first -%}
+            {{- '\n\n' -}}
+          {%- endif -%}
+          {%- if b.kind == 'tool' -%}
+            {{- '<tool_result>' ~ so.sorted[so.at].text ~ '</tool_result>' -}}
+            {%- set so.at = so.at + 1 -%}
+          {%- else -%}
+            {{- b.text -}}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if closing -%}
+          {%- if r.task is not none -%}
+            {%- if r.task not in task_tokens -%}
+              {{- raise_exception('Invalid task: ' ~ r.task) -}}
+            {%- elif r.task != 'action' -%}
+              {{- task_tokens[r.task] -}}
+            {%- else -%}
+              {{- assistant_tok ~ (think_open if mode == 'thinking' else think_close) ~ task_tokens['action'] -}}
+            {%- endif -%}
+          {%- else -%}
+            {{- assistant_tok ~ (think_open if mode == 'thinking' and (not drop or r.start >= last) else think_close) -}}
+          {%- endif -%}
+        {%- endif -%}
+        {%- set r.prev_task = r.task -%}
+        {%- set r.count = r.count + 1 -%}
+        {%- set r.open = false -%}
+      {%- endif -%}
+    {%- else -%}
+      {#- a system, assistant or latest_reminder turn -#}
+      {%- if content is string -%}
+        {%- set text = content -%}
+      {%- else -%}
+        {%- set tp = namespace(parts=[]) -%}
+        {%- for b in content if b is mapping -%}
+          {%- if b.type == 'text' -%}
+            {%- set tp.parts = tp.parts + [b.text if b.text is defined and b.text is not none else ''] -%}
+          {%- elif b.type == 'image' or b.type == 'image_url' -%}
+            {%- set tp.parts = tp.parts + [image_tok] -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- set text = tp.parts | join('\n\n') -%}
+      {%- endif -%}
+      {%- if r.count == 0 and mode == 'thinking' -%}
+        {{- sys_tok ~ 'Reasoning Effort: ' ~ budget ~ ' (range 1-100, the higher the value, the more thorough the reasoning)\n\n' -}}
+      {%- elif r.count == 0 and role == 'system' -%}
+        {{- sys_tok -}}
+      {%- endif -%}
+      {%- if role == 'system' -%}
+        {%- if r.count > 0 -%}
+          {{- sys_tok -}}
+        {%- endif -%}
+        {{- text -}}
+        {%- set own = top_tools if k == 0 and top_tools else (m.tools if m.tools is defined and m.tools else none) -%}
+        {%- if own -%}
+          {{- '\n\n' ~ tools_head -}}
+          {%- for t in own -%}
+            {%- set flat = not (t.function is defined and t.function is mapping) -%}
+            {%- set f = t if flat else t.function -%}
+            {%- set space = t.namespace if t.namespace is defined and t.namespace is not none else (f.namespace if f.namespace is defined else none) -%}
+            {%- set q = namespace(space=space.name if space is mapping else space, name=f.name) -%}
+            {%- if '::' in q.name -%}
+              {%- set parts = q.name.split('::') -%}
+              {%- if q.space is not none and q.space != parts[0] -%}
+                {{- raise_exception('Conflicting tool namespaces: ' ~ q.space ~ ' != ' ~ parts[0]) -}}
+              {%- endif -%}
+              {%- if parts | length > 2 -%}
+                {{- raise_exception('Tool name must not contain ' ~ "'::'" ~ ': ' ~ q.name) -}}
+              {%- endif -%}
+              {%- set q.space = parts[0] -%}
+              {%- set q.name = parts[1] -%}
+            {%- endif -%}
+            {%- if q.space is not none and '::' in q.space -%}
+              {{- raise_exception('Tool namespace must not contain ' ~ "'::'" ~ ': ' ~ q.space) -}}
+            {%- endif -%}
+            {%- set qname = q.name if q.space is none else q.space ~ '::' ~ q.name -%}
+            {%- set described = space is mapping and space.description is defined and space.description -%}
+            {%- set description = (space.description ~ '\n' ~ (f.description if f.description is defined and f.description else '')) if described else none -%}
+            {%- if not loop.first -%}
+              {{- '\n' -}}
+            {%- endif -%}
+            {{- '{' -}}
+            {%- set js = namespace(first=true, described=false) -%}
+            {%- for key, v in f.items() if not (key == 'namespace' or (flat and key == 'type')) -%}
+              {%- if not js.first -%}
+                {{- ', ' -}}
+              {%- endif -%}
+              {%- set js.first = false -%}
+              {%- if key == 'name' -%}
+                {{- (key | tojson) ~ ': ' ~ (qname | tojson) -}}
+              {%- elif key == 'description' and described -%}
+                {{- (key | tojson) ~ ': ' ~ (description | tojson) -}}
+                {%- set js.described = true -%}
+              {%- else -%}
+                {{- (key | tojson) ~ ': ' ~ (v | tojson) -}}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if described and not js.described -%}
+              {{- (', ' if not js.first else '') ~ '"description": ' ~ (description | tojson) -}}
+            {%- endif -%}
+            {{- '}' -}}
+          {%- endfor -%}
+          {{- tools_tail -}}
+        {%- endif -%}
+        {%- if m.response_format is defined and m.response_format -%}
+          {{- '\n\n## Response Format:\n\nYou MUST strictly adhere to the following schema to reply:\n' ~ (m.response_format | tojson) -}}
+        {%- endif -%}
+      {%- elif role == 'latest_reminder' -%}
+        {{- reminder_tok ~ text -}}
+      {%- elif role == 'assistant' -%}
+        {%- if mode == 'thinking' and not (r.count > 0 and r.prev_task is not none) and (not drop or k > last) -%}
+          {{- (m.reasoning_content if m.reasoning_content is string else '') ~ think_close -}}
+        {%- endif -%}
+        {{- text -}}
+        {%- set calls = m.tool_calls if m.tool_calls is defined and m.tool_calls else [] -%}
+        {%- if calls -%}
+          {%- set ids = namespace(list=[]) -%}
+          {{- '\n\n<｜DSML｜ calls>\n' -}}
+          {%- for c in calls -%}
+            {%- if c.id is defined and c.id -%}
+              {%- set ids.list = ids.list + [c.id] -%}
+            {%- elif c.function is defined and c.function is mapping and c.function.id is defined and c.function.id -%}
+              {%- set ids.list = ids.list + [c.function.id] -%}
+            {%- else -%}
+              {%- set ids.list = ids.list + [''] -%}
+            {%- endif -%}
+            {%- set f = c.function if c.function is defined and c.function is mapping else {} -%}
+            {%- set space = c.namespace if c.namespace is defined and c.namespace else (f.namespace if f.namespace is defined else none) -%}
+            {%- set q = namespace(space=space.name if space is mapping else space, name=f.name if f.name is defined else '') -%}
+            {%- if '::' in q.name -%}
+              {%- set parts = q.name.split('::') -%}
+              {%- if q.space is not none and q.space != parts[0] -%}
+                {{- raise_exception('Conflicting tool namespaces: ' ~ q.space ~ ' != ' ~ parts[0]) -}}
+              {%- endif -%}
+              {%- if parts | length > 2 -%}
+                {{- raise_exception('Tool name must not contain ' ~ "'::'" ~ ': ' ~ q.name) -}}
+              {%- endif -%}
+              {%- set q.space = parts[0] -%}
+              {%- set q.name = parts[1] -%}
+            {%- endif -%}
+            {%- if q.space is not none and '::' in q.space -%}
+              {{- raise_exception('Tool namespace must not contain ' ~ "'::'" ~ ': ' ~ q.space) -}}
+            {%- endif -%}
+            {%- set args = f.arguments if f.arguments is defined else {} -%}
+            {%- if args is mapping and args | length == 1 and '_invalid_arguments' in args -%}
+              {%- set args = {'arguments': args['_invalid_arguments']} -%}
+            {%- elif args is not mapping -%}
+              {%- set args = {'arguments': args} -%}
+            {%- endif -%}
+            {%- if not loop.first -%}
+              {{- '\n' -}}
+            {%- endif -%}
+            {{- '<｜DSML｜ invoke name="' ~ (q.name if q.space is none else q.space ~ '::' ~ q.name) ~ '">\n' -}}
+            {%- for key, v in args.items() -%}
+              {%- if not loop.first -%}
+                {{- '\n' -}}
+              {%- endif -%}
+              {{- '<｜DSML｜ parameter name="' ~ key ~ '" string="' ~ ('true' if v is string else 'false') ~ '">' ~ (v if v is string else v | tojson) ~ '</｜DSML｜ parameter>' -}}
+            {%- endfor -%}
+            {{- '\n</｜DSML｜ invoke>' -}}
+          {%- endfor -%}
+          {{- '\n</｜DSML｜ calls>' -}}
+          {%- set r.ids = ids.list -%}
+        {%- endif -%}
+        {%- if not (m.wo_eos is defined and m.wo_eos) -%}
+          {{- eos -}}
+        {%- endif -%}
+      {%- else -%}
+        {{- raise_exception('Unknown role: ' ~ role) -}}
+      {%- endif -%}
+      {%- if closing -%}
+        {%- if task is not none -%}
+          {%- if task not in task_tokens -%}
+            {{- raise_exception('Invalid task: ' ~ task) -}}
+          {%- elif task != 'action' -%}
+            {{- task_tokens[task] -}}
+          {%- else -%}
+            {{- assistant_tok ~ (think_open if mode == 'thinking' else think_close) ~ task_tokens['action'] -}}
+          {%- endif -%}
+        {%- elif role == 'system' and r.count > 0 -%}
+          {{- assistant_tok ~ (think_open if mode == 'thinking' and (not drop or k >= last) else think_close) -}}
+        {%- endif -%}
+      {%- endif -%}
+      {%- set r.prev_task = task -%}
+      {%- set r.count = r.count + 1 -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}

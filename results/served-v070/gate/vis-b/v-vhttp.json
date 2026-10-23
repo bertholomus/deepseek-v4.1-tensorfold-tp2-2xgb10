@@ -1,0 +1,66 @@
+{
+ "summary": {
+  "passed": 6,
+  "of": 6
+ },
+ "results": {
+  "solid_colour": {
+   "ok": true,
+   "status": 200,
+   "seconds": 0.6,
+   "reply": "Red",
+   "tool_calls": [],
+   "prompt_tokens": 210,
+   "error": null
+  },
+  "reads_text": {
+   "ok": true,
+   "status": 200,
+   "seconds": 0.5,
+   "reply": "OPEN 24 HOURS",
+   "tool_calls": [],
+   "prompt_tokens": 204,
+   "error": null
+  },
+  "two_images": {
+   "ok": true,
+   "status": 200,
+   "seconds": 0.7,
+   "reply": "red, blue",
+   "tool_calls": [],
+   "prompt_tokens": 497,
+   "error": null
+  },
+  "image_then_tool_call": {
+   "ok": true,
+   "status": 200,
+   "seconds": 0.9,
+   "reply": "",
+   "tool_calls": [
+    {
+     "id": "call_657fb188c3103a5c437d0c68",
+     "type": "function",
+     "function": {
+      "name": "record_color",
+      "arguments": "{\"color\":\"red\"}"
+     }
+    }
+   ],
+   "prompt_tokens": 511,
+   "error": null
+  },
+  "image_in_tool_result": {
+   "ok": true,
+   "status": 200,
+   "seconds": 0.8,
+   "reply": "The sign on your screen says **\"OPEN 24 HOURS\"** — black text on a white background.",
+   "tool_calls": [],
+   "prompt_tokens": 538,
+   "error": null
+  },
+  "image_in_assistant_refused": {
+   "ok": true,
+   "status": 400
+  }
+ }
+}

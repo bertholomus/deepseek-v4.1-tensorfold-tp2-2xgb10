@@ -1,0 +1,62 @@
+2026-10-23T15:45:13Z tp2_gate: g2: A = bd1b05fb2a30-tp2-1017 with serve.env (window 2097152) on 18897; B = the same with the window sized from A's lowest MemAvailable (pool_size.py: floor 9 + margin 2 GiB, 890 B a position a rank)
+2026-10-23T15:45:13Z tp2_gate: the gate's clients and the vision gate to node0
+2026-10-23T15:45:18Z tp2_gate: A: serve.env on 18897 (window 2097152)
+2026-10-23T15:45:43Z tp2_gate: the a launch up on 18897 in 25 s
+2026-10-23T15:45:43Z tp2_gate: check launch A: PASS start-a.log names the pin bd1b05fb2a30 fix(server): a <tool_call> whose text only star
+2026-10-23T15:45:43Z tp2_gate: check settings A: PASS rank 0 names a 2.0 GiB prompt cache, the shield and the stats line
+2026-10-23T15:46:28Z tp2_gate: check gates A: PASS gates 6 ok=True
+2026-10-23T15:47:29Z tp2_gate: check parallel A: PASS solo 16 replies, burst 16/16, staggered 16/16 == solo
+2026-10-23T15:47:29Z tp2_gate: check solo done A: PASS 16 of 16 done lines
+2026-10-23T15:47:41Z tp2_gate: check vision A: PASS vision gate 6/6, visionref 9/9 answered
+2026-10-23T15:47:41Z tp2_gate: check exact chat A: PASS exact chat: 71 of 71 equal
+2026-10-23T15:47:51Z tp2_gate: check shield A: PASS shield recorded 14 conversations: 14/14 answered; /tokenize of 120018 bytes 0.012 s
+2026-10-23T15:49:35Z tp2_gate: check sampler A: PASS di_sampler_check: PASS
+2026-10-23T15:49:53Z tp2_gate: check structured A: PASS structured: 11/11 other requests as specified, tool_choice "required" a call (finish tool_calls), burst 12 and staggered 12 of 12 == solo
+2026-10-23T15:49:54Z tp2_gate: check grammar A: PASS rank 0: structured output: xgrammar over 129280 tokens
+2026-10-23T15:50:20Z tp2_gate: check reply ids A: PASS di_replyids_check: recorded 16 rows -> zkept-replyids-a.json
+2026-10-23T15:50:39Z tp2_gate: check dsml A: PASS dsml recorded: 10/10 forced rows answered, 6/6 auto rows answered
+2026-10-23T15:50:46Z tp2_gate: check acceptstats A: PASS di_acceptstats_check: PASS (the depth families add up)
+2026-10-23T15:50:46Z tp2_gate: check stats lines A: PASS 5 stats lines in rank 0's log
+2026-10-23T15:50:57Z tp2_gate: check resume probe A: PASS cached 0/4096/4096/6144 of 4396/6444/6204/8492 tokens
+2026-10-23T15:52:20Z tp2_gate: check keepalive A: PASS first tokens 40.41 and 80.87 s, 2 and 5 comments, 97510 and 97510 prompt tokens
+2026-10-23T15:52:59Z tp2_gate: check keptcheck A: PASS 8 of 8 answered
+2026-10-23T15:53:37Z tp2_gate: check fillcheck A: PASS 2 of 2 answered
+2026-10-23T15:55:49Z tp2_gate: check memory A: PASS lowest MemAvailable node0/node1 11.7/13.6 GiB during the 93K prefill bench (floor 9)
+2026-10-23T16:04:58Z tp2_gate: row 1M A: 1M: 3/3 needles found in a 1,039,836-token haystack (asks of 528.8/2.9/2.9 s), the 2nd and 3rd asks resumed 1,038,336/1,038,336 of it from the kept state (2/2), lowest MemAvailable node0/node1 9.4/13.1 GiB
+2026-10-23T16:05:01Z tp2_gate: A passed (20 checks and the 1M row)
+2026-10-23T16:05:01Z tp2_gate: pool: node0 lowest 9.4 GiB, node1 lowest 13.1 GiB at window 2,097,152: -1.6 GiB past the floor 9 + margin 2 GiB, not one 1M-position step (0.87 GiB at 890 B a position a rank): the pool stays
+2026-10-23T16:05:01Z tp2_gate: B: window 2097152
+2026-10-23T16:05:25Z tp2_gate: the b launch up on 18897 in 24 s
+2026-10-23T16:05:25Z tp2_gate: check launch B: PASS start-b.log names the pin bd1b05fb2a30 fix(server): a <tool_call> whose text only star
+2026-10-23T16:05:26Z tp2_gate: check launch B: env: PASS no TP2_GATE_B_ENV: the pool only
+2026-10-23T16:05:26Z tp2_gate: check launch B: pool: PASS node0's tp2-25-lane command line names TF_DS_WINDOW=2097152, node1's --pool 2097152
+2026-10-23T16:05:26Z tp2_gate: check settings B: PASS rank 0 names a 2.0 GiB prompt cache, the shield and the stats line
+2026-10-23T16:06:11Z tp2_gate: check gates B: PASS gates 6 ok=True
+2026-10-23T16:07:12Z tp2_gate: check parallel B: PASS solo 16 replies, burst 16/16, staggered 16/16 == solo, solo 16/16 == A's
+2026-10-23T16:07:12Z tp2_gate: check solo done B: PASS solo done lines 16/16 == A's (sha, rounds, accepted; drafted differs on 2)
+2026-10-23T16:07:34Z tp2_gate: check vision B: PASS vision PASS: vision gate 6/6, visionref 9/9 equal to A's, four at a time 18/18 equal to A's
+2026-10-23T16:07:35Z tp2_gate: check exact chat B: PASS exact chat: 71 of 71 equal
+2026-10-23T16:07:45Z tp2_gate: check shield B: PASS PASS: 14/14 cases (5 clean equal, 9 injected shielded); 14/14 conversations' ids, text and greedy replies == A's
+2026-10-23T16:09:30Z tp2_gate: check sampler B: PASS di_sampler_check: PASS
+2026-10-23T16:09:49Z tp2_gate: check structured B: PASS structured: 11/11 other requests as specified, tool_choice "required" a call (finish tool_calls), burst 12 and staggered 12 of 12 == solo, 12/12 == A's
+2026-10-23T16:09:49Z tp2_gate: check grammar B: PASS rank 0: structured output: xgrammar over 129280 tokens
+2026-10-23T16:10:15Z tp2_gate: check reply ids B: PASS reply ids: 16/16 rows == A's (reasoning, content, calls, finish, tokens)
+2026-10-23T16:10:34Z tp2_gate: check dsml B: PASS di_dsmlreq_check: PASS (16 rows: forced rows call offered tools within their schema, auto rows equal the reference); DSML forced and auto rows: 16/16 rows == A's (reasoning, content, calls, finish, tokens)
+2026-10-23T16:10:41Z tp2_gate: check acceptstats B: PASS di_acceptstats_check: PASS (the depth families add up)
+2026-10-23T16:10:42Z tp2_gate: check stats lines B: PASS 5 stats lines in rank 0's log
+2026-10-23T16:10:53Z tp2_gate: check resume probe B: PASS PASS: replies 4/4 == as served, cached as served 0/4096/4096/6144, candidate 0/4096/4096/6144, as served did not show the near-end case (q ran from 0, q2 resumed 4096): judged on equal replies alone
+2026-10-23T16:12:15Z tp2_gate: check keepalive B: PASS PASS: replies 2/2 == as served, as served 2 and 5 comments, 15.0 and 15.0 s silent before the first token; candidate 2 and 5, 15.0 and 15.0 s, first tokens 40.4/80.9 s as served, 40.5/80.9 s candidate (97510 and 97510 prompt tokens)
+2026-10-23T16:12:55Z tp2_gate: check keptcheck B: PASS keptcheck PASS: replies 8/8 == the served build's, geometry S 2822, image span 186, img1 6267, A 67827 (last chunk end 67584), candidate cached img2 4096, img3 2048, b1 2048, a2 67584 (served 4096, 2048, 2048, 67584)
+2026-10-23T16:13:33Z tp2_gate: check fillcheck B: PASS fillcheck PASS: replies 2/2 == the served build's, Y 65010 tokens; X's longest stop in the wait 26.7 s as served (3 chunks of X), 26.7 s candidate (3), Y's first token 26.8 s as served (lane 26.8), 26.8 s candidate (lane 26.8, +0.0 %)
+2026-10-23T16:15:46Z tp2_gate: check memory B: PASS lowest MemAvailable node0/node1 11.7/13.2 GiB during the 93K prefill bench (floor 9)
+2026-10-23T16:24:55Z tp2_gate: row 1M B: 1M: 3/3 needles found in a 1,039,836-token haystack (asks of 529.0/3.0/2.9 s), the 2nd and 3rd asks resumed 1,038,336/1,038,336 of it from the kept state (2/2), lowest MemAvailable node0/node1 9.6/13.0 GiB
+2026-10-23T16:24:58Z tp2_gate: check prefill bench: PASS cmp1021_bench.py prefill 3 on the 93,335-token prompt on A and on B
+2026-10-23T16:24:58Z tp2_gate: prefill 93,335 tokens: A 2134.0 tok/s (median TTFT 43.74 s), B 2131.7 tok/s (median TTFT 43.79 s), B/A -0.1 %
+2026-10-23T16:24:58Z tp2_gate: mem: after the prefill A 11.9/13.5 GiB, B 11.8/13.2 GiB (node0/node1); lowest during it A 11.7/13.6 GiB, B 11.7/13.2 GiB; at 1M: see the 1M rows (floor 9)
+2026-10-23T16:24:58Z tp2_gate: tp2_gate g2: PASS (43 checks: A 20, B 23 with B's replies == A's; the 1M rows; B's window 2097152; prefill A 2134.0 tok/s (median TTFT 43.74 s), B 2131.7 tok/s (median TTFT 43.79 s), B/A -0.1 %; lowest MemAvailable A 11.7/13.6 / B 11.7/13.2 GiB)
+2026-10-23T16:24:59Z tp2_gate: promote g2: bd1b05fb2a30-tp2-1017 with window 2097152 on 18896 (was 2097152: serve.env)
+2026-10-23T16:25:24Z tp2_gate: check served: pool: PASS rank 1 names pool 2097152
+2026-10-23T16:26:09Z tp2_gate: check served: gates on 18896: PASS gates 6 ok=True
+2026-10-23T16:26:10Z tp2_gate: check served: exact chat on 18896: PASS exact chat: 71 of 71 equal
+2026-10-23T16:26:10Z tp2_gate: check served: memory: PASS lowest MemAvailable node0/node1 12.8/13.6 GiB on 18896 (floor 9)
+2026-10-23T16:26:10Z tp2_gate: tp2_gate promote g2: PASS: served bd1b05fb2a30-tp2-1017 window 2097152 on 127.0.0.1:18896 (the gate's 43 checks + these 4 = 47); pool.env WINDOW=2097152
