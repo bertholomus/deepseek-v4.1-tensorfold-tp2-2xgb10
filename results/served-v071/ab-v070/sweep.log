@@ -1,0 +1,13 @@
+2026-10-23T21:58:26Z tp2_rows: sweep s2: sweep s2: rows 6 a launch on node0 127.0.0.1:18897; 3 launches, ~45 min
+2026-10-23T21:58:29Z tp2_rows: a: tp2_25.sh start on 18897 with TP2_25_HTTP=18897
+2026-10-23T21:58:54Z tp2_rows: a: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256 --seed 1023
+2026-10-23T22:01:42Z tp2_rows: a (engine ac6a372c68e8, window 2097152, streams 4, parallel 4, rows 16): rows 6: 1 of 1 ran; lowest MemAvailable node0/node1 13.1/14.1 GiB (floor 9)
+2026-10-23T22:01:42Z tp2_rows: b-v070: tp2_25.sh start on 18897 with TP2_25_HTTP=18897 TP2_25_PIN=bd1b05fb2a30-tp2-1017 TP2_25_WINDOW=2097152
+2026-10-23T22:02:36Z tp2_rows: b-v070: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256 --seed 1023
+2026-10-23T22:05:31Z tp2_rows: b-v070 (engine bd1b05fb2a30, window 2097152, streams 4, parallel 4, rows 16): rows 6: 1 of 1 ran; lowest MemAvailable node0/node1 12.6/13.6 GiB (floor 9)
+2026-10-23T22:05:31Z tp2_rows: a2: tp2_25.sh start on 18897 with TP2_25_HTTP=18897
+2026-10-23T22:06:16Z tp2_rows: a2: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256 --seed 1023
+2026-10-23T22:09:04Z tp2_rows: a2 (engine ac6a372c68e8, window 2097152, streams 4, parallel 4, rows 16): rows 6: 1 of 1 ran; lowest MemAvailable node0/node1 13.0/14.2 GiB (floor 9)
+2026-10-23T22:09:05Z tp2_rows: sweep s2: done in 10 min (result.txt)
+2026-10-23T22:09:05Z tp2_rows: restoring the served lane on 18896 (serve.env + pool.env)
+2026-10-23T22:09:29Z tp2_rows: the served lane is back on 18896

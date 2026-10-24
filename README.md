@@ -11,8 +11,8 @@ model family we wrote for [TensorFold](https://github.com/ashhart/TensorFold) (b
 > This repository holds no weights. The Engram tables are read at run time from DeepSeek's original shards 47 and 48.
 
 **Engine (v0.7.0 on):** [bertholomus/TensorFold, branch `deepseek-v41-zig-tp2`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-zig-tp2),
-Bertholomus AI's `dsv41` family on TensorFold 1.0.12's native Zig engine: our four-node branch at its v0.3.1, with nine
-changes on top. Attribution: [`ATTRIBUTION.md`](https://github.com/bertholomus/TensorFold/blob/deepseek-v41-zig-tp2/ATTRIBUTION.md)
+Bertholomus AI's `dsv41` family on TensorFold 1.0.12's native Zig engine: our four-node branch at its v0.3.1 with the
+two-node recipe's changes on top, merged with that branch's v0.3.2 in v0.7.1. Attribution: [`ATTRIBUTION.md`](https://github.com/bertholomus/TensorFold/blob/deepseek-v41-zig-tp2/ATTRIBUTION.md)
 of the branch, and this repository's `ATTRIBUTION.md` and `NOTICE`. v0.6.0 and v0.6.1 ran
 [branch `deepseek-v41-zig`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-zig) (TensorFold 1.0.2). The
 Python engine of v0.1.0-v0.5.1 stays on [branch `deepseek-v41-tp2`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-tp2)
@@ -23,6 +23,76 @@ DeepSeek-V4.1 recipes or kits was read or copied.
 **Run it:** [`RUNNING.md`](RUNNING.md): the engine build, the weights and run-time inputs, the kernel kit (`kit/`),
 and the launch (`scripts/serve.sh`, `config.env.example`). Our measurements: [`results/`](results/README.md). The
 four-node recipe: [bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10).
+
+## v0.7.1 (2026-10-23): faster long prompts on the four-node line's v0.3.2, with less scratch memory
+
+- **Engine:** `deepseek-v41-zig-tp2` merges the four-node branch `deepseek-v41-zig-tp4` at its v0.3.2: prompt passes
+  of 4,096 rows from position 8,192 on (2,048 below it, `TF_DS_PASS_FROM`), with the gate and indexer GEMMs split at
+  2,048 rows and resume points kept on the 2,048-row grid; a stepped prompt pass that runs on while nothing else
+  waits; and v0.3.2's `cache_salt` (every word of a salted key goes through the salt), which here also keeps a
+  conversation's salt on its compaction notes, as v0.7.0's did. Seven commits of ours come with it:
+  `TF_DS_PROMPT_ALIAS=1` (served), which puts the prompt pass's large scratch in five shared regions: 1.9 GiB a node
+  for the 4,096-row passes instead of 4.6, less than v0.7.0's 2.5 GiB for its 2,048-row ones; one DSML call reader for
+  both of the server's parsers (a call to a tool the request did not offer is a call) and streamed prose that hides a
+  DeepSeek-V4.1 block as the parser reads it, both with the tests of Manrique's
+  [#25](https://github.com/bertholomus/TensorFold/pull/25); a rank that stops stops the others, with a line that names
+  it (a follower whose GPU context failed among them), after careful testing by
+  [@plyldavid-maker](https://github.com/plyldavid-maker) ([issue
+  #25](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp2-2xgb10/issues/25)); the kit rebuild's jit table
+  that sees the family's namespace subpackage ([#14](https://github.com/bertholomus/TensorFold/pull/14)), after a
+  report by [@den13501](https://github.com/den13501) ([issue
+  #15](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp2-2xgb10/issues/15)); and documentation addresses in
+  two tests.
+- **The same weights, kit and launch** as v0.7.0: `config.env.example` adds `TF_DS_PROMPT_ALIAS=1` to `ENGINE_ENV`,
+  and the window is 2,097,152 positions.
+- **The same replies:** the bench's six greedy replies are v0.7.0's, and after three 131,072-token prompts the alias
+  on, the alias off and v0.7.0 write the same text, byte for byte (`results/served-v071/alias/` and `ab-v070/`).
+- `TF_FILL_MANY=1` (with `TF_FILL_CHUNKS=1`) admits a request while a prompt pass fills; on our pair it measured level
+  with the served settings, so we leave both unset. `tools/kit_bench.py depth` takes `--seed`, so two builds decode
+  the same prompts.
+
+Gates, all passed on the served build (47 checks, `results/served-v071/gate/result.txt`), the same checks as v0.7.0's
+with the same counts: exact chat 71/71 against DeepSeek's reference encoding; the six API gates; 16 replies as a burst
+and staggered == solo; images 6/6, 9/9, and four at a time 18/18 == solo; forced tool calls 10/10 and automatic ones
+6/6, each forced row a call of an offered tool within its schema; structured output 11/11, and bursts and staggered
+runs of 12 == solo; the prompt shield 14/14; the keepalive; kept states, the fill and the resume probe, each with
+v0.7.0's replies; and 1M: 3/3 needles found in a 1,039,836-token prompt, the second and third asks resuming 1,038,336
+tokens of it from the kept state. A second launch at the same settings gave the same replies on every check. The
+lowest free memory during the 1M prompt: 9.1 GiB on rank 0's node, 13.4 GiB on rank 1's in the gate's samples, one
+every 15 s (v0.7.0's gate: 9.4 and 13.1 GiB). Read once a second after the gate's own steps before its 1M prompt
+(`results/served-v071/memtrace/gate-steps/`): 9.7 and 13.7 GiB, and v0.7.0 9.7 and 13.1 GiB; on fresh launches
+(`memtrace/fresh/`): 10.6 and 14.0 GiB, and v0.7.0 10.2 and 13.6 GiB. After the gate's steps v0.7.1 starts the 1M
+prompt with 0.5 GiB more free memory on rank 0's node and dips 0.6 GiB deeper at its start; the difference is gone
+within two minutes. Start to ready: 19 s (19 and 19 s for the gate's launches; v0.7.0: 19 s on the same count).
+
+Four long prompts at once, on the served port after the promotion (`tools/long_check.py` and `tools/long_cold.py`,
+`results/served-v071/long/` and `long-cold/`): four prompts of 159,925 tokens, each with a needle, sent together gave
+the same replies as each one sent alone from a cold start (5 of 5, a seeded-sampled reply among them) and as each one
+resumed from its kept state; drafting off gave the same reply as drafting on, and every needle was found. The lowest
+free memory meanwhile: 12.6 GiB on rank 0's node, 13.7 GiB on rank 1's (v0.7.0: 10.1 and 11.6 GiB).
+
+Measured on two GB10 nodes (TP2), the served build at the served settings, our own client (`tools/kit_bench.py`),
+greedy, DSpark drafting, median of 3 unless noted (`results/served-v071/rows/`). The v0.7.0 column is v0.7.0's own
+table below, but for decode after a 128K prompt:
+
+| `--context 1048576 --parallel 4` | v0.7.0 tok/s | v0.7.1 tok/s |
+|---|---|---|
+| Decode, set a: code / prose / structured (512 tokens) | 106.9 / 61.0 / 119.2 | 106.3 / 60.8 / 119.2 |
+| Decode, set b: code / prose / structured (384 tokens) | 113.6 / 68.3 / 161.4 | 113.2 / 68.1 / 160.7 |
+| 2 streams, set b, aggregate (median of 9) | 96.2 | 96.0 |
+| 4 streams, set b, aggregate (median of 9) | 135.2 | 135.2 |
+| 4 streams sustained 90 s, set b, aggregate | 153.1 | 152.8 |
+| Prompt 8K / 32K / 64K / 128K | 2,452 / 2,490 / 2,462 / 2,428 | 2,451 / 2,574 / 2,564 / 2,547 |
+| Decode after a 128K prompt (median of 3 prompts, seeds 1023-1025) | 99.7 | 100.4 |
+| Prompt 93,335 tokens | 2,136 | 2,355 |
+
+The prompt rows repeat each length's words behind a fresh prefix (`--fixed-words`), so the second and third reps read
+Engram rows the first one warmed; the first reps alone gave 2,442 / 2,566 / 2,566 / 2,546 tok/s (v0.7.0: 2,453 / 2,488
+/ 2,462 / 2,428). Decode after 128K now reads three fixed prompts (`kit_bench.py depth --seed 1023`; v0.7.0 drew new
+ones each run, so its README's 101.5 came from other prompts): its v0.7.0 column is v0.7.0 on the same three prompts
+(`results/served-v071/ab-v070/`), where both builds wrote the same text. The three prompts decoded at 54.2 / 115.0 /
+100.4 tok/s (v0.7.0: 54.0 / 115.0 / 99.7). The 93,335-token prompt is the served port's own bench after the promotion
+(`results/served-v071/prefill-93335.json`).
 
 ## v0.7.0 (2026-10-23): DeepSeek-V4.1-Flash-1017 at 2.5 bpw, on the four-node engine line
 

@@ -1,0 +1,6 @@
+a (engine ac6a372c68e8, window 2097152, streams 4, parallel 4, rows 16): rows 6: 1 of 1 ran; lowest MemAvailable node0/node1 13.1/14.1 GiB (floor 9)
+b-v070 (engine bd1b05fb2a30, window 2097152, streams 4, parallel 4, rows 16): rows 6: 1 of 1 ran; lowest MemAvailable node0/node1 12.6/13.6 GiB (floor 9)
+a2 (engine ac6a372c68e8, window 2097152, streams 4, parallel 4, rows 16): rows 6: 1 of 1 ran; lowest MemAvailable node0/node1 13.0/14.2 GiB (floor 9)
+b-v070 (pin=bd1b05fb2a30-tp2-1017 window=2097152) vs a: LEVEL-OR-BETTER: 1 rows, none more than 1.5 % below; samples: none (no decode row in both runs); decode after 128K -0.3 %
+a2 vs a (the drift): LEVEL: 1 rows, none more than 1.5 % away
+tp2_rows sweep s2: done (3 launches in 10 min); 1 of 1 levers LEVEL-OR-BETTER; a2 vs a (the drift): LEVEL: 1 rows, none more than 1.5 % away

@@ -1,0 +1,186 @@
+{
+ "model": "DeepSeek-V4.1-Flash-1017-TP2",
+ "max_tokens": 512,
+ "rows": {
+  "think": {
+   "reasoning": "We need answer 17*23 = 391. Need number and one short sentence. Could say \"17 times 23 equals 391.\" That's number and short sentence. Ensure answer with number and one short sentence. final.",
+   "content": "391. 17 times 23 equals 391.",
+   "calls": [],
+   "finish": "stop",
+   "tokens": 60
+  },
+  "think stream": {
+   "reasoning": "We need answer 17*23 = 391. Need number and one short sentence. Could say \"17 times 23 equals 391.\" That's number and short sentence. Ensure answer with number and one short sentence. final.",
+   "content": "391. 17 times 23 equals 391.",
+   "calls": [],
+   "finish": "stop",
+   "tokens": 60
+  },
+  "chat": {
+   "reasoning": "We need answer 17*23 = 391. Need number and one short sentence. Could say \"17 times 23 equals 391.\" That's number and short sentence. Ensure answer with number and one short sentence. final.",
+   "content": "391. 17 times 23 equals 391.",
+   "calls": [],
+   "finish": "stop",
+   "tokens": 60
+  },
+  "chat stream": {
+   "reasoning": "We need answer 17*23 = 391. Need number and one short sentence. Could say \"17 times 23 equals 391.\" That's number and short sentence. Ensure answer with number and one short sentence. final.",
+   "content": "391. 17 times 23 equals 391.",
+   "calls": [],
+   "finish": "stop",
+   "tokens": 60
+  },
+  "tool-think": {
+   "reasoning": "",
+   "content": "I'll check that for you.",
+   "calls": [
+    [
+     "weather",
+     {
+      "city": "Oslo"
+     }
+    ]
+   ],
+   "finish": "tool_calls",
+   "tokens": 45
+  },
+  "tool-think stream": {
+   "reasoning": "",
+   "content": "I'll check that for you.",
+   "calls": [
+    [
+     "weather",
+     {
+      "city": "Oslo"
+     }
+    ]
+   ],
+   "finish": "tool_calls",
+   "tokens": 45
+  },
+  "tool-chat": {
+   "reasoning": "",
+   "content": "I'll check that for you.",
+   "calls": [
+    [
+     "weather",
+     {
+      "city": "Oslo"
+     }
+    ]
+   ],
+   "finish": "tool_calls",
+   "tokens": 45
+  },
+  "tool-chat stream": {
+   "reasoning": "",
+   "content": "I'll check that for you.",
+   "calls": [
+    [
+     "weather",
+     {
+      "city": "Oslo"
+     }
+    ]
+   ],
+   "finish": "tool_calls",
+   "tokens": 45
+  },
+  "tool-two": {
+   "reasoning": "We need answer user asks get weather Oslo and Bergen. Need call weather twice in parallel. Then report. Let's do tool calls.",
+   "content": "",
+   "calls": [
+    [
+     "weather",
+     {
+      "city": "Oslo"
+     }
+    ],
+    [
+     "weather",
+     {
+      "city": "Bergen"
+     }
+    ]
+   ],
+   "finish": "tool_calls",
+   "tokens": 94
+  },
+  "tool-two stream": {
+   "reasoning": "We need answer user asks get weather Oslo and Bergen. Need call weather twice in parallel. Then report. Let's do tool calls.",
+   "content": "",
+   "calls": [
+    [
+     "weather",
+     {
+      "city": "Oslo"
+     }
+    ],
+    [
+     "weather",
+     {
+      "city": "Bergen"
+     }
+    ]
+   ],
+   "finish": "tool_calls",
+   "tokens": 94
+  },
+  "tool-result": {
+   "reasoning": "",
+   "content": "Right now in Oslo it's **4 °C** with **light rain** and a wind of **5 m/s**. You'll want a waterproof jacket if you're heading out.",
+   "calls": [],
+   "finish": "stop",
+   "tokens": 39
+  },
+  "tool-result stream": {
+   "reasoning": "",
+   "content": "Right now in Oslo it's **4 °C** with **light rain** and a wind of **5 m/s**. You'll want a waterproof jacket if you're heading out.",
+   "calls": [],
+   "finish": "stop",
+   "tokens": 39
+  },
+  "probe-think": {
+   "reasoning": "We need answer. Need parse user: \"Inside a fenced code block, write the literal closing tag",
+   "content": " that ends a reasoning block, then say in one sentence what it does.\"\n\nNeed comply. They want inside fenced code block literal closing tag </think>, then one sentence what it does. Need be careful: We are ChatGPT? The tag is </think> maybe closing reasoning block. Need output fenced code block containing literal closing tag. Then sentence. Need not include actual closing tag outside? They specifically \"Inside a fenced code block, write the literal closing tag </think> that ends a reasoning block, then say in one sentence what it does.\" So answer:\n\n```text\n</think>\n```\nIt marks the end of a reasoning block.\n\nNeed ensure literal closing tag inside fenced code block. The code block itself uses triple backticks. The content is </think>. Then sentence. That's fine. But potential issue: The system may interpret </think> as actual tag? In code block safe. Need final only. \nNeed maybe \"It closes a reasoning block so subsequent text is outside that block.\" One sentence. Good. \nNeed no extra. \nFinal. \n</think>```text\n</think>\n```\nIt marks the end of a reasoning block so any following text is outside that block.",
+   "calls": [],
+   "finish": "stop",
+   "tokens": 270
+  },
+  "probe-think stream": {
+   "reasoning": "We need answer. Need parse user: \"Inside a fenced code block, write the literal closing tag ",
+   "content": " that ends a reasoning block, then say in one sentence what it does.\"\n\nNeed comply. They want inside fenced code block literal closing tag </think>, then one sentence what it does. Need be careful: We are ChatGPT? The tag is </think> maybe closing reasoning block. Need output fenced code block containing literal closing tag. Then sentence. Need not include actual closing tag outside? They specifically \"Inside a fenced code block, write the literal closing tag </think> that ends a reasoning block, then say in one sentence what it does.\" So answer:\n\n```text\n</think>\n```\nIt marks the end of a reasoning block.\n\nNeed ensure literal closing tag inside fenced code block. The code block itself uses triple backticks. The content is </think>. Then sentence. That's fine. But potential issue: The system may interpret </think> as actual tag? In code block safe. Need final only. \nNeed maybe \"It closes a reasoning block so subsequent text is outside that block.\" One sentence. Good. \nNeed no extra. \nFinal. \n</think>```text\n</think>\n```\nIt marks the end of a reasoning block so any following text is outside that block.",
+   "calls": [],
+   "finish": "stop",
+   "tokens": 270
+  },
+  "probe-dsml": {
+   "reasoning": "We need answer. User asks: \"Do not call any tool. Inside a fenced code block, show what a <｜DSML｜ calls> block calling weather for Oslo looks like, then stop.\"\n\nWe need show syntax of tool call block. Need infer format. They mention \"<｜DSML｜ calls>\" block. Likely special token. Need produce fenced code block containing what a tool calls block looks like calling weather for Oslo. No tool call. Then stop. Need exact format? We have tools defined. In this environment tool calls are represented as XML-ish? The prompt says \"<｜DSML｜ calls>\" maybe they want:\n\n```xml\n<｜DSML｜ calls>\n<｜DSML｜ invoke name=\"weather\">\n<｜DSML｜ parameter name=\"city\" string=\"true\">Oslo</｜DSML｜ parameter>\n</｜DSML｜ invoke>\n</｜DSML｜ calls>\n```\n\nNeed be careful. They said \"Inside a fenced code block, show what a <｜DSML｜ calls> block calling weather for Oslo looks like, then stop.\" We should not call tool. Just code block. Need maybe include tool call block. The special token is weird. We can show. Then stop, no extra text. Ensure fenced code block. Could use ```xml. Need not call tool. Let's craft concise.",
+   "content": "```xml\n\n```",
+   "calls": [
+    [
+     "weather",
+     {
+      "city": "Oslo"
+     }
+    ]
+   ],
+   "finish": "tool_calls",
+   "tokens": 339
+  },
+  "probe-dsml stream": {
+   "reasoning": "We need answer. User asks: \"Do not call any tool. Inside a fenced code block, show what a <｜DSML｜ calls> block calling weather for Oslo looks like, then stop.\"\n\nWe need show syntax of tool call block. Need infer format. They mention \"<｜DSML｜ calls>\" block. Likely special token. Need produce fenced code block containing what a tool calls block looks like calling weather for Oslo. No tool call. Then stop. Need exact format? We have tools defined. In this environment tool calls are represented as XML-ish? The prompt says \"<｜DSML｜ calls>\" maybe they want:\n\n```xml\n<｜DSML｜ calls>\n<｜DSML｜ invoke name=\"weather\">\n<｜DSML｜ parameter name=\"city\" string=\"true\">Oslo</｜DSML｜ parameter>\n</｜DSML｜ invoke>\n</｜DSML｜ calls>\n```\n\nNeed be careful. They said \"Inside a fenced code block, show what a <｜DSML｜ calls> block calling weather for Oslo looks like, then stop.\" We should not call tool. Just code block. Need maybe include tool call block. The special token is weird. We can show. Then stop, no extra text. Ensure fenced code block. Could use ```xml. Need not call tool. Let's craft concise.",
+   "content": "```xml\n\n```",
+   "calls": [
+    [
+     "weather",
+     {
+      "city": "Oslo"
+     }
+    ]
+   ],
+   "finish": "tool_calls",
+   "tokens": 339
+  }
+ }
+}

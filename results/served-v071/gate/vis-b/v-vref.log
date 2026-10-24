@@ -1,0 +1,9 @@
+{"case": "vision_chart.png", "prompt_tokens": 201, "text": "This bar chart illustrates sales per day for Monday, Tuesday, and Wednesday, with Tuesday showing the highest sales."}
+{"case": "vision_receipt.png", "prompt_tokens": 209, "text": "The image displays a simple receipt from \"Corner Cafe\" listing a Latte for 4.50, a Croissant for 3.25, and Water for 1.00, with a total of 8.75."}
+{"case": "vision_red.png", "prompt_tokens": 206, "text": "The image is a solid, uniform field of bright red color with no other features or objects."}
+{"case": "vision_shapes.png", "prompt_tokens": 206, "text": "The image displays a red circle, a blue square, and a yellow triangle arranged on a light gray background."}
+{"case": "vision_tall.png", "prompt_tokens": 279, "text": "This image is a solid, vertical strip of deep blue color."}
+{"case": "vision_text.png", "prompt_tokens": 198, "text": "The image displays the text \"OPEN 24 HOURS\" in black capital letters against a white background."}
+{"case": "vision_tiny.png", "prompt_tokens": 196, "text": "The image is a solid black square."}
+{"case": "vision_wide.png", "prompt_tokens": 242, "text": "The image displays a solid, horizontal band of bright yellow color."}
+{"case": "vision_chart.png+vision_receipt.png", "prompt_tokens": 399, "text": "Based on the images provided, here are the key differences:\n\n**Image 1 (Left):**\n*   **Type:** A bar chart (data visualization).\n*   **Content:** It displays \"Sales per day\" for three days:"}

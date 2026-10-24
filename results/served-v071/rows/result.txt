@@ -1,0 +1,3 @@
+rows v071 on 18896 (engine ac6a372c68e8, window 2097152, streams 4, parallel 4, rows 16): rows 1 2 3 4 5 6: 6 of 6 ran; lowest MemAvailable node0/node1 12.3/13.5 GiB (floor 9)
+numbers: set a code 106.3; set a prose 60.8; set a structured 119.2; set b code 113.2; set b prose 68.1; set b structured 160.7; 2 streams 96.0; 4 streams 135.2; 4 sustained 152.8; prefill 8K 2,451; prefill 32K 2,574; prefill 64K 2,564; prefill 128K 2,547; decode after 128K 100.4
+lane health after: ok

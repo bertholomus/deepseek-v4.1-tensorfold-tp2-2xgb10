@@ -1,0 +1,11 @@
+info: the keyed indexer layers' rows of 32768 columns or more split over the nodes (TF_DS_IDX_SPLIT)
+info: the prompt pass's scratch in shared regions (TF_DS_PROMPT_ALIAS)
+info: rank cache: 83.2 GiB of expert entries read whole in 7.4 s
+info: the prompt pass's scratch: 25 buffers of 4701 MiB in shared regions of 1912 MiB (TF_DS_PROMPT_ALIAS)
+{"rank": 1, "loaded_s": 14.7, "pool": 2097152, "drafts": true, "arena_used": 5030378292, "arena_reserved": 5049945344}
+dsv41: rank 1 stopped following rank 0: PeerDown
+{"rank": 1, "follow": "PeerDown"}
+
+[2026-10-23 21:14:15] node1:209:209 [0] init.cc:449 NCCL WARN Spectrum-X (SPCX) NCCL plugin is not supported on device:RDMA_DEV0, skipping ..
+
+[2026-10-23 21:14:15] node1:209:209 [0] init.cc:449 NCCL WARN Spectrum-X (SPCX) NCCL plugin is not supported on device:RDMA_DEV1, skipping ..

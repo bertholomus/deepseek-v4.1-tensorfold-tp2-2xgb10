@@ -1,0 +1,6 @@
+# sweep s2x (DS lanes 1016, 2026-10-23, v0.7.1): row 6 only (decode after a 128K prompt, seeds 1023-1025, each row's
+# text kept): build 14 with and without TF_DS_PROMPT_ALIAS at one pool. Greedy, so the alias is exact on v0.3.2's
+# 4,096-row prompt passes when both lines write the same three texts. A (v0.7.0's build 8, 2,048-row passes) is the
+# cross-build view only.
+b14a   pin=ac6a372c68e8-tp2-1017 window=1048576 env=TF_DS_PROMPT_ALIAS=1
+b14n   pin=ac6a372c68e8-tp2-1017 window=1048576 env=TF_DS_PROMPT_ALIAS=0

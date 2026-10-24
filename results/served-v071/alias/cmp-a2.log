@@ -1,0 +1,3 @@
+{"row": "decode after 128K", "a": 99.5, "b": 99.4, "change_pct": -0.1}
+samples: none (no decode row in both runs)
+LEVEL: 1 rows, none more than 1.5 % away

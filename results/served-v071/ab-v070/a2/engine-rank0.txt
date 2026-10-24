@@ -1,0 +1,1 @@
+ac6a372c68e8 fix(server): a salted conversation's compaction notes keep its cache_salt (on a16a167e, the TP4 line's v0.3.1; TP2-25: kit-tp2-v031)

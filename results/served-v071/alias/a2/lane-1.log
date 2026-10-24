@@ -1,0 +1,3 @@
+info: the keyed indexer layers' rows of 32768 columns or more split over the nodes (TF_DS_IDX_SPLIT)
+info: rank cache: 83.2 GiB of expert entries read whole in 7.4 s
+{"rank": 1, "loaded_s": 15.3, "pool": 2097152, "drafts": true, "arena_used": 5455816244, "arena_reserved": 5572136192}

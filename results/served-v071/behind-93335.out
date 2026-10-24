@@ -1,0 +1,4 @@
+rep 0: short ttft 38.72 s behind long (long ttft 39.65 s)
+rep 1: short ttft 38.74 s behind long (long ttft 39.67 s)
+rep 2: short ttft 38.72 s behind long (long ttft 39.65 s)
+{"mode": "behind", "reps": 3, "url": "http://127.0.0.1:18896", "body": "prompt-93335.txt", "median_short_ttft_s": 38.723015711060725, "delay_s": 1.0}

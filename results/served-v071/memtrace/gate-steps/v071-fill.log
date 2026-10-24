@@ -1,0 +1,1 @@
+{"x": {"prompt_tokens": 24, "cached": 0, "finish": "length", "chunks": 253, "lane_ttft": 0.110684329, "lane_prefill": 0.109729124}, "y": {"prompt_tokens": 65010, "cached": 0, "finish": "length", "chunks": 10, "lane_ttft": 25.807876135, "lane_prefill": 25.706587403}, "wait": {"y_first_s": 25.82, "x_stop_s": 25.71, "x_chunks": 3}}

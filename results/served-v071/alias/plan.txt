@@ -1,0 +1,6 @@
+sweep s2x: rows 6 a launch on node0 127.0.0.1:18897; 4 launches, ~60 min
+a: serve.env + pool.env as served: bd1b05fb2a30-tp2-1017, window 2097152, streams 4, parallel 4, rows 16
+b-b14a: pin=ac6a372c68e8-tp2-1017 window=1048576 env=TF_DS_PROMPT_ALIAS=1 (tp2_25.sh start with TP2_25_HTTP=18897 TP2_25_PIN=ac6a372c68e8-tp2-1017 TP2_25_WINDOW=1048576 TP2_25_EXTRA_ENV=TF_DS_PROMPT_ALIAS=1)
+b-b14n: pin=ac6a372c68e8-tp2-1017 window=1048576 env=TF_DS_PROMPT_ALIAS=0 (tp2_25.sh start with TP2_25_HTTP=18897 TP2_25_PIN=ac6a372c68e8-tp2-1017 TP2_25_WINDOW=1048576 TP2_25_EXTRA_ENV=TF_DS_PROMPT_ALIAS=0)
+a2: serve.env as served again (the drift)
+then each b-LABEL against a (tp2_rows.py cmp, band 1.5 %) and a2 against a (--both); the served lane on 18896 back if it was up

@@ -1,0 +1,12 @@
+2026-10-23T22:44:36Z memtrace m2: start: served lane up 1 on 18896; cases v071 v070 v071r2; window 2097152; base 18897
+2026-10-23T22:45:02Z memtrace m2: v071: up in 24 s: memfit: MemAvailable after the load: node0 13.65 GiB, node1 14.70 GiB; less the 2 GiB prompt cache, the floor 9 GiB: fits (window 2097152: 1.74 GiB a rank in the load)
+2026-10-23T22:54:51Z memtrace m2: v071: the 1M row in 518 s: rc 0
+2026-10-23T22:55:18Z memtrace m2: v071: v071 | node0: before 13700 MiB, lowest 10808 MiB (10.55 GiB) at +511 s, 150-450 s 11558 MiB; at the lowest vs before: MemFree -2899 Cached +2 AnonPages +2044 Shmem +0 cg_anon +1980 cg_kernel +2 cg_file +0 p_RssAnon +1981 py +75 | node1: before 14
+2026-10-23T22:56:07Z memtrace m2: v070: up in 49 s: memfit: MemAvailable after the load: node0 12.58 GiB, node1 14.13 GiB; less the 2 GiB prompt cache, the floor 9 GiB: fits (window 2097152: 1.74 GiB a rank in the load)
+2026-10-23T23:06:31Z memtrace m2: v070: the 1M row in 549 s: rc 0
+2026-10-23T23:06:58Z memtrace m2: v070: v070 | node0: before 13102 MiB, lowest 10434 MiB (10.19 GiB) at +4 s, 150-450 s 10969 MiB; at the lowest vs before: MemFree -2668 Cached +0 AnonPages +2008 Shmem +0 cg_anon +1943 cg_kernel +1 cg_file +0 p_RssAnon +1943 py +75 | node1: before 1414
+2026-10-23T23:07:42Z memtrace m2: v071r2: up in 44 s: memfit: MemAvailable after the load: node0 13.61 GiB, node1 14.58 GiB; less the 2 GiB prompt cache, the floor 9 GiB: fits (window 2097152: 1.74 GiB a rank in the load)
+2026-10-23T23:18:05Z memtrace m2: v071r2: the 1M row in 548 s: rc 0
+2026-10-23T23:18:32Z memtrace m2: v071r2: v071r2 | node0: before 13628 MiB, lowest 10718 MiB (10.47 GiB) at +4 s, 150-450 s 11903 MiB; at the lowest vs before: MemFree -2911 Cached +0 AnonPages +243 Shmem +0 cg_anon +175 cg_kernel +1 cg_file +0 p_RssAnon +174 py +75 | node1: before 14594
+2026-10-23T23:18:32Z memtrace m2: done: summary.txt
+2026-10-23T23:18:58Z memtrace m2: the served lane is back on 18896

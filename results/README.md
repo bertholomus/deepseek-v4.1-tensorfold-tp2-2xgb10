@@ -1,10 +1,26 @@
 # Results
 
-Our own measurements of our own engine on two GB10 nodes, as the README's v0.7.0 section reports them. Private host
-names, addresses, devices and paths are not in these files: the nodes are named by rank (`node0` runs rank 0,
-`node1` rank 1), the link's addresses and devices are placeholders (`NODE0_LINK_IP`, `RDMA_DEV0`, ...), and a file
-the runs name is named without its folder. Nothing else was changed. Releases before v0.7.0 reported their numbers in
-the README only.
+Our own measurements of our own engine on two GB10 nodes, as the README's v0.7.1 and v0.7.0 sections report them.
+Private host names, addresses, devices and paths are not in these files: the nodes are named by rank (`node0` runs
+rank 0, `node1` rank 1), the link's addresses and devices are placeholders (`NODE0_LINK_IP`, `RDMA_DEV0`, ...), and a
+file the runs name is named without its folder. Nothing else was changed. Releases before v0.7.0 reported their
+numbers in the README only.
+
+## `served-v071/`: v0.7.1, the served build `ac6a372` on the 2.5 bpw weights (2026-10-23)
+
+The engine is the source of `ENGINE_COMMIT`'s parent (the same tree but for the fork's three documents); the settings
+are `config.env.example`'s. The weights and the run-time inputs are v0.7.0's (`served-v070/weights.sha256`,
+`inputs.txt` and `kl-report.md`). The files are laid out as `served-v070/`'s below, with three folders more:
+
+| File | What |
+|---|---|
+| `gate/` | the gate run before the promotion, as v0.7.0's: launch A, launch B and the served port's checks (47 checks in all, `gate/result.txt`). Where a B check compares replies "as served" or with "the served build's", the served port ran v0.7.0 |
+| `rows/` | the speed rows on the served port, as v0.7.0's; `rows-6.json` keeps each prompt's seed (1023 to 1025) and its text |
+| `long/`, `long-cold/` | four long prompts at once on the served port, and each one alone from a cold start, as v0.7.0's (our labels `l2` and `l2c`) |
+| `prefill-93335.*`, `behind-93335.*` | the served port's 93,335-token prefill (three reps) and the short chat sent 1 s behind it, after the promotion |
+| `ab-v070/` | decode after a 128K prompt on the same three prompts (seeds 1023 to 1025): `a` and `a2` are v0.7.1 at the served settings, `b-v070` is v0.7.0's build `bd1b05f` at its own; each line's `rows-6.json` holds the three texts, the same on the three lines; `result.txt` compares the lines |
+| `alias/` | the same row on build `ac6a372` with `TF_DS_PROMPT_ALIAS=1` (`b-b14a`) and `TF_DS_PROMPT_ALIAS=0` (`b-b14n`), both at a window of 1,048,576 positions, beside v0.7.0's build (`a` and `a2`); `texts.txt` compares the texts of the four lines (all the same) and `mem.txt` of each line its free memory |
+| `memtrace/` | the gate's 1M row (3 needles in a 1,039,836-token prompt) at the served window, with each node's memory read once a second: `gate-steps/` after the gate's own steps before it (the resume probe, the keepalive, the kept and fill checks, the 93,335-token bench), `fresh/` on fresh launches after one 93,335-token prompt; `v071` is v0.7.1 as served, `v070` v0.7.0's build `bd1b05f` as it served, `v071r2` v0.7.1 with v0.7.0's 2,048-row prompt passes (`TF_DS_PASS_ROWS=2048`); `v071na`, v0.7.1 without `TF_DS_PROMPT_ALIAS`, stops at the launch's memory check (10.7 GiB free on rank 0's node after the load, under the 9 GiB floor with the 2 GiB prompt cache), so the alias is what lets v0.7.1's 4,096-row passes run at this window; `*-rank0.txt` and `*-rank1.txt` hold the samples (MiB), `*-phases.txt` when each step began, `summary.txt` each launch's lowest free memory and what moved |
 
 ## `served-v070/`: v0.7.0, the served build `bd1b05f` on the 2.5 bpw weights (2026-10-23)
 

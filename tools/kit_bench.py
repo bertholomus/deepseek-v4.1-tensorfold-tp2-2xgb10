@@ -312,14 +312,17 @@ def cmd_prefill(c: Client, a) -> list:
 
 
 def cmd_depth(c: Client, a) -> list:
-    """Decode speed after a long cold prompt: greedy, ignore_eos, a.tokens tokens."""
+    """Decode speed after a long cold prompt: greedy, ignore_eos, a.tokens tokens. With --seed S the i-th prompt's
+    filler takes seed S + i, so two runs (two builds) decode the same prompts; without it, the time picks them. Each
+    row keeps its seed and its text: greedy, so two exact builds write the same text."""
 
     rows = []
-    for length in [int(x) for x in a.lengths.split(",")]:
-        ids = filler_ids(c, length, seed=int(time.time() * 1000) ^ length)
+    for i, length in enumerate(int(x) for x in a.lengths.split(",")):
+        seed = a.seed + i if a.seed is not None else int(time.time() * 1000) ^ length
+        ids = filler_ids(c, length, seed=seed)
         r = c.stream({"prompt": ids, "max_tokens": a.tokens, "temperature": 0, "ignore_eos": True}, "/v1/completions")
         row = {"length": length, "prompt_tokens": r["prompt_tokens"], "ttft_s": r["ttft_s"], "tokens": r["tokens"],
-               "decode_tps": r["decode_tps"]}
+               "decode_tps": r["decode_tps"], "seed": seed, "text": r["text"]}
         print(json.dumps(row), flush=True)
         rows.append(row)
     return rows
@@ -372,6 +375,7 @@ def main() -> None:
     s.add_argument("--fixed-words", action="store_true",
                    help="the same words every rep of a length behind a fresh salt: later reps read warm Engram rows")
     s = sub.add_parser("depth"); s.add_argument("--lengths", default="131072"); s.add_argument("--tokens", type=int, default=256)
+    s.add_argument("--seed", type=int, default=None)
     s = sub.add_parser("oracle"); s.add_argument("--gen-tokens", type=int, default=64); s.add_argument("--topk", type=int, default=20)
     for s in sub.choices.values():
         s.add_argument("--out")

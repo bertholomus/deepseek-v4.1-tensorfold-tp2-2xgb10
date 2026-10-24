@@ -1,0 +1,6 @@
+2026-10-23T23:53:10Z the pin to node0
+2026-10-23T23:53:31Z the pin to node1
+2026-10-23T23:53:46Z start: ac6a372c68e8 DeepSeek-V4.1-Flash-1017-EXL3-2.5bpw--1bae0e10 on 18897: context 1048576, window 2097152, streams 4, parallel 4, rows 16, gather rdma, serve env TF_DS_IDX_SPLIT=1 TENSORFOLD_PLAIN_SPECIALS=1 TENSORFOLD_GRAMMAR_LIB=/kit/grammar/libtfgrammar.so TENSORFOLD_SSE_KEEPALIVE=15 TENSORFOLD_STATS_EVERY=60, serve args --prompt-cache-gib 2
+2026-10-23T23:54:04Z up on node0 127.0.0.1:18897; model 96.04 GiB; 4 streams at once, 0.00 GiB each at a 1048576-token window, of 0.0 GiB left after a 12.4 GiB reserve
+2026-10-23T23:54:05Z memfit: MemAvailable after the load: node0 10.69 GiB, node1 12.75 GiB; less the 2 GiB prompt cache, the floor 9 GiB: does not fit (window 2097152: 1.74 GiB a rank in the load)
+2026-10-23T23:54:05Z STOP: start: up, but the measured memory does not fit the floor (a smaller WINDOW, in whole 1M steps down to CONTEXT, or a smaller --prompt-cache-gib: serve.env)

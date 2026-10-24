@@ -1,0 +1,3 @@
+{"row": "decode after 128K", "a": 99.5, "b": 99.7, "change_pct": 0.2}
+samples: none (no decode row in both runs)
+LEVEL-OR-BETTER: 1 rows, none more than 1.5 % below

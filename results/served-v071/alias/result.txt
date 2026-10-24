@@ -1,0 +1,8 @@
+a (engine bd1b05fb2a30, window 2097152, streams 4, parallel 4, rows 16): rows 6: 1 of 1 ran; lowest MemAvailable node0/node1 12.5/13.7 GiB (floor 9)
+b-b14a (engine ac6a372c68e8, window 1048576, streams 4, parallel 4, rows 16): rows 6: 1 of 1 ran; lowest MemAvailable node0/node1 13.8/14.9 GiB (floor 9)
+b-b14n (engine ac6a372c68e8, window 1048576, streams 4, parallel 4, rows 16): rows 6: 1 of 1 ran; lowest MemAvailable node0/node1 11.0/12.4 GiB (floor 9)
+a2 (engine bd1b05fb2a30, window 2097152, streams 4, parallel 4, rows 16): rows 6: 1 of 1 ran; lowest MemAvailable node0/node1 12.6/13.8 GiB (floor 9)
+b-b14a (pin=ac6a372c68e8-tp2-1017 window=1048576 env=TF_DS_PROMPT_ALIAS=1) vs a: LEVEL-OR-BETTER: 1 rows, none more than 1.5 % below; samples: none (no decode row in both runs); decode after 128K +0.8 %
+b-b14n (pin=ac6a372c68e8-tp2-1017 window=1048576 env=TF_DS_PROMPT_ALIAS=0) vs a: LEVEL-OR-BETTER: 1 rows, none more than 1.5 % below; samples: none (no decode row in both runs); decode after 128K +0.2 %
+a2 vs a (the drift): LEVEL: 1 rows, none more than 1.5 % away
+tp2_rows sweep s2x: done (4 launches in 14 min); 2 of 2 levers LEVEL-OR-BETTER; a2 vs a (the drift): LEVEL: 1 rows, none more than 1.5 % away

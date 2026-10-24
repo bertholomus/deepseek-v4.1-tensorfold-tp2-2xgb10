@@ -1,0 +1,35 @@
+{
+ "cmd": "depth",
+ "base": "http://127.0.0.1:18897",
+ "model": "DeepSeek-V4.1-Flash-1017-TP2",
+ "unix": 1792788144.1227682,
+ "result": [
+  {
+   "length": 131072,
+   "prompt_tokens": 131072,
+   "ttft_s": 53.78160497301724,
+   "tokens": 256,
+   "decode_tps": 54.107845028997154,
+   "seed": 1023,
+   "text": " head family fact school father city member point family right student mother part time student garden person family city head home game day job word river end state government island city month garden night team river party work month life family world city water money part child history water morning money work end day line family father town right life member good night time family life school state high game father month river fact morning night girl water house room mother information day family father right time water end morning high school girl family teacher town good job day water river mother fact water life family night good work water family day end good high school father night day river water day family school night life town water month school girl water family time good life family town river day school teacher job day water family night school father life day town river family water day school life family night good work water family day end good high school father night day river water day family school night life town water month school girl water family time good life family town river day school teacher job day water family night school father life day town river family water day school life family night good work water family day end good high school father night day river water day family school night life town water month school girl water family time good life family town river day school teacher job day water family night school father life"
+  },
+  {
+   "length": 131072,
+   "prompt_tokens": 131072,
+   "ttft_s": 53.74004632397555,
+   "tokens": 256,
+   "decode_tps": 115.41257530639231,
+   "seed": 1024,
+   "text": " head person island father school family city research family research person group head family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back family word island father city lot father house back"
+  },
+  {
+   "length": 131072,
+   "prompt_tokens": 131072,
+   "ttft_s": 53.7517652149545,
+   "tokens": 256,
+   "decode_tps": 99.52510169441985,
+   "seed": 1025,
+   "text": " head city word office night family problem part member river fact river month right room study father result family back day father town house night month person power education president idea school life education month team case part day world parent<\uff5cend\u2581of\u2581sentence\uff5c><\uff5cbegin\u2581of\u2581sentence\uff5c># 0:0:0:0:0:0:0:1\n<\uff5cend\u2581of\u2581sentence\uff5c>(((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((("
+  }
+ ]
+}

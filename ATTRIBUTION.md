@@ -12,7 +12,7 @@ lists what the recipe uses.
 | [bertholomus/DeepSeek-V4.1-Flash-1017-EXL3-2.5bpw](https://huggingface.co/bertholomus/DeepSeek-V4.1-Flash-1017-EXL3-2.5bpw) | MIT, inherited from the base model | The weights we serve since v0.7.0 (our EXL3 quant, made with ExLlamaV3's converter and Fabiano Anemone's DeepSeek-V4 support for it) | Loaded at run time. Not redistributed. `tools/serving_1017.py` adds six of its tensors under the engine's names and types to a download |
 | [Mia-AiLab/DeepSeek-V4.1-Flash-EXL3-2.9bpw](https://huggingface.co/Mia-AiLab/DeepSeek-V4.1-Flash-EXL3-2.9bpw) | MIT, inherited from the base model | The weights we served up to v0.6.1 | Loaded at run time. Not redistributed |
 | [TensorFold](https://github.com/ashhart/TensorFold) 1.0.12 (1.0.2 in v0.6.0 and v0.6.1; its Python line before them) | Apache-2.0 from TensorFold 0.6.0, Copyright 2026 TensorFold contributors; code written before 0.6.0 keeps its MIT notice (`kit/LICENSES/TensorFold-MIT.txt`) | The serving engine and its OpenAI-compatible server; compiled in `kit/`: its EXL3 kernels (`kit/cubins/`, with our additions) and its grammar shim (`kit/grammar/libtfgrammar.so`) | Forked: [bertholomus/TensorFold `deepseek-v41-zig-tp2`](https://github.com/bertholomus/TensorFold/tree/deepseek-v41-zig-tp2) |
-| Our four-node recipe, [bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10) (v0.3.3; its kit v0.3.1) | Apache-2.0, same authors | `scripts/`, `tools/`, `chat/chat_template.jinja`, the layout of `RUNNING.md` and the kit's files | Ours, reused; `scripts/serve.sh` made for two nodes |
+| Our four-node recipe, [bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10) (v0.3.3; its kit v0.3.1) | Apache-2.0, same authors | `scripts/`, `tools/`, `chat/chat_template.jinja`, the layout of `RUNNING.md` and the kit's files | Ours, reused; `scripts/serve.sh` made for two nodes, and `tools/kit_bench.py`'s depth rows take `--seed` (v0.7.1) |
 | NVIDIA PyTorch container `nvcr.io/nvidia/pytorch:26.07-py3` (PyTorch BSD-3-Clause, Triton MIT, NCCL, Pillow MIT-CMU) | NVIDIA's container license and the components' own licenses | The run-time environment; its PyTorch on the CPU for the RoPE tables (`kit/verify_kit.sh`) | Used as supplied. Not redistributed, except the kernel below |
 | [PyTorch](https://github.com/pytorch/pytorch) and [NVIDIA CUTLASS](https://github.com/NVIDIA/cutlass) | BSD-3-Clause | PyTorch's memory-efficient attention kernel for the vision tower (`fmha_cutlassF_f32_aligned_64x64_rf_sm80`, built on CUTLASS) | Extracted unmodified from the container's `libtorch_cuda.so`; redistributed in binary form as `kit/vision/torch_fmha_sm120.cubin` with the license texts in `kit/LICENSES/` |
 | [Triton](https://github.com/triton-lang/triton) | MIT | The compiler of our kernels in `kit/aot/` | Compiled with; license text in `kit/LICENSES/` |
@@ -21,7 +21,7 @@ lists what the recipe uses.
 
 ## Contributors
 
-v0.7.0's engine is the four-node line's v0.3.1, which carries these pull requests to our fork:
+The engine is the four-node line's v0.3.1 (v0.7.1 merges its v0.3.2), which carries these pull requests to our fork:
 [#4](https://github.com/bertholomus/TensorFold/pull/4) by Lucas Peters ([@lucas-peters](https://github.com/lucas-peters)),
 the prompt indexer's aligned row blocks; [#18](https://github.com/bertholomus/TensorFold/pull/18) by
 [@lepetitprince716-prog](https://github.com/lepetitprince716-prog), the faster load;
@@ -38,7 +38,7 @@ and [#34](https://github.com/bertholomus/TensorFold/pull/34) by [@Blackwellboy](
 by [@Capicua25x](https://github.com/Capicua25x) ([issue #18](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp2-2xgb10/issues/18)),
 and its stream keepalive one by [@den13501](https://github.com/den13501) ([issue #12](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp2-2xgb10/issues/12)).
 
-The two-node branch adds nine changes on top, four of them other people's work: LeetJoe's
+The two-node branch adds nine changes on top in v0.7.0, four of them other people's work: LeetJoe's
 ([@LeetJoe](https://github.com/LeetJoe)) [#17](https://github.com/bertholomus/TensorFold/pull/17), a message's own
 image placeholder escaped instead of refused; [@Blackwellboy](https://github.com/Blackwellboy)'s
 [#38](https://github.com/bertholomus/TensorFold/pull/38), a refused Engram row id no longer leaks the AIO batch's
@@ -48,7 +48,12 @@ calls read from their own tags; and Nathan McBride's ([@nmcbride](https://github
 [TensorFold #973](https://github.com/ashhart/TensorFold/pull/973), the template's append in place (two commits). Its
 assistant-turn quoting with `TENSORFOLD_REPLY_IDS` follows a report by [@ahinore](https://github.com/ahinore)
 ([four-node recipe issue #3](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10/issues/3)). The
-engine branch's `ATTRIBUTION.md` credits each of them, and the picked commits keep their authors. Thank you.
+engine branch's `ATTRIBUTION.md` credits each of them, and the picked commits keep their authors.
+v0.7.1's two commits that carry the tests of Manrique's [#25](https://github.com/bertholomus/TensorFold/pull/25) into one DSML call reader and the
+streamed prose name Manrique as co-author. Its rank-stop watch follows careful testing by
+[@plyldavid-maker](https://github.com/plyldavid-maker) ([issue #25](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp2-2xgb10/issues/25)), and the kit rebuild's jit
+table ([#14](https://github.com/bertholomus/TensorFold/pull/14)) a report by [@den13501](https://github.com/den13501) ([issue #15](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp2-2xgb10/issues/15)).
+Thank you.
 
 The kit's `_topk_sel` variant for N = KK = 256 (prompts of exactly 512 or 513 tokens) was compiled by Lucas Peters
 ([@lucas-peters](https://github.com/lucas-peters)) with `kit/tools/make_topk_sel.py`, this recipe's

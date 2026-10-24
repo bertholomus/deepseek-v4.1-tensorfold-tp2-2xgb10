@@ -1,0 +1,11 @@
+2026-10-23T23:22:08Z memtrace m3: start: served lane up 1 on 18896; cases v071 v070 v071na; window 2097152; base 18897
+2026-10-23T23:22:34Z memtrace m3: v071: up in 24 s: memfit: MemAvailable after the load: node0 13.71 GiB, node1 14.63 GiB; less the 2 GiB prompt cache, the floor 9 GiB: fits (window 2097152: 1.74 GiB a rank in the load)
+2026-10-23T23:27:47Z memtrace m3: v071: the gate's steps before the 1M row: resume 0, keep 0, kept 0, fill 0, bench 0 (exit codes)
+2026-10-23T23:36:26Z memtrace m3: v071: the 1M row in 519 s: rc 0
+2026-10-23T23:36:56Z memtrace m3: v071: v071 | node0: before 13052 MiB, lowest 9917 MiB (9.68 GiB) at +7 s, 150-450 s 10964 MiB; at the lowest vs before: MemFree -3136 Cached +0 AnonPages +1995 Shmem +0 cg_anon +1932 cg_kernel +1 cg_file +0 p_RssAnon +1932 py +75 | node1: before 14098 
+2026-10-23T23:38:04Z memtrace m3: v070: up in 68 s: memfit: MemAvailable after the load: node0 13.27 GiB, node1 14.10 GiB; less the 2 GiB prompt cache, the floor 9 GiB: fits (window 2097152: 1.74 GiB a rank in the load)
+2026-10-23T23:43:31Z memtrace m3: v070: the gate's steps before the 1M row: resume 0, keep 0, kept 0, fill 0, bench 0 (exit codes)
+2026-10-23T23:52:40Z memtrace m3: v070: the 1M row in 549 s: rc 0
+2026-10-23T23:53:09Z memtrace m3: v070: v070 | node0: before 12513 MiB, lowest 9965 MiB (9.73 GiB) at +7 s, 150-450 s 10463 MiB; at the lowest vs before: MemFree -2548 Cached +0 AnonPages +1998 Shmem +0 cg_anon +1934 cg_kernel +1 cg_file +0 p_RssAnon +1932 py +75 | node1: before 13499 
+2026-10-23T23:54:05Z memtrace m3: STOP: v071na did not come up (v071na-start.log)
+2026-10-23T23:54:33Z memtrace m3: the served lane is back on 18896

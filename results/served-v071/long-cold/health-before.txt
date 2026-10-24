@@ -1,0 +1,1 @@
+idle {'connections': 0, 'waiting': 0, 'decode_tokens_per_second': 24.0, 'prefill_tokens_per_second': 561.4}

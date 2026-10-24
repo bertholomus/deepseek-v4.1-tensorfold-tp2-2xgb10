@@ -1,0 +1,4 @@
+{"case": "p0", "length": 4396, "status": 200, "seconds": 2.15, "prompt_tokens": 4396, "cached": 0, "text": " station 37 rose 10 cm while"}
+{"case": "p1", "length": 6444, "status": 200, "seconds": 1.26, "prompt_tokens": 6444, "cached": 4096, "text": ": the river at station 48 rose"}
+{"case": "q", "length": 6204, "status": 200, "seconds": 1.23, "prompt_tokens": 6204, "cached": 4096, "text": " rose 1 cm while sun moved east"}
+{"case": "q2", "length": 8492, "status": 200, "seconds": 1.29, "prompt_tokens": 8492, "cached": 6144, "text": ".\nEntry 447: the river at"}

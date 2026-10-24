@@ -1,0 +1,19 @@
+{"streams": 2, "rep": 0, "aggregate_tps": 95.4957383333259, "per_stream_decode_tps": [72.846, 50.567]}
+{"streams": 2, "rep": 1, "aggregate_tps": 96.31333800571053, "per_stream_decode_tps": [75.422, 49.011]}
+{"streams": 2, "rep": 2, "aggregate_tps": 95.88686526872266, "per_stream_decode_tps": [72.953, 50.414]}
+{"streams": 2, "rep": 3, "aggregate_tps": 96.10688227127658, "per_stream_decode_tps": [72.968, 50.52]}
+{"streams": 2, "rep": 4, "aggregate_tps": 95.50851247111524, "per_stream_decode_tps": [74.787, 48.61]}
+{"streams": 2, "rep": 5, "aggregate_tps": 92.88579969747232, "per_stream_decode_tps": [72.753, 47.249]}
+{"streams": 2, "rep": 6, "aggregate_tps": 96.52147174832, "per_stream_decode_tps": [75.858, 49.107]}
+{"streams": 2, "rep": 7, "aggregate_tps": 96.57429805104839, "per_stream_decode_tps": [73.135, 50.8]}
+{"streams": 2, "rep": 8, "aggregate_tps": 96.03685307298792, "per_stream_decode_tps": [75.298, 48.868]}
+{"streams": 4, "rep": 0, "aggregate_tps": 134.88348869419002, "per_stream_decode_tps": [48.136, 34.893, 81.002, 48.615]}
+{"streams": 4, "rep": 1, "aggregate_tps": 135.4844797284386, "per_stream_decode_tps": [47.337, 36.461, 77.971, 48.815]}
+{"streams": 4, "rep": 2, "aggregate_tps": 135.0527336473242, "per_stream_decode_tps": [45.614, 36.337, 77.622, 50.109]}
+{"streams": 4, "rep": 3, "aggregate_tps": 135.51295168578204, "per_stream_decode_tps": [48.405, 36.418, 70.926, 49.959]}
+{"streams": 4, "rep": 4, "aggregate_tps": 135.07013845914136, "per_stream_decode_tps": [49.017, 34.636, 70.75, 50.73]}
+{"streams": 4, "rep": 5, "aggregate_tps": 135.23561153929097, "per_stream_decode_tps": [48.344, 36.383, 74.133, 48.783]}
+{"streams": 4, "rep": 6, "aggregate_tps": 135.48580040883508, "per_stream_decode_tps": [46.867, 36.482, 70.755, 51.584]}
+{"streams": 4, "rep": 7, "aggregate_tps": 135.66956858705223, "per_stream_decode_tps": [48.472, 36.519, 74.368, 48.883]}
+{"streams": 4, "rep": 8, "aggregate_tps": 134.856591154842, "per_stream_decode_tps": [46.505, 34.096, 80.799, 51.226]}
+

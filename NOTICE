@@ -20,7 +20,8 @@ TensorFold
   The branch carries pull requests to our fork by Lucas Peters (#4), lepetitprince716-prog (#18), Manrique (#26,
   and #28 and #29 ported), Scott Woolsey Biggart (#30), mrsergiopascal (#31) and Blackwellboy (#33 and #34), and,
   new in v0.7.0, by LeetJoe (#17) and Blackwellboy (#38), a port of Manrique's #25 (the native side of willjriley's
-  #20), and Nathan McBride's upstream TensorFold pull request #973. ATTRIBUTION.md credits each of them.
+  #20), and Nathan McBride's upstream TensorFold pull request #973; v0.7.1 carries Manrique's #25 tests into one
+  DSML call reader and the streamed prose. ATTRIBUTION.md credits each of them.
   kit/cubins/ holds TensorFold's EXL3 kernels, compiled, with our additions; their code written before TensorFold
   0.6.0 keeps its MIT notice, kit/LICENSES/TensorFold-MIT.txt (TensorFold's LICENSES/MIT.txt, unmodified).
 
