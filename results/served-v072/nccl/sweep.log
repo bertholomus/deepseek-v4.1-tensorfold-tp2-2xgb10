@@ -1,0 +1,44 @@
+2026-10-24T02:41:34Z tp2_rows: sweep s4: sweep s4: rows 1 2 3 4 5 6 a launch on node0 127.0.0.1:18897; 5 launches, ~75 min
+2026-10-24T02:41:37Z tp2_rows: a: tp2_25.sh start on 18897 with TP2_25_HTTP=18897
+2026-10-24T02:42:02Z tp2_rows: a: row 1: kit_bench.py decode --tokens 512 --reps 3 --set a
+2026-10-24T02:42:58Z tp2_rows: a: row 2: kit_bench.py decode --tokens 384 --reps 3 --set b
+2026-10-24T02:43:36Z tp2_rows: a: row 3: kit_bench.py concurrent --streams 2,4 --tokens 256 --reps 9 --set b
+2026-10-24T02:45:33Z tp2_rows: a: row 4: kit_bench.py sustained --streams 4 --tokens 256 --seconds 90 --set b
+2026-10-24T02:47:10Z tp2_rows: a: row 5: kit_bench.py prefill --lengths 8192,32768,65536,131072 --reps 3 --fixed-words
+2026-10-24T02:51:51Z tp2_rows: a: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256 --seed 1023
+2026-10-24T02:54:39Z tp2_rows: a (engine ac6a372c68e8, window 2097152, streams 4, parallel 4, rows 16): rows 1 2 3 4 5 6: 6 of 6 ran; lowest MemAvailable node0/node1 12.6/13.7 GiB (floor 9)
+2026-10-24T02:54:39Z tp2_rows: b-nc2: tp2_25.sh start on 18897 with TP2_25_HTTP=18897 TP2_25_EXTRA_ENV=TF_DS_PROMPT_ALIAS=1 NCCL_MAX_NCHANNELS=2
+2026-10-24T02:55:04Z tp2_rows: b-nc2: row 1: kit_bench.py decode --tokens 512 --reps 3 --set a
+2026-10-24T02:56:00Z tp2_rows: b-nc2: row 2: kit_bench.py decode --tokens 384 --reps 3 --set b
+2026-10-24T02:56:38Z tp2_rows: b-nc2: row 3: kit_bench.py concurrent --streams 2,4 --tokens 256 --reps 9 --set b
+2026-10-24T02:58:35Z tp2_rows: b-nc2: row 4: kit_bench.py sustained --streams 4 --tokens 256 --seconds 90 --set b
+2026-10-24T03:00:11Z tp2_rows: b-nc2: row 5: kit_bench.py prefill --lengths 8192,32768,65536,131072 --reps 3 --fixed-words
+2026-10-24T03:05:06Z tp2_rows: b-nc2: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256 --seed 1023
+2026-10-24T03:08:01Z tp2_rows: b-nc2 (engine ac6a372c68e8, window 2097152, streams 4, parallel 4, rows 16): rows 1 2 3 4 5 6: 6 of 6 ran; lowest MemAvailable node0/node1 14.4/15.5 GiB (floor 9)
+2026-10-24T03:08:01Z tp2_rows: b-nc4: tp2_25.sh start on 18897 with TP2_25_HTTP=18897 TP2_25_EXTRA_ENV=TF_DS_PROMPT_ALIAS=1 NCCL_MAX_NCHANNELS=4
+2026-10-24T03:08:27Z tp2_rows: b-nc4: row 1: kit_bench.py decode --tokens 512 --reps 3 --set a
+2026-10-24T03:09:23Z tp2_rows: b-nc4: row 2: kit_bench.py decode --tokens 384 --reps 3 --set b
+2026-10-24T03:10:01Z tp2_rows: b-nc4: row 3: kit_bench.py concurrent --streams 2,4 --tokens 256 --reps 9 --set b
+2026-10-24T03:11:58Z tp2_rows: b-nc4: row 4: kit_bench.py sustained --streams 4 --tokens 256 --seconds 90 --set b
+2026-10-24T03:13:35Z tp2_rows: b-nc4: row 5: kit_bench.py prefill --lengths 8192,32768,65536,131072 --reps 3 --fixed-words
+2026-10-24T03:18:19Z tp2_rows: b-nc4: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256 --seed 1023
+2026-10-24T03:21:08Z tp2_rows: b-nc4 (engine ac6a372c68e8, window 2097152, streams 4, parallel 4, rows 16): rows 1 2 3 4 5 6: 6 of 6 ran; lowest MemAvailable node0/node1 14.4/15.5 GiB (floor 9)
+2026-10-24T03:21:08Z tp2_rows: b-nc8: tp2_25.sh start on 18897 with TP2_25_HTTP=18897 TP2_25_EXTRA_ENV=TF_DS_PROMPT_ALIAS=1 NCCL_MIN_NCHANNELS=8
+2026-10-24T03:21:33Z tp2_rows: b-nc8: row 1: kit_bench.py decode --tokens 512 --reps 3 --set a
+2026-10-24T03:22:29Z tp2_rows: b-nc8: row 2: kit_bench.py decode --tokens 384 --reps 3 --set b
+2026-10-24T03:23:07Z tp2_rows: b-nc8: row 3: kit_bench.py concurrent --streams 2,4 --tokens 256 --reps 9 --set b
+2026-10-24T03:25:04Z tp2_rows: b-nc8: row 4: kit_bench.py sustained --streams 4 --tokens 256 --seconds 90 --set b
+2026-10-24T03:26:41Z tp2_rows: b-nc8: row 5: kit_bench.py prefill --lengths 8192,32768,65536,131072 --reps 3 --fixed-words
+2026-10-24T03:31:22Z tp2_rows: b-nc8: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256 --seed 1023
+2026-10-24T03:34:10Z tp2_rows: b-nc8 (engine ac6a372c68e8, window 2097152, streams 4, parallel 4, rows 16): rows 1 2 3 4 5 6: 6 of 6 ran; lowest MemAvailable node0/node1 12.6/13.7 GiB (floor 9)
+2026-10-24T03:34:10Z tp2_rows: a2: tp2_25.sh start on 18897 with TP2_25_HTTP=18897
+2026-10-24T03:34:36Z tp2_rows: a2: row 1: kit_bench.py decode --tokens 512 --reps 3 --set a
+2026-10-24T03:35:32Z tp2_rows: a2: row 2: kit_bench.py decode --tokens 384 --reps 3 --set b
+2026-10-24T03:36:10Z tp2_rows: a2: row 3: kit_bench.py concurrent --streams 2,4 --tokens 256 --reps 9 --set b
+2026-10-24T03:38:07Z tp2_rows: a2: row 4: kit_bench.py sustained --streams 4 --tokens 256 --seconds 90 --set b
+2026-10-24T03:39:44Z tp2_rows: a2: row 5: kit_bench.py prefill --lengths 8192,32768,65536,131072 --reps 3 --fixed-words
+2026-10-24T03:44:25Z tp2_rows: a2: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256 --seed 1023
+2026-10-24T03:47:13Z tp2_rows: a2 (engine ac6a372c68e8, window 2097152, streams 4, parallel 4, rows 16): rows 1 2 3 4 5 6: 6 of 6 ran; lowest MemAvailable node0/node1 12.6/13.7 GiB (floor 9)
+2026-10-24T03:47:14Z tp2_rows: sweep s4: done in 65 min (result.txt)
+2026-10-24T03:47:14Z tp2_rows: restoring the served lane on 18896 (serve.env + pool.env)
+2026-10-24T03:47:38Z tp2_rows: the served lane is back on 18896

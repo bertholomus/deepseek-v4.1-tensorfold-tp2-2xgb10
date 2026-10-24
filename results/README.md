@@ -1,10 +1,26 @@
 # Results
 
-Our own measurements of our own engine on two GB10 nodes, as the README's v0.7.1 and v0.7.0 sections report them.
-Private host names, addresses, devices and paths are not in these files: the nodes are named by rank (`node0` runs
-rank 0, `node1` rank 1), the link's addresses and devices are placeholders (`NODE0_LINK_IP`, `RDMA_DEV0`, ...), and a
-file the runs name is named without its folder. Nothing else was changed. Releases before v0.7.0 reported their
+Our own measurements of our own engine on two GB10 nodes, as the README's v0.7.2, v0.7.1 and v0.7.0 sections report
+them. Private host names, addresses, devices and paths are not in these files: the nodes are named by rank (`node0`
+runs rank 0, `node1` rank 1), the link's addresses and devices are placeholders (`NODE0_LINK_IP`, `RDMA_DEV0`, ...),
+and a file the runs name is named without its folder. Nothing else was changed. Releases before v0.7.0 reported their
 numbers in the README only.
+
+## `served-v072/`: v0.7.2, the served build `6579b75` on the 2.5 bpw weights (2026-10-23)
+
+The engine is the source of `ENGINE_COMMIT`'s parent (the same tree but for the fork's three documents); the settings
+are `config.env.example`'s. The weights and the run-time inputs are v0.7.0's (`served-v070/weights.sha256`,
+`inputs.txt` and `kl-report.md`). The files are laid out as `served-v071/`'s below, with these folders:
+
+| File | What |
+|---|---|
+| `gate/` | the gate run before the promotion, as v0.7.1's: launch A, launch B and the served port's checks (47 checks in all, `gate/result.txt`). Where a B check compares replies "as served" or with "the served build's", the served port ran v0.7.1 |
+| `rows/` | the speed rows on the served port, as v0.7.1's; `rows-6.json` keeps each prompt's seed (1023 to 1025) and its text |
+| `long/`, `long-cold/` | four long prompts at once on the served port, and each one alone from a cold start, as v0.7.1's (our labels `l3` and `l3c`) |
+| `prefill-93335.*`, `behind-93335.*` | the served port's 93,335-token prefill (three reps) and the short chat sent 1 s behind it, after the promotion |
+| `memtrace/gate-steps/` | the gate's 1M row (3 needles in a 1,039,836-token prompt) at the served window after the gate's own steps before it (the resume probe, the keepalive, the kept and fill checks, the 93,335-token bench), with each node's memory read once a second, as v0.7.1's `memtrace/gate-steps/`: `v072` is v0.7.2 as served, `v071` v0.7.1's build `ac6a372` as it served, one launch after the other; `*-rank0.txt` and `*-rank1.txt` hold the samples (MiB), `*-phases.txt` when each step began, `*-1m.json` the three asks, `summary.txt` each launch's lowest free memory and what moved (`p_RssAnon` is rank 0's server) |
+| `copies/` | replies that copy their prompt, the case the copy windows serve: the code of `tools/kit_bench.py`'s `Client` class, repeated as it is (`repeat`) and with one method renamed (`rename`), greedy, three reps a prompt, on v0.7.1's build `ac6a372` with `TF_DS_NO_COPIES=1` (`a`, and `a2` after `b`) and as v0.7.1 served it, copy windows on (`b`); `result.txt` compares them |
+| `nccl/` | the speed rows on v0.7.1 as served (`a`, and `a2` after the others) and with NCCL's channel count set (`b-nc2`: `NCCL_MAX_NCHANNELS=2`, `b-nc4`: `NCCL_MAX_NCHANNELS=4`, `b-nc8`: `NCCL_MIN_NCHANNELS=8`); `result.txt` compares each line with `a` |
 
 ## `served-v071/`: v0.7.1, the served build `ac6a372` on the 2.5 bpw weights (2026-10-23)
 

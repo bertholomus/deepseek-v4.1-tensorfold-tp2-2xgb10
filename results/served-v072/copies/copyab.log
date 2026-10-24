@@ -1,0 +1,9 @@
+2026-10-24T03:47:41Z copyab c1: start: served lane up 1 on 18896; pin ac6a372c68e8-tp2-1017, window 2097152; base 18897
+2026-10-24T03:48:47Z copyab c1: a (engine ac6a372c68e8, extra env 'TF_DS_PROMPT_ALIAS=1 TF_DS_NO_COPIES=1'): {"prompt": "repeat", "decode_tps_median": 135.269625153162, "decode_tps_all": [135.656, 134.702, 135.27], "tokens_all": [733, 733, 733], "identical_texts": true} {"prompt": "rename", "decode_tps_median": 132.48114890939664, "decode_tps_all": [132.515, 132.481, 132.338], "tokens_all": [735, 735, 735], "identical_texts": true} 
+2026-10-24T03:49:51Z copyab c1: b (engine ac6a372c68e8, extra env 'TF_DS_PROMPT_ALIAS=1'): {"prompt": "repeat", "decode_tps_median": 140.71612217740616, "decode_tps_all": [139.557, 140.716, 140.801], "tokens_all": [733, 733, 733], "identical_texts": true} {"prompt": "rename", "decode_tps_median": 138.46387511250776, "decode_tps_all": [138.464, 138.856, 137.117], "tokens_all": [735, 735, 735], "identical_texts": true} 
+2026-10-24T03:50:58Z copyab c1: a2 (engine ac6a372c68e8, extra env 'TF_DS_PROMPT_ALIAS=1 TF_DS_NO_COPIES=1'): {"prompt": "repeat", "decode_tps_median": 135.14838151246104, "decode_tps_all": [134.61, 135.148, 135.315], "tokens_all": [733, 733, 733], "identical_texts": true} {"prompt": "rename", "decode_tps_median": 131.87815003514558, "decode_tps_all": [132.846, 131.42, 131.878], "tokens_all": [735, 735, 735], "identical_texts": true} 
+repeat (728 source tokens, [733, 733, 733] reply tokens): v0.7.2 (a, a2) 135.3 / 135.1 tok/s vs copy windows on (b) 140.7: -3.9 % (a2 vs a -0.1 %); texts a == b == a2: True
+rename (728 source tokens, [735, 735, 735] reply tokens): v0.7.2 (a, a2) 132.5 / 131.9 tok/s vs copy windows on (b) 138.5: -4.5 % (a2 vs a -0.5 %); texts a == b == a2: True
+copyab: LOWER: v0.7.2 against copy windows on, worst -4.5 %; texts the same: True
+2026-10-24T03:51:00Z copyab c1: done (result.txt)
+2026-10-24T03:51:24Z copyab c1: the served lane is back on 18896

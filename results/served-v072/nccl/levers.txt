@@ -1,0 +1,10 @@
+# sweep s4 (DS lanes 1016, 2026-10-23; devchain dsv41 d165): NCCL's channel count. The prompt passes' gathers go over
+# NCCL (comm.zig allGather); the decode gathers ride the RDMA ring (TF_RDMA_DEVICES, GATHER=rdma). A is serve.env as
+# served (v0.7.1: build 14 ac6a372c68e8, TF_DS_PROMPT_ALIAS=1, + pool.env); a lever counts when LEVEL-OR-BETTER with
+# its samples == A's (README "Speed for the publish"). The four-node lane's v0.3.5 serves NCCL_MAX_NCHANNELS=4 (there:
+# 8K +7.6 %, 32K +4.6 %, 128K -1 %, decode level). From client, in tp2-25/:
+#   mkdir -p bench/sweeps &&
+#   setsid nohup ./tp2_25.sh sweep s4 drafts/levers-s4.txt < /dev/null >> bench/sweeps/s4.out 2>&1 &
+nc2    env=NCCL_MAX_NCHANNELS=2                                # fewer channels
+nc4    env=NCCL_MAX_NCHANNELS=4                                # the four-node lane's v0.3.5 setting
+nc8    env=NCCL_MIN_NCHANNELS=8                                # more channels

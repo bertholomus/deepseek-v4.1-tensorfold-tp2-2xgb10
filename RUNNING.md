@@ -2,18 +2,18 @@
 
 What follows is how we run the served build. `scripts/serve.sh` is our served launch with the site values moved to
 `config.env`: the four-node recipe's script (v0.3.3) for two nodes, whose preflight also checks each node's RoCE
-address (section 2). v0.7.1 changes the engine and adds one variable to the launch (README, v0.7.1); v0.7.0 changed
-the engine, the weights, the kernel kit and the launch.
+address (section 2). v0.7.2 changes the engine (README, v0.7.2); v0.7.1 changed the engine and added one variable to
+the launch, and v0.7.0 the engine, the weights, the kernel kit and the launch.
 
 ## 1. The engine
 
-Clone our TensorFold fork at the commit in `ENGINE_COMMIT` (branch `deepseek-v41-zig-tp2`). Its parent, `23625c2`,
-holds the served build's source (the tree of `ac6a372`, which our lane runs, but for the fork's README.md, NOTICE and
+Clone our TensorFold fork at the commit in `ENGINE_COMMIT` (branch `deepseek-v41-zig-tp2`). Its parent, `16c8d30`,
+holds the served build's source (the tree of `6579b75`, which our lane runs, but for the fork's README.md, NOTICE and
 ATTRIBUTION.md, which no build step reads), and `ENGINE_COMMIT` brings those documents up to date. The branch is the
 four-node branch `deepseek-v41-zig-tp4` at its v0.3.1 with the two-node recipe's changes on top, merged with that
-branch's v0.3.2 (README, v0.7.1). It is not the engine of v0.6.1 (branch `deepseek-v41-zig`): run the same build on
-both nodes. Build the native engine for the GB10's aarch64 + sm_121 with Zig 0.17.0 and the CUDA toolchain of
-`nvcr.io/nvidia/pytorch:26.07-py3`:
+branch's v0.3.2 (README, v0.7.1), and two changes of ours in the tokenizer (README, v0.7.2). It is not the engine of
+v0.6.1 (branch `deepseek-v41-zig`): run the same build on both nodes. Build the native engine for the GB10's aarch64 +
+sm_121 with Zig 0.17.0 and the CUDA toolchain of `nvcr.io/nvidia/pytorch:26.07-py3`:
 
 ```sh
 zig build install native -Dtarget=aarch64-linux-gnu.2.28 -Doptimize=ReleaseFast -Dnvcc=/usr/local/cuda/bin/nvcc -Dsm=121
@@ -128,9 +128,9 @@ them.
 `TF_DS_NO_COPIES` unset to serve as we do; the README says what each does when set. `TF_DS_NEIGHBOR_RDMA` is for a
 physical four-node ring.
 
-The served window, 2,097,152 positions (`WINDOW`), holds one 1,048,576-token request with room for the other
-streams. It left 9.1 GiB free on rank 0's node and 13.4 GiB on rank 1's at the lowest on ours, during a 1M-token
-prompt; each 1,048,576 positions less frees 0.87 GiB a node.
+The served window, 2,097,152 positions (`WINDOW`), holds one 1,048,576-token request with room for the other streams.
+It left 11.3 GiB free on rank 0's node and 13.4 GiB on rank 1's at the lowest on ours, during a 1M-token prompt; each
+1,048,576 positions less frees 0.87 GiB a node.
 
 ## 4. Check
 
@@ -143,8 +143,9 @@ haystack; with `--shared` the follow-up questions resume from the kept prompt), 
 four-node lane, whose `lane-ref.json` and `lane-probe.json` were recorded on other weights and do not apply here). One
 client is ours and new: `long_cold.py` runs `long_check.py`'s cases again, each one alone from a cold start (its own
 `cache_salt`, so no kept prompt is reused), against a `long_check.py` run's replies to the same prompts sent together
-(`--burst` that run's `--out` file). `results/served-v071/` and `served-v070/` were made with `kit_bench.py`,
-`gates.py`, `needle.py`, `long_check.py` and `long_cold.py`. The exact-chat check (71 cases with DeepSeek's reference
-renderings), the 16-reply check, the image checks (solo and four at a time) and the checks of structured output,
-forced tool calls, the prompt shield, kept states, the fill and the memory are our lane tools and are not in this
-release; their reports are in `results/served-v071/` and `served-v070/`.
+(`--burst` that run's `--out` file). `results/served-v072/`, `served-v071/` and `served-v070/` were made with
+`kit_bench.py`, `gates.py`, `needle.py`, `long_check.py` and `long_cold.py`. The exact-chat check (71 cases with
+DeepSeek's reference renderings), the 16-reply check, the image checks (solo and four at a time) and the checks of
+structured output, forced tool calls, the prompt shield, kept states, the fill, the memory and the copied replies are
+our lane tools and are not in this release; their reports are in `results/served-v072/`, `served-v071/` and
+`served-v070/`.

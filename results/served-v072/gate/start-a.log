@@ -1,0 +1,9 @@
+2026-10-24T03:53:03Z start: 6579b756dcd7 DeepSeek-V4.1-Flash-1017-EXL3-2.5bpw--1bae0e10 on 18897: context 1048576, window 2097152, streams 4, parallel 4, rows 16, gather rdma, serve env TF_DS_IDX_SPLIT=1 TENSORFOLD_PLAIN_SPECIALS=1 TENSORFOLD_GRAMMAR_LIB=/kit/grammar/libtfgrammar.so TENSORFOLD_SSE_KEEPALIVE=15 TENSORFOLD_STATS_EVERY=60, serve args --prompt-cache-gib 2, extra TF_DS_PROMPT_ALIAS=1
+2026-10-24T03:53:21Z up on node0 127.0.0.1:18897; model 93.23 GiB; 4 streams at once, 0.00 GiB each at a 1048576-token window, of 0.3 GiB left after a 12.4 GiB reserve
+2026-10-24T03:53:22Z memfit: MemAvailable after the load: node0 12.73 GiB, node1 14.62 GiB; less the 2 GiB prompt cache, the floor 9 GiB: fits (window 2097152: 1.74 GiB a rank in the load)
+2026-10-24T03:53:22Z start: up and answering
+node0 MemAvailable 12.7 GiB, swap used 0.1 GiB
+node0 tp2-25-lane 5.713GiB / 123.8GiB
+node0 model 93.23 GiB; 4 streams at once, 0.00 GiB each at a 1048576-token window, of 0.3 GiB left after a 12.4 GiB reserve
+node1 MemAvailable 14.5 GiB, swap used 0.1 GiB
+node1 tp2-25-lane 5.385GiB / 123.8GiB

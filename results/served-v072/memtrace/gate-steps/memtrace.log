@@ -1,0 +1,13 @@
+2026-10-24T04:56:32Z memtrace m5: start: served lane up 1 on 18896; cases v072@6579b756dcd7@TF_DS_PROMPT_ALIAS=1 v071; window 2097152; base 18897
+2026-10-24T04:56:34Z memtrace m5: case v072: pin 6579b756dcd7-tp2-1017, EXTRA_ENV 'TF_DS_PROMPT_ALIAS=1'
+2026-10-24T04:56:58Z memtrace m5: v072: up in 24 s: memfit: MemAvailable after the load: node0 13.52 GiB, node1 14.65 GiB; less the 2 GiB prompt cache, the floor 9 GiB: fits (window 2097152: 1.74 GiB a rank in the load)
+2026-10-24T05:02:10Z memtrace m5: v072: the gate's steps before the 1M row: resume 0, keep 0, kept 0, fill 0, bench 0 (exit codes)
+2026-10-24T05:10:48Z memtrace m5: v072: the 1M row in 518 s: rc 0
+2026-10-24T05:11:18Z memtrace m5: v072: v072 | node0: before 12994 MiB, lowest 12169 MiB (11.88 GiB) at +509 s, 150-450 s 12668 MiB; at the lowest vs before: MemFree -829 Cached +0 AnonPages +216 Shmem +0 cg_anon +155 cg_kernel +1 cg_file +0 p_RssAnon +156 py +68 | node1: before 14122 
+2026-10-24T05:11:18Z memtrace m5: case v071: pin ac6a372c68e8-tp2-1017, EXTRA_ENV 'TF_DS_PROMPT_ALIAS=1'
+2026-10-24T05:12:06Z memtrace m5: v071: up in 48 s: memfit: MemAvailable after the load: node0 13.56 GiB, node1 14.67 GiB; less the 2 GiB prompt cache, the floor 9 GiB: fits (window 2097152: 1.74 GiB a rank in the load)
+2026-10-24T05:17:17Z memtrace m5: v071: the gate's steps before the 1M row: resume 0, keep 0, kept 0, fill 0, bench 0 (exit codes)
+2026-10-24T05:25:56Z memtrace m5: v071: the 1M row in 519 s: rc 0
+2026-10-24T05:26:24Z memtrace m5: v071: v071 | node0: before 12790 MiB, lowest 9858 MiB (9.63 GiB) at +5 s, 150-450 s 11249 MiB; at the lowest vs before: MemFree -2932 Cached +0 AnonPages +864 Shmem +0 cg_anon +809 cg_kernel +0 cg_file +0 p_RssAnon +811 py +74 | node1: before 14144 MiB
+2026-10-24T05:26:24Z memtrace m5: done: summary.txt
+2026-10-24T05:27:17Z memtrace m5: the served lane is back on 18896

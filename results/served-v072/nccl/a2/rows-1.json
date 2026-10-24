@@ -1,0 +1,83 @@
+{
+ "cmd": "decode",
+ "base": "http://127.0.0.1:18897",
+ "model": "DeepSeek-V4.1-Flash-1017-TP2",
+ "unix": 1792812932.5022912,
+ "result": [
+  {
+   "set": "a",
+   "prompt": "code",
+   "max_tokens": 512,
+   "reps": 3,
+   "decode_tps_median": 105.93582902334273,
+   "decode_tps_all": [
+    105.936,
+    106.063,
+    104.965
+   ],
+   "tokens_all": [
+    512,
+    512,
+    512
+   ],
+   "chunks_all": [
+    130,
+    130,
+    130
+   ],
+   "ttft_s_median": 0.14506754407193512,
+   "identical_texts": true,
+   "sample": "# Thread-Safe LRU Cache with Per-Entry TTL\n\nBelow is a complete implementation of a thread-safe LRU cache with per-entry TTL expiry, followed by a comprehensive unittest suite.\n\n## Implementation\n\n```python\n\"\"\"\nThread-safe LRU cache with per-entry TTL expiry.\n\nThis module provides :class:`TTLLRUCache`, a fixed-capacity cache that evicts\nthe least-recently-used entry when full and expires entries i"
+  },
+  {
+   "set": "a",
+   "prompt": "prose",
+   "max_tokens": 512,
+   "reps": 3,
+   "decode_tps_median": 60.5169302464564,
+   "decode_tps_all": [
+    60.517,
+    60.422,
+    60.604
+   ],
+   "tokens_all": [
+    512,
+    512,
+    512
+   ],
+   "chunks_all": [
+    306,
+    306,
+    306
+   ],
+   "ttft_s_median": 0.14877538906875998,
+   "identical_texts": true,
+   "sample": "# The Lantern and the Lonely: A History of Lighthouses and Their Keepers\n\nStand on any rock-bound coast at dusk and watch a light come on: a single white point that begins as a smudge against the darkening sea and then, with each sweep, cuts a clean blade of brightness across the water. It is easy to forget that for most of human history that light was not electric, not automated, not reliable\u2014and"
+  },
+  {
+   "set": "a",
+   "prompt": "structured",
+   "max_tokens": 512,
+   "reps": 3,
+   "decode_tps_median": 118.81618770509581,
+   "decode_tps_all": [
+    118.309,
+    118.821,
+    118.816
+   ],
+   "tokens_all": [
+    512,
+    512,
+    512
+   ],
+   "chunks_all": [
+    109,
+    110,
+    110
+   ],
+   "ttft_s_median": 0.22727245499845594,
+   "identical_texts": true,
+   "sample": "[\n  {\n    \"id\": 1,\n    \"name\": \"Aria Chen\",\n    \"department\": \"Engineering\",\n    \"title\": \"VP of Engineering\",\n    \"salary\": 210000,\n    \"start_date\": \"2018-03-12\",\n    \"manager_id\": null,\n    \"skills\": [\"System Architecture\", \"Team Leadership\", \"Cloud Infrastructure\"]\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Marcus Delgado\",\n    \"department\": \"Engineering\",\n    \"title\": \"Senior Backend Engineer\",\n    \""
+  }
+ ]
+}

@@ -1,0 +1,4 @@
+{"length": 1040000, "prompt_tokens": 1039836, "cached_tokens": 0, "depth": 0.1, "label": "A", "phrase": "juniper-falcon-7468", "found": true, "reply": "juniper-falcon-7468", "seconds": 502.8, "shared": true}
+{"length": 1040000, "prompt_tokens": 1039836, "cached_tokens": 1038336, "depth": 0.5, "label": "B", "phrase": "orchid-amber-2186", "found": true, "reply": "orchid-amber-2186", "seconds": 2.8, "shared": true}
+{"length": 1040000, "prompt_tokens": 1039836, "cached_tokens": 1038336, "depth": 0.9, "label": "C", "phrase": "raven-meadow-2542", "found": true, "reply": "raven-meadow-2542", "seconds": 2.9, "shared": true}
+{"summary": {"cases": 3, "found": 3}}

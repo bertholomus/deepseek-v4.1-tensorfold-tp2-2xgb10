@@ -1,0 +1,54 @@
+{
+ "rows": [
+  {
+   "prompt": "repeat",
+   "source_tokens": 728,
+   "max_tokens": 928,
+   "reps": 3,
+   "decode_tps_median": 135.14838151246104,
+   "decode_tps_all": [
+    134.61,
+    135.148,
+    135.315
+   ],
+   "tokens_all": [
+    733,
+    733,
+    733
+   ],
+   "ttft_s_all": [
+    0.603,
+    0.591,
+    0.6
+   ],
+   "identical_texts": true,
+   "text_sha256": "9ad7a975d3f7fdb8bd5cd9576d11cb62335f5484b3af78fdd134b0109e3e76f5",
+   "sample": "```python\nclass Client:\n    def __init__(self, base: str, model: str, key: str | None):\n        self.base, self.model, self.key = base.rstrip(\"/\"), model, key\n\n    def _req(self, path: str, body: dict | None = None, timeout: float = 3600):\n        headers = {\"Content-Type\": \"application/json\"}\n     "
+  },
+  {
+   "prompt": "rename",
+   "source_tokens": 728,
+   "max_tokens": 928,
+   "reps": 3,
+   "decode_tps_median": 131.87815003514558,
+   "decode_tps_all": [
+    132.846,
+    131.42,
+    131.878
+   ],
+   "tokens_all": [
+    735,
+    735,
+    735
+   ],
+   "ttft_s_all": [
+    0.619,
+    0.622,
+    0.619
+   ],
+   "identical_texts": true,
+   "text_sha256": "91ec2486c5ae20c6d71e86d573e4ab657edb79a673130c934e2fd1432da30c64",
+   "sample": "```python\nclass Client:\n    def __init__(self, base: str, model: str, key: str | None):\n        self.base, self.model, self.key = base.rstrip(\"/\"), model, key\n\n    def _req(self, path: str, body: dict | None = None, timeout: float = 3600):\n        headers = {\"Content-Type\": \"application/json\"}\n     "
+  }
+ ]
+}

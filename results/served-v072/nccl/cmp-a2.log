@@ -1,0 +1,16 @@
+{"row": "set a code", "a": 106.5, "b": 105.9, "change_pct": -0.5}
+{"row": "set a prose", "a": 60.5, "b": 60.5, "change_pct": 0.1}
+{"row": "set a structured", "a": 119.1, "b": 118.8, "change_pct": -0.2}
+{"row": "set b code", "a": 112.8, "b": 112.5, "change_pct": -0.3}
+{"row": "set b prose", "a": 67.7, "b": 67.7, "change_pct": -0.0}
+{"row": "set b structured", "a": 160.0, "b": 160.7, "change_pct": 0.5}
+{"row": "2 streams", "a": 95.8, "b": 95.5, "change_pct": -0.3}
+{"row": "4 streams", "a": 135.0, "b": 134.7, "change_pct": -0.2}
+{"row": "4 sustained", "a": 152.6, "b": 152.4, "change_pct": -0.1}
+{"row": "prefill 8K", "a": 2445.5, "b": 2441.8, "change_pct": -0.1}
+{"row": "prefill 32K", "a": 2573.9, "b": 2574.6, "change_pct": 0.0}
+{"row": "prefill 64K", "a": 2564.9, "b": 2563.5, "change_pct": -0.1}
+{"row": "prefill 128K", "a": 2546.7, "b": 2548.5, "change_pct": 0.1}
+{"row": "decode after 128K", "a": 99.8, "b": 99.9, "change_pct": 0.1}
+samples: 6/6 greedy decode samples == A's
+LEVEL: 14 rows, none more than 1.5 % away

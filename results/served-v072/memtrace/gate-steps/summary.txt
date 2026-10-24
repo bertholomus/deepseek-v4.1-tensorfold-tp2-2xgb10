@@ -1,0 +1,20 @@
+v072 | node0: before 12994 MiB, lowest 12169 MiB (11.88 GiB) at +509 s, 150-450 s 12668 MiB; at the lowest vs before: MemFree -829 Cached +0 AnonPages +216 Shmem +0 cg_anon +155 cg_kernel +1 cg_file +0 p_RssAnon +156 py +68 | node1: before 14122 MiB, lowest 13972 MiB (13.64 GiB) at +514 s, 150-450 s 14098 MiB; at the lowest vs before: MemFree -151 Cached +1 AnonPages +32 Shmem +0 cg_anon +26 cg_kernel +0 cg_file +0 p_RssAnon +35 py +0 | 1M: 3/3 found, asks 503.6/2.3/2.3 s
+  v072: the 1M row seen by the gate's 15 s memwatch: node0 a 15 s sampler's lowest 12169-12325 MiB, node1 a 15 s sampler's lowest 13972-13986 MiB
+  v072: step launched (0 s): node0 median ?, lowest ? MiB; node1 median ?, lowest ? MiB
+  v072: step resume (11 s): node0 median 13615, lowest 13575 MiB; node1 median 14624, lowest 14552 MiB
+  v072: step keep (82 s): node0 median 13542, lowest 13484 MiB; node1 median 14507, lowest 14464 MiB
+  v072: step kept (38 s): node0 median 13198, lowest 13072 MiB; node1 median 14407, lowest 14369 MiB
+  v072: step fill (36 s): node0 median 13014, lowest 12936 MiB; node1 median 14382, lowest 14298 MiB
+  v072: step bench (119 s): node0 median 12961, lowest 12921 MiB; node1 median 14210, lowest 14123 MiB
+  v072: step idle (10 s): node0 median 12994, lowest 12973 MiB; node1 median 14122, lowest 14116 MiB
+  v072: the whole trace's lowest: node0 12169 MiB, node1 13957 MiB
+v071 | node0: before 12790 MiB, lowest 9858 MiB (9.63 GiB) at +5 s, 150-450 s 11249 MiB; at the lowest vs before: MemFree -2932 Cached +0 AnonPages +864 Shmem +0 cg_anon +809 cg_kernel +0 cg_file +0 p_RssAnon +811 py +74 | node1: before 14144 MiB, lowest 14021 MiB (13.69 GiB) at +282 s, 150-450 s 14091 MiB; at the lowest vs before: MemFree -124 Cached +1 AnonPages +15 Shmem +1 cg_anon +7 cg_kernel +0 cg_file +0 p_RssAnon +8 py +0 | 1M: 3/3 found, asks 502.8/2.8/2.9 s
+  v071: the 1M row seen by the gate's 15 s memwatch: node0 a 15 s sampler's lowest 9858-11166 MiB, node1 a 15 s sampler's lowest 14021-14038 MiB
+  v071: step launched (0 s): node0 median ?, lowest ? MiB; node1 median ?, lowest ? MiB
+  v071: step resume (10 s): node0 median 13599, lowest 13567 MiB; node1 median 14650, lowest 14590 MiB
+  v071: step keep (82 s): node0 median 13182, lowest 13036 MiB; node1 median 14470, lowest 14420 MiB
+  v071: step kept (38 s): node0 median 13035, lowest 13008 MiB; node1 median 14420, lowest 14387 MiB
+  v071: step fill (37 s): node0 median 12946, lowest 12924 MiB; node1 median 14329, lowest 14243 MiB
+  v071: step bench (118 s): node0 median 12767, lowest 12681 MiB; node1 median 14212, lowest 14150 MiB
+  v071: step idle (10 s): node0 median 12790, lowest 12687 MiB; node1 median 14144, lowest 14137 MiB
+  v071: the whole trace's lowest: node0 9858 MiB, node1 14021 MiB

@@ -1,0 +1,19 @@
+{"streams": 2, "rep": 0, "aggregate_tps": 95.03618333570392, "per_stream_decode_tps": [75.153, 48.734]}
+{"streams": 2, "rep": 1, "aggregate_tps": 96.02174414141749, "per_stream_decode_tps": [72.798, 50.418]}
+{"streams": 2, "rep": 2, "aggregate_tps": 95.03003720603787, "per_stream_decode_tps": [72.147, 50.004]}
+{"streams": 2, "rep": 3, "aggregate_tps": 95.66372635993669, "per_stream_decode_tps": [75.055, 48.71]}
+{"streams": 2, "rep": 4, "aggregate_tps": 95.9128362232285, "per_stream_decode_tps": [72.758, 50.365]}
+{"streams": 2, "rep": 5, "aggregate_tps": 95.90307443670513, "per_stream_decode_tps": [75.163, 48.778]}
+{"streams": 2, "rep": 6, "aggregate_tps": 96.00319282688739, "per_stream_decode_tps": [75.198, 48.835]}
+{"streams": 2, "rep": 7, "aggregate_tps": 95.13951155557015, "per_stream_decode_tps": [71.953, 49.92]}
+{"streams": 2, "rep": 8, "aggregate_tps": 95.77630069977032, "per_stream_decode_tps": [72.453, 50.282]}
+{"streams": 4, "rep": 0, "aggregate_tps": 134.6884590696503, "per_stream_decode_tps": [47.848, 36.177, 73.334, 48.346]}
+{"streams": 4, "rep": 1, "aggregate_tps": 135.24677753283603, "per_stream_decode_tps": [45.803, 35.744, 80.896, 50.331]}
+{"streams": 4, "rep": 2, "aggregate_tps": 135.11108863906574, "per_stream_decode_tps": [49.355, 34.915, 76.751, 48.731]}
+{"streams": 4, "rep": 3, "aggregate_tps": 134.6158741031058, "per_stream_decode_tps": [45.683, 34.816, 80.488, 51.381]}
+{"streams": 4, "rep": 4, "aggregate_tps": 135.28953567442775, "per_stream_decode_tps": [49.236, 34.964, 76.78, 48.704]}
+{"streams": 4, "rep": 5, "aggregate_tps": 135.19707231150593, "per_stream_decode_tps": [45.883, 36.274, 78.091, 50.359]}
+{"streams": 4, "rep": 6, "aggregate_tps": 134.81102648525882, "per_stream_decode_tps": [46.667, 36.154, 70.858, 51.322]}
+{"streams": 4, "rep": 7, "aggregate_tps": 134.95988460695077, "per_stream_decode_tps": [48.113, 36.301, 73.75, 48.516]}
+{"streams": 4, "rep": 8, "aggregate_tps": 135.70210528610158, "per_stream_decode_tps": [47.34, 35.867, 80.957, 48.865]}
+

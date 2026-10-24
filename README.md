@@ -24,6 +24,69 @@ DeepSeek-V4.1 recipes or kits was read or copied.
 and the launch (`scripts/serve.sh`, `config.env.example`). Our measurements: [`results/`](results/README.md). The
 four-node recipe: [bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10).
 
+## v0.7.2 (2026-10-23): less memory for a long prompt, and each long message tokenized once
+
+- **Engine:** two commits of ours in the server's tokenizer, on v0.7.1's engine; the ids are the same. The server
+  tokenizes a chat request more than once: the prompt, the prompt without its generation suffix (where a kept state of
+  it ends) and, with the prompt cache on, the chat with its latest user message replaced by a probe. A long text's
+  encode now gives its scratch back as soon as its ids exist; it had kept about 0.8 GiB of a 1M-token prompt's scratch
+  for each encode until the request's connection closed. And the memo, which keeps the ids of the long texts the
+  server has tokenized, now keeps each message's text between DeepSeek-V4's chat markers. These markers are added
+  tokens matched after normalization, and the memo had keyed the whole text after the first special token instead,
+  which changes with every render and every turn, so on a chat it never matched. Now a request's later renders and a
+  chat's next turn take each long message's ids from the memo. The engine's tokenizer tests add one for this case.
+- `TF_DS_SOLO_OVERHEAD=1` and `TF_DS_NO_COPIES=1`, from [@Blackwellboy](https://github.com/Blackwellboy)'s
+  [#33](https://github.com/bertholomus/TensorFold/pull/33) and
+  [#34](https://github.com/bertholomus/TensorFold/pull/34) (in the engine, off unless set, since v0.7.0), stay unset:
+  the first prices a lone stream's head windows at the fixed draft allowance, the second drops a drafted stream's
+  suffix-lookup copy windows, so the draft head proposes alone.
+- NCCL's channel count, set, did not beat NCCL's own choice on our pair (at most 2 channels: lower in a row, -1.2 % on
+  average; at most 4: level or better, -0.2 % on average; at least 8: level or better, +0.0 % on average;
+  `results/served-v072/nccl/`), so we leave it unset.
+- **The same weights, kit and launch** as v0.7.1: the window is 2,097,152 positions.
+- **The same replies:** the bench's six greedy replies and the three texts written after 131,072-token prompts (seeds
+  1023 to 1025) are v0.7.1's, byte for byte.
+
+Gates, all passed on the served build (47 checks, `results/served-v072/gate/result.txt`), the same checks as v0.7.1's
+with the same counts: exact chat 71/71 against DeepSeek's reference encoding; the six API gates; 16 replies as a burst
+and staggered == solo; images 6/6, 9/9, and four at a time 18/18 == solo; forced tool calls 10/10 and automatic ones
+6/6, each forced row a call of an offered tool within its schema; structured output 11/11, and bursts and staggered
+runs of 12 == solo; the prompt shield 14/14; the keepalive; kept states, the fill and the resume probe, each with
+v0.7.1's replies; and 1M: 3/3 needles found in a 1,039,836-token prompt, the second and third asks resuming 1,038,336
+tokens of it from the kept state in 2.3 and 2.3 s (v0.7.1: 2.9 and 2.9 s). A second launch at the same settings gave
+the same replies on every check. The lowest free memory during the 1M prompt: 11.3 GiB on rank 0's node, 13.4 GiB on
+rank 1's in the gate's samples, one every 15 s (v0.7.1's gate: 9.1 and 13.4 GiB). Read once a second after the gate's
+own steps before its 1M prompt (`results/served-v072/memtrace/gate-steps/`): 11.9 and 13.6 GiB, and v0.7.1, run after
+it, 9.6 and 13.7 GiB; at that point rank 0's server held 156 MiB more than before the prompt, and v0.7.1's 811 MiB.
+Start to ready: 19 s (19 and 19 s for the gate's launches; v0.7.1: 19 s on the same count).
+
+Four long prompts at once, on the served port after the promotion (`tools/long_check.py` and `tools/long_cold.py`,
+`results/served-v072/long/` and `long-cold/`): four prompts of 159,925 tokens, each with a needle, sent together gave
+the same replies as each one sent alone from a cold start (5 of 5, a seeded-sampled reply among them) and as each one
+resumed from its kept state; drafting off gave the same reply as drafting on, and every needle was found. The lowest
+free memory meanwhile: 12.6 GiB on rank 0's node, 13.8 GiB on rank 1's (v0.7.1: 12.6 and 13.7 GiB).
+
+Measured on two GB10 nodes (TP2), the served build at the served settings, our own client (`tools/kit_bench.py`),
+greedy, DSpark drafting, median of 3 unless noted (`results/served-v072/rows/`). The v0.7.1 column is v0.7.1's own
+table below, on the same prompts:
+
+| `--context 1048576 --parallel 4` | v0.7.1 tok/s | v0.7.2 tok/s |
+|---|---|---|
+| Decode, set a: code / prose / structured (512 tokens) | 106.3 / 60.8 / 119.2 | 105.7 / 60.3 / 119.6 |
+| Decode, set b: code / prose / structured (384 tokens) | 113.2 / 68.1 / 160.7 | 112.6 / 67.7 / 160.6 |
+| 2 streams, set b, aggregate (median of 9) | 96.0 | 95.6 |
+| 4 streams, set b, aggregate (median of 9) | 135.2 | 134.6 |
+| 4 streams sustained 90 s, set b, aggregate | 152.8 | 152.5 |
+| Prompt 8K / 32K / 64K / 128K | 2,451 / 2,574 / 2,564 / 2,547 | 2,452 / 2,567 / 2,560 / 2,543 |
+| Decode after a 128K prompt (median of 3 prompts, seeds 1023-1025) | 100.4 | 100.0 |
+| Prompt 93,335 tokens | 2,355 | 2,361 |
+
+The prompt rows repeat each length's words behind a fresh prefix (`--fixed-words`), so the second and third reps read
+Engram rows the first one warmed; the first reps alone gave 2,449 / 2,567 / 2,565 / 2,543 tok/s (v0.7.1: 2,442 / 2,566
+/ 2,566 / 2,546). The three prompts after 128K decoded at 54.0 / 115.0 / 100.0 tok/s (v0.7.1: 54.2 / 115.0 / 100.4),
+each with v0.7.1's text. The 93,335-token prompt is the served port's own bench after the promotion
+(`results/served-v072/prefill-93335.json`).
+
 ## v0.7.1 (2026-10-23): faster long prompts on the four-node line's v0.3.2, with less scratch memory
 
 - **Engine:** `deepseek-v41-zig-tp2` merges the four-node branch `deepseek-v41-zig-tp4` at its v0.3.2: prompt passes

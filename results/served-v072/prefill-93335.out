@@ -1,0 +1,4 @@
+rep 0: 93335 tok, ttft 39.53 s, 2361.4 tok/s
+rep 1: 93335 tok, ttft 39.52 s, 2361.5 tok/s
+rep 2: 93335 tok, ttft 40.00 s, 2333.5 tok/s
+{"mode": "prefill", "reps": 3, "url": "http://127.0.0.1:18896", "body": "prompt-93335.txt", "median_prefill_tok_s": 2361.4140025695424, "median_ttft_s": 39.525047237984836}

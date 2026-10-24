@@ -1,0 +1,127 @@
+{
+ "base": "http://127.0.0.1:18897",
+ "model": "DeepSeek-V4.1-Flash-1017-TP2",
+ "unix": 1792814006.2137074,
+ "gates": {
+  "models": {
+   "ok": true,
+   "ids": [
+    "DeepSeek-V4.1-Flash-1017-TP2"
+   ],
+   "seconds": 0.0
+  },
+  "chat_probe": {
+   "ok": true,
+   "reply": "323",
+   "seconds": 0.1
+  },
+  "reasoning_stream": {
+   "ok": true,
+   "reasoning_chars": 245,
+   "content": "No.",
+   "finish": "stop",
+   "seconds": 1.1
+  },
+  "tool_call": {
+   "finish": "tool_calls",
+   "calls": [
+    {
+     "id": "call_6b320941befc1f47cc859b7d",
+     "type": "function",
+     "function": {
+      "name": "get_weather",
+      "arguments": "{\"city\":\"Paris\",\"unit\":\"c\"}"
+     }
+    }
+   ],
+   "content": "",
+   "stream": {
+    "finish": "tool_calls",
+    "calls": [
+     {
+      "name": "get_weather",
+      "arguments": "{\"city\":\"Paris\",\"unit\":\"c\"}",
+      "id": "call_0b8b8366bc69091114bd4bd0"
+     }
+    ],
+    "content_leak": false
+   },
+   "continuation": {
+    "finish": "stop",
+    "content": "It's currently **18°C** in Paris with **light rain**.",
+    "uses_result": true
+   },
+   "ok": true,
+   "seconds": 2.3
+  },
+  "drafted_equals_serial": {
+   "t0": {
+    "equal": 8,
+    "of": 8,
+    "rows": [
+     {
+      "prompt": 0,
+      "equal": true
+     },
+     {
+      "prompt": 1,
+      "equal": true
+     },
+     {
+      "prompt": 2,
+      "equal": true
+     },
+     {
+      "prompt": 3,
+      "equal": true
+     },
+     {
+      "prompt": 4,
+      "equal": true
+     },
+     {
+      "prompt": 5,
+      "equal": true
+     },
+     {
+      "prompt": 6,
+      "equal": true
+     },
+     {
+      "prompt": 7,
+      "equal": true
+     }
+    ]
+   },
+   "ok": true,
+   "seconds": 32.5
+  },
+  "burst4": {
+   "ok": true,
+   "wall_s": 8.2,
+   "aggregate_tps": 125.37,
+   "streams": [
+    {
+     "tokens": 256,
+     "seconds": 5.01
+    },
+    {
+     "tokens": 256,
+     "seconds": 6.1
+    },
+    {
+     "tokens": 256,
+     "seconds": 4.0
+    },
+    {
+     "tokens": 256,
+     "seconds": 8.17
+    }
+   ],
+   "errors": [],
+   "seconds": 8.2
+  }
+ },
+ "ok": true,
+ "failed": []
+}

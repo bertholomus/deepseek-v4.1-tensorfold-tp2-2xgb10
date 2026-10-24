@@ -1,0 +1,5 @@
+c                  clean    ref     2 ids (  2 control)  now     2 ids (  2 control)  ok
+i                  injected ref     5 ids (  2 control)  now     7 ids (  1 control)  ok
+c                  clean    ref     2 ids (  2 control)  now     2 ids (  2 control)  FAIL: reply differs from the reference
+i                  injected ref     5 ids (  2 control)  now     7 ids (  1 control)  FAIL: no reply (500)
+selftest: 11/11

@@ -1,0 +1,19 @@
+{"streams": 2, "rep": 0, "aggregate_tps": 94.80882832282923, "per_stream_decode_tps": [75.062, 48.607]}
+{"streams": 2, "rep": 1, "aggregate_tps": 95.20863891459658, "per_stream_decode_tps": [74.682, 48.431]}
+{"streams": 2, "rep": 2, "aggregate_tps": 95.55712421617005, "per_stream_decode_tps": [72.609, 50.232]}
+{"streams": 2, "rep": 3, "aggregate_tps": 95.9251368693657, "per_stream_decode_tps": [75.329, 48.805]}
+{"streams": 2, "rep": 4, "aggregate_tps": 95.8064026729766, "per_stream_decode_tps": [75.243, 48.741]}
+{"streams": 2, "rep": 5, "aggregate_tps": 95.51444122423443, "per_stream_decode_tps": [72.376, 50.211]}
+{"streams": 2, "rep": 6, "aggregate_tps": 95.61718018530465, "per_stream_decode_tps": [75.166, 48.65]}
+{"streams": 2, "rep": 7, "aggregate_tps": 95.35533192122013, "per_stream_decode_tps": [74.492, 48.512]}
+{"streams": 2, "rep": 8, "aggregate_tps": 95.36541576606884, "per_stream_decode_tps": [72.189, 50.107]}
+{"streams": 4, "rep": 0, "aggregate_tps": 134.49736844289237, "per_stream_decode_tps": [45.528, 35.586, 80.013, 49.979]}
+{"streams": 4, "rep": 1, "aggregate_tps": 134.43662370226613, "per_stream_decode_tps": [49.005, 33.98, 76.375, 49.473]}
+{"streams": 4, "rep": 2, "aggregate_tps": 134.27940868168974, "per_stream_decode_tps": [45.455, 35.276, 73.685, 52.413]}
+{"streams": 4, "rep": 3, "aggregate_tps": 135.08139134927723, "per_stream_decode_tps": [47.595, 34.645, 70.725, 52.634]}
+{"streams": 4, "rep": 4, "aggregate_tps": 135.08411847370883, "per_stream_decode_tps": [45.763, 35.747, 80.795, 50.218]}
+{"streams": 4, "rep": 5, "aggregate_tps": 134.66998253386447, "per_stream_decode_tps": [47.971, 36.206, 70.314, 49.586]}
+{"streams": 4, "rep": 6, "aggregate_tps": 134.23200902938385, "per_stream_decode_tps": [47.319, 33.932, 72.821, 52.262]}
+{"streams": 4, "rep": 7, "aggregate_tps": 134.90754866932622, "per_stream_decode_tps": [46.653, 34.103, 80.576, 51.34]}
+{"streams": 4, "rep": 8, "aggregate_tps": 135.12072155188497, "per_stream_decode_tps": [48.112, 36.299, 70.543, 49.635]}
+

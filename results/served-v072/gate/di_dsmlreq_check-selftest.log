@@ -1,0 +1,8 @@
+ok   valid calls and equal auto rows pass
+ok   a missing city fails
+ok   a named function's other tool fails
+ok   two calls where one is asked fail
+ok   a changed auto row fails
+ok   a stream unlike its whole reply fails
+ok   a refusal fails
+di_dsmlreq_check selftest: PASS

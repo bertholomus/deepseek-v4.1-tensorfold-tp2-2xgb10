@@ -1,0 +1,4 @@
+{"prompt": "code", "decode_tps_median": 113.06733069338391, "decode_tps_all": [112.93, 113.067, 113.114], "tokens_all": [384, 384, 384], "identical_texts": true}
+{"prompt": "prose", "decode_tps_median": 67.88920721405647, "decode_tps_all": [68.02, 67.889, 67.784], "tokens_all": [384, 384, 384], "identical_texts": true}
+{"prompt": "structured", "decode_tps_median": 160.4416442573089, "decode_tps_all": [160.637, 160.442, 159.096], "tokens_all": [384, 384, 384], "identical_texts": true}
+

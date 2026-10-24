@@ -1,0 +1,19 @@
+{"streams": 2, "rep": 0, "aggregate_tps": 95.21825965810442, "per_stream_decode_tps": [72.554, 50.368]}
+{"streams": 2, "rep": 1, "aggregate_tps": 96.28281663338832, "per_stream_decode_tps": [75.574, 48.987]}
+{"streams": 2, "rep": 2, "aggregate_tps": 96.10604967413592, "per_stream_decode_tps": [75.366, 48.883]}
+{"streams": 2, "rep": 3, "aggregate_tps": 95.45949939390034, "per_stream_decode_tps": [74.596, 48.554]}
+{"streams": 2, "rep": 4, "aggregate_tps": 96.128869528753, "per_stream_decode_tps": [75.32, 48.889]}
+{"streams": 2, "rep": 5, "aggregate_tps": 95.8373028378948, "per_stream_decode_tps": [74.999, 48.762]}
+{"streams": 2, "rep": 6, "aggregate_tps": 96.06647579821922, "per_stream_decode_tps": [75.149, 48.876]}
+{"streams": 2, "rep": 7, "aggregate_tps": 96.16326788871221, "per_stream_decode_tps": [75.295, 48.938]}
+{"streams": 2, "rep": 8, "aggregate_tps": 95.61919852135631, "per_stream_decode_tps": [75.145, 48.638]}
+{"streams": 4, "rep": 0, "aggregate_tps": 134.53923756316848, "per_stream_decode_tps": [47.309, 34.016, 72.126, 52.029]}
+{"streams": 4, "rep": 1, "aggregate_tps": 135.23824616053102, "per_stream_decode_tps": [47.625, 34.676, 70.879, 52.608]}
+{"streams": 4, "rep": 2, "aggregate_tps": 135.89257507412177, "per_stream_decode_tps": [49.368, 35.62, 71.003, 49.851]}
+{"streams": 4, "rep": 3, "aggregate_tps": 134.80241262402728, "per_stream_decode_tps": [49.307, 35.377, 74.071, 48.707]}
+{"streams": 4, "rep": 4, "aggregate_tps": 135.20938517200568, "per_stream_decode_tps": [49.271, 35.519, 73.86, 48.618]}
+{"streams": 4, "rep": 5, "aggregate_tps": 135.13506570925813, "per_stream_decode_tps": [48.194, 36.311, 74.169, 48.726]}
+{"streams": 4, "rep": 6, "aggregate_tps": 135.59334682869581, "per_stream_decode_tps": [49.372, 34.278, 76.821, 49.855]}
+{"streams": 4, "rep": 7, "aggregate_tps": 134.59441291611623, "per_stream_decode_tps": [48.251, 34.023, 80.589, 49.831]}
+{"streams": 4, "rep": 8, "aggregate_tps": 135.37959506590727, "per_stream_decode_tps": [49.279, 35.531, 70.98, 49.756]}
+

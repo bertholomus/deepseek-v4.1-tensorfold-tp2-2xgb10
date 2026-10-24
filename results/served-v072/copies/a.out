@@ -1,0 +1,2 @@
+{"prompt": "repeat", "decode_tps_median": 135.269625153162, "decode_tps_all": [135.656, 134.702, 135.27], "tokens_all": [733, 733, 733], "identical_texts": true}
+{"prompt": "rename", "decode_tps_median": 132.48114890939664, "decode_tps_all": [132.515, 132.481, 132.338], "tokens_all": [735, 735, 735], "identical_texts": true}

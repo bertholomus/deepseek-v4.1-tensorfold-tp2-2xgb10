@@ -1,0 +1,1 @@
+6579b756dcd7 perf(tokenizer): the memo keeps a message's text between markers matched after normalization (on a16a167e, the TP4 line's v0.3.1; TP2-25: kit-tp2-v031)
