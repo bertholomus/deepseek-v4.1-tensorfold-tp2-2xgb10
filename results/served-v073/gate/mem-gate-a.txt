@@ -1,0 +1,2 @@
+node0 MemAvailable:   12621632 kB
+node1 MemAvailable:   13865216 kB

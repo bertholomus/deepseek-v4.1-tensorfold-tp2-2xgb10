@@ -1,0 +1,70 @@
+╭────────────────────────────────────────────────────────────────────────╮
+│                                                                        │
+│  R I G M A R K   //   AGENT WORKLOAD RECEIPT                           │
+│  BENCHMARKS LOCAL AI HOW CODING AGENTS ACTUALLY USE IT                 │
+│  ▲  13/15 BASIC OUTPUT GATES PASSED — DO NOT HEADLINE                  │
+│                                                                        │
+├─ MODEL ────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  DeepSeek-V4.1-Flash-1017-TP2                                          │
+│                                                                        │
+├─ SINGLE STREAM ────────────────────────────────────────────────────────┤
+│                                                                        │
+│  WORKLOAD         tok/s       Range tok/s   Last (s)    Checks         │
+│  PROSE             55.4         38.8–64.2       47.4     ✓ 5/5         │
+│  CODE              60.4        55.9–108.2       86.5     ✗ 3/5         │
+│  STRUCTURED*       85.6         81.7–90.4        8.6     ✓ 5/5         │
+│                                                                        │
+│  * Predictable JSON ceiling; not general agent performance.            │
+│  Decode medians are estimates; rates include streamed reasoning.       │
+│                                                                        │
+├─ PREFILL ──────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  DEPTH       Cold tok/s      Cold TTFT (s)    Replay TTFT (s)          │
+│  8K               2,396               3.42               1.00          │
+│  32K              2,560              12.80               1.02          │
+│  64K              2,572              25.48               1.01          │
+│  Medians; replay is an immediate repeat, not a proven hit.             │
+│                                                                        │
+├─ CAPPED CONCURRENT GENERATION ─────────────────────────────────────────┤
+│                                                                        │
+│  Aggregate tok/s: C1 41.2 | C2 75.0 | C4 100.7                         │
+│  C4: 0/12 normal stops; 0/12 with visible output.                      │
+│  Capped throughput includes reasoning; not completed agent tasks.      │
+│                                                                        │
+├─ APPLIANCE ────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  Hardware: 2x NVIDIA DGX Spark (GB10, 128 GB unified memory each)      │
+│  Topology: TP2, one rank per Spark, RoCE over ConnectX-7 (2 CX7        │
+│    functions per node)                                                 │
+│  Checkpoint: EXL3 quant of deepseek-ai/DeepSeek-V4.1-Flash-1017, 2.5   │
+│    bpw routed experts (TP2-25; not published) @ not publishe           │
+│  Quantisation: EXL3: routed experts 2.5 bpw; attention, shared experts │
+│    and Engram wkv 4; indexer wk 8; head 6; DSpark experts 4, DSpark    │
+│    attention 6; BF16 activations                                       │
+│  KV cache: TensorFold DeepSeek-V4.1 native latent KV,                  │
+│    2,097,152-position shared pool (TF_DS_WINDOW)                       │
+│  Engine: TensorFold fork github.com/bertholomus/TensorFold, the        │
+│    deepseek-v41-zig-tp4 line (v0.3.1, engine a16a167e) + cache_salt    │
+│    (build 6579b756dcd7, not published), native Zig, TensorFold 1.0.12  │
+│    base                                                                │
+│                                                                        │
+├─ SETTINGS ─────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  SUITE: DEFAULT SETTINGS                                               │
+│  REQUEST: {"chat_template_kwargs": {"reasoning_effort": "low"}}        │
+│  Temperature 0.0 | top_p 1.0 | seed 20260905 | protocol 1.3.0          │
+│  Decode: 5 runs, 8192-token cap | Prefill: 8K/32K/64K, 3 pairs         │
+│  Concurrency: C1/C2/C4, 3 rounds, 256-token cap; workload code         │
+│  Cache isolation: random-salt-per-pair                                 │
+│  Comparison ID: 2026-10-22-dsv41-tp4-rigmark-v1                        │
+│                                                                        │
+├─ RECEIPT ──────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  SOURCE     git:770c3106729d  •  dirty  •  worktree:740d46644b2e       │
+│  RIGMARK RELEASE: ahead of v0.0.4 (unreleased checkout)                │
+│  JSON sha256:74700683697647a8…                                         │
+│  SHARE THE CARD • LINK THE JSON RECEIPT • #RIGMARK                     │
+│  github.com/alexellis/rigmark                                          │
+│                                                                        │
+╰────────────────────────────────────────────────────────────────────────╯

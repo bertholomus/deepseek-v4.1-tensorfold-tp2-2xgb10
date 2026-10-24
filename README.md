@@ -24,6 +24,57 @@ DeepSeek-V4.1 recipes or kits was read or copied.
 and the launch (`scripts/serve.sh`, `config.env.example`). Our measurements: [`results/`](results/README.md). The
 four-node recipe: [bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10).
 
+## v0.7.3 (2026-10-24): eight concurrent streams, the same replies
+
+- **Settings only:** the engine is v0.7.2's (branch `deepseek-v41-zig-tp2`, the same commit), the weights and the
+  kernel kit v0.7.0's, the window 2,097,152 positions. `config.env.example` decodes 8 streams and serves 8 requests at
+  once (`STREAMS` and `PARALLEL`, from 4 to 8; `ROUND_ROWS` stays 16).
+- **8 streams sustained:** 168.3 tok/s over 90 s on our pair, +9.4 % against v0.7.2's 153.8 (its sweep s5, the
+  4-stream lane pushed to 8 streams). Every other row is within 1.1 % of v0.7.2's published rows (the qualifier band
+  is 1.5 %), and the bench's six greedy replies and the three texts written after 131,072-token prompts (seeds 1023 to
+  1025) are v0.7.2's published ones, byte for byte (`results/served-v073/rows/`).
+- Memory: the gate's 1M rows left 11.7 GiB on rank 0's node and 13.1 GiB on rank 1's at the lowest (floor 9); the
+  memtrace run one sample a second (v0.7.2's m5 pattern) is not run at 8 streams yet — it needs a node slot and stays
+  an open item.
+
+Gates, all passed on the served build (47 checks, `results/served-v073/gate/result.txt`), the same checks as v0.7.2's
+with the same counts: exact chat 71/71 against DeepSeek's reference encoding; the six API gates; 16 replies as a burst
+and staggered == solo; images 6/6, 9/9, and four at a time 18/18 == solo; forced tool calls 10/10 and automatic ones
+6/6, each forced row a call of an offered tool within its schema; structured output 11/11, and bursts and staggered
+runs of 12 == solo; the prompt shield 14/14; the keepalive; kept states, the fill and the resume probe, each with
+v0.7.2's replies; and 1M: 3/3 needles found in a 1,039,836-token prompt, the second and third asks resuming 1,038,336
+tokens of it from the kept state in 2.3 and 2.3 s (v0.7.2: 2.3 and 2.3 s). A second launch at the same settings gave
+the same replies on every check. The lowest free memory during the 1M prompt: 11.7 GiB on rank 0's node, 13.1 GiB on
+rank 1's in the gate's samples, one every 15 s (v0.7.2's gate: 11.3 and 13.4 GiB). Start to ready: 19 s (19 and 19 s
+for the gate's launches; v0.7.2: 19 s on the same count).
+
+The release bench on the served port after the promotion: 93,335 tokens prefilled at 2,364 tok/s (v0.7.2: 2,361), a
+short chat sent 1 s behind the cold 93,335-token prompt had its first token in 38.6 s (v0.7.2: 39.1 s)
+(`results/served-v073/prefill-93335.json`, `behind-93335.json`). The quality set answered 72 of 75, v0.7.2's score,
+and rigmark ran its 15 decode rows (`bench-result.txt`, `rigmark/`).
+
+Measured on two GB10 nodes (TP2), the served build at the served settings, our own client (`tools/kit_bench.py`),
+greedy, DSpark drafting, median of 3 unless noted (`results/served-v073/rows/`). The v0.7.2 column is v0.7.2's own
+table below, on the same prompts:
+
+| `--context 1048576 --parallel 8` | v0.7.2 tok/s | v0.7.3 tok/s |
+|---|---|---|
+| Decode, set a: code / prose / structured (512 tokens) | 105.7 / 60.3 / 119.6 | 106.0 / 60.5 / 118.3 |
+| Decode, set b: code / prose / structured (384 tokens) | 112.6 / 67.7 / 160.6 | 112.7 / 67.5 / 159.5 |
+| 2 streams, set b, aggregate (median of 9) | 95.6 | 95.3 |
+| 4 streams, set b, aggregate (median of 9) | 134.6 | 134.0 |
+| 4 streams sustained 90 s, set b, aggregate | 152.5 | 151.8 |
+| 8 streams sustained 90 s, set b, aggregate | 153.8 (sweep s5) | 168.3 |
+| Prompt 8K / 32K / 64K / 128K | 2,452 / 2,567 / 2,560 / 2,543 | 2,439 / 2,568 / 2,550 / 2,523 |
+| Decode after a 128K prompt (median of 3 prompts, seeds 1023-1025) | 100.0 | 99.2 |
+| Prompt 93,335 tokens | 2,361 | 2,364 |
+
+The prompt rows repeat each length's words behind a fresh prefix (`--fixed-words`), so the second and third reps read
+Engram rows the first one warmed; the first reps alone gave 2,439 / 2,570 / 2,550 / 2,530 tok/s (v0.7.2: 2,449 / 2,567
+/ 2,565 / 2,543). The three prompts after 128K decoded at 53.5 / 114.4 / 99.2 tok/s (v0.7.2: 54.0 / 115.0 / 100.0),
+each with v0.7.2's text. The 93,335-token prompt is the served port's own bench after the promotion
+(`results/served-v073/prefill-93335.json`).
+
 ## v0.7.2 (2026-10-23): less memory for a long prompt, and each long message tokenized once
 
 - **Engine:** two commits of ours in the server's tokenizer, on v0.7.1's engine; the ids are the same. The server

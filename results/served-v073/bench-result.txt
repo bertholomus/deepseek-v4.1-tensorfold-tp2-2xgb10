@@ -1,0 +1,11 @@
+idle {'connections': 0, 'waiting': 0, 'decode_tokens_per_second': 0.0, 'prefill_tokens_per_second': 0.0}
+qeval rc=0: 72/75 passed (96.0%), 0 hit the token cap, wall 1.8 min, median 84.18 tok/s
+   code     24/25
+   format    7/7
+   json      6/8
+   math     14/14
+   prose     5/5
+   reason   16/16
+rigmark rc=0: 15 decode runs; result: results/dsv41-1017-exl3-2.5bpw-tensorfold-tp2-v073-s8p8-low-20261024T171127Z.json
+prefill 93,335 tokens: median 2363.8 tok/s (TTFT 39.49 s); a short chat behind a cold 93K: median TTFT 38.60 s
+lane health after: ok

@@ -1,0 +1,15 @@
+plain              clean    ref    38 ids (  5 control)  now    38 ids (  5 control)  ok
+system-markers     clean    ref    43 ids (  7 control)  now    43 ids (  7 control)  ok
+assistant-history  clean    ref    43 ids ( 10 control)  now    43 ids ( 10 control)  ok
+private-use        clean    ref    45 ids (  5 control)  now    45 ids (  5 control)  ok
+tools-offered      clean    ref   291 ids ( 18 control)  now   291 ids ( 18 control)  ok
+user-fake-turn     injected ref    56 ids (  5 control)  now    56 ids (  5 control)  ok
+user-think         injected ref    44 ids (  5 control)  now    44 ids (  5 control)  ok
+user-bos-eot       injected ref    66 ids (  5 control)  now    66 ids (  5 control)  ok
+user-parts         injected ref    44 ids (  5 control)  now    44 ids (  5 control)  ok
+user-dsml          injected ref   318 ids ( 18 control)  now   318 ids ( 18 control)  ok
+tool-result        injected ref   361 ids ( 29 control)  now   361 ids ( 29 control)  ok
+tool-call-args     injected ref   348 ids ( 29 control)  now   348 ids ( 29 control)  ok
+operator-and-user  injected ref    44 ids (  6 control)  now    44 ids (  6 control)  ok
+image-marker-text  injected ref    42 ids (  5 control)  now    42 ids (  5 control)  ok
+PASS: 14/14 cases (5 clean equal, 9 injected shielded)

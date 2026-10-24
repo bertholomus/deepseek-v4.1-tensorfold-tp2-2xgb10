@@ -1,0 +1,649 @@
+{
+ "summary": "exact chat: 71 of 71 equal",
+ "equal": 71,
+ "total": 71,
+ "base": "http://127.0.0.1:18897",
+ "model": "DeepSeek-V4.1-Flash-1017-TP2",
+ "cases_file": "cases.jsonl",
+ "results": [
+  {
+   "name": "fixture-1",
+   "equal": true,
+   "counts": [
+    548,
+    548
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "fixture-1-chat",
+   "equal": true,
+   "counts": [
+    494,
+    494
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "fixture-2",
+   "equal": true,
+   "counts": [
+    40,
+    40
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "fixture-2-thinking",
+   "equal": true,
+   "counts": [
+    79,
+    79
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "effort-low",
+   "equal": true,
+   "counts": [
+    31,
+    31
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "effort-high",
+   "equal": true,
+   "counts": [
+    31,
+    31
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "effort-max",
+   "equal": true,
+   "counts": [
+    31,
+    31
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "chat-effort-max",
+   "equal": true,
+   "counts": [
+    5,
+    5
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "leading-system",
+   "equal": true,
+   "counts": [
+    12,
+    12
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tools-chat",
+   "equal": true,
+   "counts": [
+    267,
+    267
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-schema-tool-str",
+   "equal": true,
+   "counts": [
+    265,
+    265
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-schema-tool-str-msg",
+   "equal": true,
+   "counts": [
+    265,
+    265
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-schema-tool-dict",
+   "equal": true,
+   "counts": [
+    269,
+    269
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-schema-tool-dict-msg",
+   "equal": true,
+   "counts": [
+    269,
+    269
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-schema-function-str",
+   "equal": true,
+   "counts": [
+    265,
+    265
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-schema-function-str-msg",
+   "equal": true,
+   "counts": [
+    265,
+    265
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-schema-function-dict",
+   "equal": true,
+   "counts": [
+    269,
+    269
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-schema-function-dict-msg",
+   "equal": true,
+   "counts": [
+    269,
+    269
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-call-chat-tool",
+   "equal": true,
+   "counts": [
+    62,
+    62
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-call-chat-function",
+   "equal": true,
+   "counts": [
+    62,
+    62
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-call-chat-qualified_name",
+   "equal": true,
+   "counts": [
+    62,
+    62
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-call-thinking-tool",
+   "equal": true,
+   "counts": [
+    92,
+    92
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-call-thinking-function",
+   "equal": true,
+   "counts": [
+    92,
+    92
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-call-thinking-qualified_name",
+   "equal": true,
+   "counts": [
+    92,
+    92
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-same-name",
+   "equal": true,
+   "counts": [
+    466,
+    466
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-no-duplicate",
+   "equal": true,
+   "counts": [
+    359,
+    359
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "drop-thinking-next",
+   "equal": true,
+   "counts": [
+    76,
+    76
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "merge-tools",
+   "equal": true,
+   "counts": [
+    25,
+    25
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "merge-tools-thinking",
+   "equal": true,
+   "counts": [
+    52,
+    52
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "task-query",
+   "equal": true,
+   "counts": [
+    6,
+    6
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "task-action-thinking",
+   "equal": true,
+   "counts": [
+    36,
+    36
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "multi-turn-chat",
+   "equal": true,
+   "counts": [
+    26,
+    26
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "multi-turn-thinking",
+   "equal": true,
+   "counts": [
+    51,
+    51
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tool-loop-chat",
+   "equal": true,
+   "counts": [
+    444,
+    444
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tool-loop-chat-open",
+   "equal": true,
+   "counts": [
+    427,
+    427
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tool-loop-thinking",
+   "equal": true,
+   "counts": [
+    477,
+    477
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tool-loop-thinking-open",
+   "equal": true,
+   "counts": [
+    456,
+    456
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tool-then-user-chat",
+   "equal": true,
+   "counts": [
+    317,
+    317
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tool-then-user-chat-notools",
+   "equal": true,
+   "counts": [
+    58,
+    58
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tool-then-user-thinking",
+   "equal": true,
+   "counts": [
+    342,
+    342
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tool-then-user-thinking-notools",
+   "equal": true,
+   "counts": [
+    84,
+    84
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tool-no-ids",
+   "equal": true,
+   "counts": [
+    410,
+    410
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tool-unknown-id",
+   "equal": true,
+   "counts": [
+    394,
+    394
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "args-nested",
+   "equal": true,
+   "counts": [
+    519,
+    519
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "args-nested-ascii",
+   "equal": true,
+   "counts": [
+    519,
+    519
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "args-object",
+   "equal": true,
+   "counts": [
+    519,
+    519
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "args-empty-string",
+   "equal": true,
+   "counts": [
+    286,
+    286
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "args-empty-object",
+   "equal": true,
+   "counts": [
+    286,
+    286
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "args-invalid",
+   "equal": true,
+   "counts": [
+    303,
+    303
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "args-list-string",
+   "equal": true,
+   "counts": [
+    307,
+    307
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "args-list",
+   "equal": true,
+   "counts": [
+    307,
+    307
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "args-null",
+   "equal": true,
+   "counts": [
+    302,
+    302
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "args-number-string",
+   "equal": true,
+   "counts": [
+    302,
+    302
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tools-no-system-chat",
+   "equal": true,
+   "counts": [
+    276,
+    276
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tools-no-system-chat-mid",
+   "equal": true,
+   "counts": [
+    284,
+    284
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tools-no-system-thinking",
+   "equal": true,
+   "counts": [
+    300,
+    300
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "tools-no-system-thinking-mid",
+   "equal": true,
+   "counts": [
+    309,
+    309
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "developer-first",
+   "equal": true,
+   "counts": [
+    291,
+    291
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "empty-contents",
+   "equal": true,
+   "counts": [
+    10,
+    10
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "no-generation-chat",
+   "equal": true,
+   "counts": [
+    5,
+    5
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "no-generation-chat-assistant",
+   "equal": true,
+   "counts": [
+    7,
+    7
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "probe-generation-chat",
+   "equal": true,
+   "counts": [
+    5,
+    5
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "probe-generation-chat-off",
+   "equal": true,
+   "counts": [
+    3,
+    3
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "no-generation-thinking",
+   "equal": true,
+   "counts": [
+    30,
+    30
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "no-generation-thinking-assistant",
+   "equal": true,
+   "counts": [
+    34,
+    34
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "probe-generation-thinking",
+   "equal": true,
+   "counts": [
+    31,
+    31
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "probe-generation-thinking-off",
+   "equal": true,
+   "counts": [
+    29,
+    29
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "probe-late-system",
+   "equal": true,
+   "counts": [
+    20,
+    20
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "mid-system-last",
+   "equal": true,
+   "counts": [
+    41,
+    41
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "response-format",
+   "equal": true,
+   "counts": [
+    30,
+    30
+   ],
+   "first_differing_index": null
+  },
+  {
+   "name": "ns-description-appended",
+   "equal": true,
+   "counts": [
+    275,
+    275
+   ],
+   "first_differing_index": null
+  }
+ ]
+}

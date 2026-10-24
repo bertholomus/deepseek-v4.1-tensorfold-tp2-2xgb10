@@ -1,0 +1,3 @@
+rows g7b-rows on 18896 (engine 6579b756dcd7, window 2097152, streams 8, parallel 8, rows 16): rows 1 2 3 4 5 6 7: 7 of 7 ran; lowest MemAvailable node0/node1 12.4/13.4 GiB (floor 9)
+numbers: set a code 106.0; set a prose 60.5; set a structured 118.3; set b code 112.7; set b prose 67.5; set b structured 159.5; 2 streams 95.3; 4 streams 134.0; 4 sustained 151.8; 8 sustained 168.3; prefill 8K 2,439; prefill 32K 2,568; prefill 64K 2,550; prefill 128K 2,523; decode after 128K 99.2
+lane health after: ok

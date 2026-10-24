@@ -1,0 +1,9 @@
+2026-10-24T10:11:03Z tp2_rows: rows g7b-rows: rows 1 2 3 4 5 6 7 on node0 127.0.0.1:18896 (engine 6579b756dcd7, window 2097152, streams 8, parallel 8, rows 16)
+2026-10-24T10:11:04Z tp2_rows: g7b-rows: row 1: kit_bench.py decode --tokens 512 --reps 3 --set a
+2026-10-24T10:12:00Z tp2_rows: g7b-rows: row 2: kit_bench.py decode --tokens 384 --reps 3 --set b
+2026-10-24T10:12:38Z tp2_rows: g7b-rows: row 3: kit_bench.py concurrent --streams 2,4 --tokens 256 --reps 9 --set b
+2026-10-24T10:14:36Z tp2_rows: g7b-rows: row 4: kit_bench.py sustained --streams 4 --tokens 256 --seconds 90 --set b
+2026-10-24T10:16:13Z tp2_rows: g7b-rows: row 5: kit_bench.py prefill --lengths 8192,32768,65536,131072 --reps 3 --fixed-words
+2026-10-24T10:20:57Z tp2_rows: g7b-rows: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256 --seed 1023
+2026-10-24T10:23:43Z tp2_rows: g7b-rows: row 7: kit_bench.py sustained --streams 8 --tokens 256 --seconds 90 --set b
+2026-10-24T10:25:23Z tp2_rows: rows g7b-rows: rows 1 2 3 4 5 6 7: 7 of 7 ran; lowest MemAvailable node0/node1 12.4/13.4 GiB (floor 9) (table.md)

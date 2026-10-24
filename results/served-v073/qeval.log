@@ -1,0 +1,85 @@
+75 tasks, concurrency 1, http://127.0.0.1:18892/v1/chat/completions
+  PASS  code_merge_intervals   
+  PASS  code_longest_run       
+  PASS  code_roman_to_int      
+  PASS  code_balanced          
+  PASS  code_flatten           
+  PASS  code_top_words         
+  PASS  code_bisect_left       
+  PASS  code_transpose         
+  PASS  code_rle               
+  PASS  code_is_palindrome     
+  PASS  code_chunk             
+  PASS  code_dedupe            
+  PASS  code_camel_to_snake    
+  PASS  code_divisor_sum       
+  PASS  code_levenshtein       
+  PASS  code_group_anagrams    
+  PASS  code_two_sum           
+  PASS  code_rotate90          
+  PASS  code_valid_ipv4        
+  PASS  code_parse_query       
+  PASS  code_kth_largest       
+  PASS  code_spiral            
+  PASS  code_word_wrap         
+  FAIL  code_interval_intersect AssertionError
+  PASS  code_base_to_int       
+  PASS  json_manifest          
+  PASS  json_nested            
+  PASS  json_toolcall          
+  FAIL  json_escape            len does not match text length
+  PASS  json_sort              
+  PASS  json_types             
+  FAIL  json_count             got 11, want 10
+  PASS  json_strict_empty      
+  PASS  math_m1                
+  PASS  math_m2                
+  PASS  math_m3                
+  PASS  math_m4                
+  PASS  math_m5                
+  PASS  math_m6                
+  PASS  math_m7                
+  PASS  math_m8                
+  PASS  math_m9                
+  PASS  math_m10               
+  PASS  math_m11               
+  PASS  math_m12               
+  PASS  math_m13               
+  PASS  math_m14               
+  PASS  reason_r1              
+  PASS  reason_r2              
+  PASS  reason_r3              
+  PASS  reason_r4              
+  PASS  reason_r5              
+  PASS  reason_r6              
+  PASS  reason_r7              
+  PASS  reason_r8              
+  PASS  reason_r9              
+  PASS  reason_r10             
+  PASS  reason_r11             
+  PASS  reason_r12             
+  PASS  reason_r13             
+  PASS  reason_r14             
+  PASS  reason_r15             
+  PASS  reason_r16             
+  PASS  fmt_table              
+  PASS  fmt_bullets            
+  PASS  fmt_nocode             
+  PASS  fmt_uppercase          
+  PASS  fmt_exactword          
+  PASS  fmt_json_only          
+  PASS  fmt_linecount          
+  PASS  prose_p1               
+  PASS  prose_p2               
+  PASS  prose_p3               
+  PASS  prose_p4               
+  PASS  prose_p5               
+
+72/75 passed (96.0%), 0 hit the token cap, wall 1.8 min, median 84.18 tok/s
+   code     24/25
+   format    7/7
+   json      6/8
+   math     14/14
+   prose     5/5
+   reason   16/16
+wrote qeval-v073-s8p8.json

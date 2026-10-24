@@ -1,0 +1,1 @@
+["bash","-c","( /engine/tf-dsv41-lanes /model /cache/rank-cache 1 2 NODE0_LINK_IP 29780 /kit --pool 2097152 --context 1048576 --streams 8 --round-rows 16 --engram /engram --token-map /cache/dsv41_token_map.json --graphs 1 --side 1 --prefetch 1 --aio 1 --rdma RDMA_DEV0,RDMA_DEV1 --rdma-kernels /engine/rdma_gather.fatbin ) 2>&1 | tee /logs/tp2-25-lane.log"]
