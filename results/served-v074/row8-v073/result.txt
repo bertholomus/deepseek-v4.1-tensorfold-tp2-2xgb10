@@ -1,0 +1,3 @@
+rows v073a2a4-row8 on 18896 (engine 6579b756dcd7, window 2097152, streams 8, parallel 8, rows 16): rows 8: 1 of 1 ran; lowest MemAvailable node0/node1 16.7/18.9 GiB (floor 9)
+numbers: 16 sustained 164.8
+lane health after: ok

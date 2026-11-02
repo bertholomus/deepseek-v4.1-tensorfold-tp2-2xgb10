@@ -1,0 +1,2 @@
+{"streams": 16, "seconds": 90.0, "max_tokens": 256, "set": "b", "requests": 70, "aggregate_tps": 164.8, "per_stream_tps_p50": 21.599, "per_stream_tps_p95": 63.156, "per_stream_tps_p05": 11.919, "ttft_s_p50": 12.523, "ttft_s_p95": 16.101}
+

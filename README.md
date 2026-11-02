@@ -67,7 +67,8 @@ the same prompts:
 | 2 streams, set b, aggregate (median of 9) | 95.1 | 95.3 |
 | 4 streams, set b, aggregate (median of 9) | 134.1 | 136.4 |
 | 4 streams sustained 90 s, set b, aggregate | 152.0 | 152.0 |
-| 16 streams sustained 90 s, set b, aggregate | 167.1 | 171.6 |
+| 8 streams sustained 90 s, set b, aggregate | 167.1 | 171.6 |
+| 16 streams sustained 90 s, set b, aggregate (`row8/`) | 164.8 | 199.1 |
 | Prompt 8K / 32K / 64K / 128K | 2,419 / 2,531 / 2,533 / 2,516 | 2,428 / 2,498 / 2,533 / 2,500 |
 | Decode after a 128K prompt (median of 3 prompts, seeds 1023-1025) | 99.0 | 98.8 |
 | Prompt 93,335 tokens | 2,364 | 2,355 |

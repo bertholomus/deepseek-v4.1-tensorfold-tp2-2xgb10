@@ -21,6 +21,7 @@ positions. The weights and the run-time inputs are v0.7.0's (`served-v070/weight
 | `gate/` | the release gate at the v0.7.4 settings: launch A, launch B and the checks (43 checks in all, `gate/result.txt`) |
 | `rows/` | the speed rows on the release build, as v0.7.3's; `rows-6.json` keeps each prompt's seed (1023 to 1025) and its text |
 | `rows-v073/` | the same rows on v0.7.3's build at its own settings, measured the same day on the same two nodes right after the release rows: the table's v0.7.3 column |
+| `row8/`, `row8-v073/` | row 8, 16 streams sustained 90 s (set b), on the release build and on v0.7.3's build at its own settings (8 streams decode, the other 8 wait in line), one launch after the other the same day on the same two nodes, each with its launch's command lines |
 | `prefill-93335.*`, `behind-93335.*` | the release build's 93,335-token prefill (three reps) and the short chat sent 1 s behind it |
 | `bench-result.txt` | the release bench's record: the quality set (72 of 75) and rigmark's 15 decode rows beside the prefill row |
 | `qeval.log` | the quality set's log (75 tasks, one at a time) |
