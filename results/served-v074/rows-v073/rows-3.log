@@ -1,0 +1,19 @@
+{"streams": 2, "rep": 0, "aggregate_tps": 94.42892060866613, "per_stream_decode_tps": [74.985, 48.407]}
+{"streams": 2, "rep": 1, "aggregate_tps": 95.40615285785013, "per_stream_decode_tps": [75.342, 48.551]}
+{"streams": 2, "rep": 2, "aggregate_tps": 94.79130493881514, "per_stream_decode_tps": [71.763, 49.853]}
+{"streams": 2, "rep": 3, "aggregate_tps": 95.605711184308, "per_stream_decode_tps": [75.206, 48.643]}
+{"streams": 2, "rep": 4, "aggregate_tps": 95.14905400708321, "per_stream_decode_tps": [74.847, 48.409]}
+{"streams": 2, "rep": 5, "aggregate_tps": 95.11853848858618, "per_stream_decode_tps": [74.693, 48.388]}
+{"streams": 2, "rep": 6, "aggregate_tps": 95.610324567949, "per_stream_decode_tps": [75.248, 48.65]}
+{"streams": 2, "rep": 7, "aggregate_tps": 94.72143666927411, "per_stream_decode_tps": [74.742, 48.191]}
+{"streams": 2, "rep": 8, "aggregate_tps": 95.13213338607093, "per_stream_decode_tps": [72.326, 49.989]}
+{"streams": 4, "rep": 0, "aggregate_tps": 133.9830618273237, "per_stream_decode_tps": [47.685, 34.637, 79.74, 48.122]}
+{"streams": 4, "rep": 1, "aggregate_tps": 134.18007545663662, "per_stream_decode_tps": [45.378, 36.088, 73.442, 50.956]}
+{"streams": 4, "rep": 2, "aggregate_tps": 133.9555240222402, "per_stream_decode_tps": [47.935, 34.641, 80.068, 48.336]}
+{"streams": 4, "rep": 3, "aggregate_tps": 134.05937581993012, "per_stream_decode_tps": [48.863, 34.722, 76.197, 48.173]}
+{"streams": 4, "rep": 4, "aggregate_tps": 134.4297432985795, "per_stream_decode_tps": [46.881, 36.152, 77.149, 48.376]}
+{"streams": 4, "rep": 5, "aggregate_tps": 133.96852799705405, "per_stream_decode_tps": [45.278, 36.04, 77.22, 49.751]}
+{"streams": 4, "rep": 6, "aggregate_tps": 134.05447722837906, "per_stream_decode_tps": [45.575, 36.048, 77.315, 50.015]}
+{"streams": 4, "rep": 7, "aggregate_tps": 133.65079720478852, "per_stream_decode_tps": [48.791, 35.143, 73.129, 48.131]}
+{"streams": 4, "rep": 8, "aggregate_tps": 134.46823736079278, "per_stream_decode_tps": [46.541, 33.993, 80.451, 51.193]}
+

@@ -1,0 +1,8 @@
+{"case": "s0", "prompt_tokens": 2822, "cached": 0, "text": "It"}
+{"case": "img1", "prompt_tokens": 6267, "cached": 2048, "text": "The image shows a pattern of alternating vertical red and blue stripes."}
+{"case": "txt1", "prompt_tokens": 6082, "cached": 2048, "text": "The"}
+{"case": "img2", "prompt_tokens": 6288, "cached": 4096, "text": "The image uses red and blue."}
+{"case": "img3", "prompt_tokens": 6288, "cached": 2048, "text": "Based on the image, the colors used are **yellow** and **green**."}
+{"case": "a1", "prompt_tokens": 67827, "cached": 0, "text": "Here are three words from the text:\n\n1. **Face**\n2. **Change**\n3. **Others**"}
+{"case": "b1", "prompt_tokens": 3694, "cached": 2048, "text": "Here are three words from the text:\n\n1. **body**\n2. **minute**\n3. **man**"}
+{"case": "a2", "prompt_tokens": 67845, "cached": 67584, "text": "Three more words from the text: **water**, **school**, **family**."}

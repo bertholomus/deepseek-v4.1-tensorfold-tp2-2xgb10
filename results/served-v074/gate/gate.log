@@ -1,0 +1,56 @@
+2026-11-02T21:44:46Z tp2_gate: v074a2a4: A = 6579b756dcd7-tp2-1017 with serve.env (window 2097152) on 18897; B = the same with the window A's (2097152: a control run) and EXTRA_ENV + 'TF_DS_IDX_SPLIT=8192' and the shape 16/16/32 (streams/parallel/rows)
+2026-11-02T21:44:46Z tp2_gate: the gate's clients and the vision gate to node0
+2026-11-02T21:44:51Z tp2_gate: A: serve.env on 18897 (window 2097152)
+2026-11-02T21:45:25Z tp2_gate: the a launch up on 18897 in 34 s
+2026-11-02T21:45:25Z tp2_gate: check launch A: PASS start-a.log names the pin 6579b756dcd7 perf(tokenizer): the memo keeps a message's tex
+2026-11-02T21:45:26Z tp2_gate: check settings A: PASS rank 0 names a 2.0 GiB prompt cache, the shield and the stats line
+2026-11-02T21:46:10Z tp2_gate: check gates A: PASS gates 6 ok=True
+2026-11-02T21:47:09Z tp2_gate: check parallel A: PASS solo 16 replies, burst 16/16, staggered 16/16 == solo
+2026-11-02T21:47:09Z tp2_gate: check solo done A: PASS 16 of 16 done lines
+2026-11-02T21:47:20Z tp2_gate: check vision A: PASS vision gate 6/6, visionref 9/9 answered
+2026-11-02T21:47:21Z tp2_gate: check exact chat A: PASS exact chat: 71 of 71 equal
+2026-11-02T21:47:31Z tp2_gate: check shield A: PASS shield recorded 14 conversations: 14/14 answered; /tokenize of 120018 bytes 0.0093 s
+2026-11-02T21:49:08Z tp2_gate: check sampler A: PASS di_sampler_check: PASS
+2026-11-02T21:49:27Z tp2_gate: check structured A: PASS structured: 11/11 other requests as specified, tool_choice "required" a call (finish tool_calls), burst 12 and staggered 12 of 12 == solo
+2026-11-02T21:49:27Z tp2_gate: check grammar A: PASS rank 0: structured output: xgrammar over 129280 tokens
+2026-11-02T21:49:53Z tp2_gate: check reply ids A: PASS di_replyids_check: recorded 16 rows -> zkept-replyids-a.json
+2026-11-02T21:50:12Z tp2_gate: check dsml A: PASS dsml recorded: 10/10 forced rows answered, 6/6 auto rows answered
+2026-11-02T21:50:19Z tp2_gate: check acceptstats A: PASS di_acceptstats_check: PASS (the depth families add up)
+2026-11-02T21:50:20Z tp2_gate: check stats lines A: PASS 4 stats lines in rank 0's log
+2026-11-02T21:50:30Z tp2_gate: check resume probe A: PASS cached 0/4096/4096/6144 of 4396/6444/6204/8492 tokens
+2026-11-02T21:51:53Z tp2_gate: check keepalive A: PASS first tokens 38.83 and 77.91 s, 2 and 5 comments, 97510 and 97510 prompt tokens
+2026-11-02T21:52:31Z tp2_gate: check keptcheck A: PASS 8 of 8 answered
+2026-11-02T21:53:08Z tp2_gate: check fillcheck A: PASS 2 of 2 answered
+2026-11-02T21:55:08Z tp2_gate: check memory A: PASS lowest MemAvailable node0/node1 16.0/18.4 GiB during the 93K prefill bench (floor 9)
+2026-11-02T22:04:02Z tp2_gate: row 1M A: 1M: 3/3 needles found in a 1,039,836-token haystack (asks of 513.0/2.3/2.3 s), the 2nd and 3rd asks resumed 1,038,336/1,038,336 of it from the kept state (2/2), lowest MemAvailable node0/node1 15.5/18.3 GiB
+2026-11-02T22:04:04Z tp2_gate: A passed (20 checks and the 1M row)
+2026-11-02T22:04:04Z tp2_gate: pool: B runs A's window 2097152 (a control run)
+2026-11-02T22:04:04Z tp2_gate: B: window 2097152, EXTRA_ENV + 'TF_DS_IDX_SPLIT=8192', shape 16/16/32
+2026-11-02T22:04:39Z tp2_gate: the b launch up on 18897 in 35 s
+2026-11-02T22:04:39Z tp2_gate: check launch B: PASS start-b.log names the pin 4fcb94c09717 tp2/v074: 6579b756d (v0.7.3) + bd4311
+2026-11-02T22:04:39Z tp2_gate: check launch B: env: PASS the launch names the shape 16/16/32 (node0: TF_DS_STREAMS=16 TF_DS_ROUND_ROWS=32 --parallel 16; node1: --streams 16 --round-rows 32) and 'TF_DS_IDX_SPLIT=8192'
+2026-11-02T22:04:39Z tp2_gate: check launch B: pool: PASS node0's tp2-25-lane command line names TF_DS_WINDOW=2097152, node1's --pool 2097152
+2026-11-02T22:04:40Z tp2_gate: check settings B: PASS rank 0 names a 2.0 GiB prompt cache, the shield and the stats line
+2026-11-02T22:05:25Z tp2_gate: check gates B: PASS gates 6 ok=True
+2026-11-02T22:06:21Z tp2_gate: check parallel B: PASS solo 16 replies, burst 16/16, staggered 16/16 == solo, solo 16/16 == A's
+2026-11-02T22:06:22Z tp2_gate: check solo done B: PASS solo done lines 16/16 == A's (sha, rounds, accepted; drafted differs on 1)
+2026-11-02T22:06:43Z tp2_gate: check vision B: PASS vision PASS: vision gate 6/6, visionref 9/9 equal to A's, four at a time 18/18 equal to A's
+2026-11-02T22:06:44Z tp2_gate: check exact chat B: PASS exact chat: 71 of 71 equal
+2026-11-02T22:06:54Z tp2_gate: check shield B: PASS PASS: 14/14 cases (5 clean equal, 9 injected shielded); 14/14 conversations' ids, text and greedy replies == A's
+2026-11-02T22:08:28Z tp2_gate: check sampler B: PASS di_sampler_check: PASS
+2026-11-02T22:08:46Z tp2_gate: check structured B: PASS structured: 11/11 other requests as specified, tool_choice "required" a call (finish tool_calls), burst 12 and staggered 12 of 12 == solo, 12/12 == A's
+2026-11-02T22:08:46Z tp2_gate: check grammar B: PASS rank 0: structured output: xgrammar over 129280 tokens
+2026-11-02T22:09:13Z tp2_gate: check reply ids B: PASS reply ids: 16/16 rows == A's (reasoning, content, calls, finish, tokens)
+2026-11-02T22:09:32Z tp2_gate: check dsml B: PASS di_dsmlreq_check: PASS (16 rows: forced rows call offered tools within their schema, auto rows equal the reference); DSML forced and auto rows: 16/16 rows == A's (reasoning, content, calls, finish, tokens)
+2026-11-02T22:09:39Z tp2_gate: check acceptstats B: PASS di_acceptstats_check: PASS (the depth families add up)
+2026-11-02T22:09:39Z tp2_gate: check stats lines B: PASS 5 stats lines in rank 0's log
+2026-11-02T22:09:50Z tp2_gate: check resume probe B: PASS PASS: replies 4/4 == as served, cached as served 0/4096/4096/6144, candidate 0/4096/4096/6144, as served did not show the near-end case (q ran from 0, q2 resumed 4096): judged on equal replies alone
+2026-11-02T22:11:13Z tp2_gate: check keepalive B: PASS PASS: replies 2/2 == as served, as served 2 and 5 comments, 15.0 and 15.0 s silent before the first token; candidate 2 and 5, 15.1 and 15.0 s, first tokens 38.8/77.9 s as served, 38.8/77.7 s candidate (97510 and 97510 prompt tokens)
+2026-11-02T22:11:51Z tp2_gate: check keptcheck B: PASS keptcheck PASS: replies 8/8 == the served build's, geometry S 2822, image span 186, img1 6267, A 67827 (last chunk end 67584), candidate cached img2 4096, img3 2048, b1 2048, a2 67584 (served 4096, 2048, 2048, 67584)
+2026-11-02T22:12:27Z tp2_gate: check fillcheck B: PASS fillcheck PASS: replies 2/2 == the served build's, Y 65010 tokens; X's longest stop in the wait 25.7 s as served (2 chunks of X), 25.6 s candidate (2), Y's first token 25.8 s as served (lane 25.8), 25.6 s candidate (lane 25.6, -0.7 %)
+2026-11-02T22:14:27Z tp2_gate: check memory B: PASS lowest MemAvailable node0/node1 15.6/18.0 GiB during the 93K prefill bench (floor 9)
+2026-11-02T22:23:21Z tp2_gate: row 1M B: 1M: 3/3 needles found in a 1,039,836-token haystack (asks of 513.0/2.3/2.3 s), the 2nd and 3rd asks resumed 1,038,336/1,038,336 of it from the kept state (2/2), lowest MemAvailable node0/node1 15.0/18.0 GiB
+2026-11-02T22:23:23Z tp2_gate: check prefill bench: PASS cmp1021_bench.py prefill 3 on the 93,335-token prompt on A and on B
+2026-11-02T22:23:23Z tp2_gate: prefill 93,335 tokens: A 2342.7 tok/s (median TTFT 39.84 s), B 2356.9 tok/s (median TTFT 39.60 s), B/A +0.6 %
+2026-11-02T22:23:23Z tp2_gate: mem: after the prefill A 16.1/18.5 GiB, B 15.7/18.1 GiB (node0/node1); lowest during it A 16.0/18.4 GiB, B 15.6/18.0 GiB; at 1M: see the 1M rows (floor 9)
+2026-11-02T22:23:23Z tp2_gate: tp2_gate v074a2a4: PASS (43 checks: A 20, B 23 with B's replies == A's; the 1M rows; B's window 2097152, shape 16/16/32; prefill A 2342.7 tok/s (median TTFT 39.84 s), B 2356.9 tok/s (median TTFT 39.60 s), B/A +0.6 %; lowest MemAvailable A 16.0/18.4 / B 15.6/18.0 GiB)

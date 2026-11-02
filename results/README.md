@@ -1,10 +1,30 @@
 # Results
 
-Our own measurements of our own engine on two GB10 nodes, as the README's v0.7.3, v0.7.2, v0.7.1 and v0.7.0 sections
-report them. Private host names, addresses, devices and paths are not in these files: the nodes are named by rank
-(`node0` runs rank 0, `node1` rank 1), the link's addresses and devices are placeholders (`NODE0_LINK_IP`,
+Our own measurements of our own engine on two GB10 nodes, as the README's v0.7.4, v0.7.3, v0.7.2, v0.7.1 and v0.7.0
+sections report them. Private host names, addresses, devices and paths are not in these files: the nodes are named by
+rank (`node0` runs rank 0, `node1` rank 1), the link's addresses and devices are placeholders (`NODE0_LINK_IP`,
 `RDMA_DEV0`, ...), and a file the runs name is named without its folder. Nothing else was changed. Releases before
 v0.7.0 reported their numbers in the README only.
+
+## `served-v074/`: v0.7.4, the release build on the 2.5 bpw weights (2026-11-02)
+
+The engine is `ENGINE_COMMIT`'s, one commit over v0.7.3's: a contributed server change of tonyd2wild's (MIT, kept with
+its author line) — opt-in per-request seeds (`TF_SEED_RANDOM`) and a top_k clamp (`TF_TOP_K_MAX`), both off unless
+set, so the default sampled output is v0.7.3's. The settings change is `config.env.example`'s `TF_DS_IDX_SPLIT`, from
+1 to 8192, and the shape: 16 streams decode together, 16 requests are served at once and a round is 32 rows
+(`config.env.example`'s `STREAMS`, `PARALLEL` and `ROUND_ROWS`, the release gate's shape) The window stays 2,097,152
+positions. The weights and the run-time inputs are v0.7.0's (`served-v070/weights.sha256`, `inputs.txt` and
+`kl-report.md`). The files are laid out as `served-v073/`'s below, with these records:
+
+| File | What |
+|---|---|
+| `gate/` | the release gate at the v0.7.4 settings: launch A, launch B and the checks (43 checks in all, `gate/result.txt`) |
+| `rows/` | the speed rows on the release build, as v0.7.3's; `rows-6.json` keeps each prompt's seed (1023 to 1025) and its text |
+| `rows-v073/` | the same rows on v0.7.3's build at its own settings, measured the same day on the same two nodes right after the release rows: the table's v0.7.3 column |
+| `prefill-93335.*`, `behind-93335.*` | the release build's 93,335-token prefill (three reps) and the short chat sent 1 s behind it |
+| `bench-result.txt` | the release bench's record: the quality set (72 of 75) and rigmark's 15 decode rows beside the prefill row |
+| `qeval.log` | the quality set's log (75 tasks, one at a time) |
+| `rigmark/` | rigmark's receipt and results for this release, beside the earlier builds' runs of the same prompts |
 
 ## `served-v073/`: v0.7.3, the served build `6579b75` on the 2.5 bpw weights (2026-10-24)
 

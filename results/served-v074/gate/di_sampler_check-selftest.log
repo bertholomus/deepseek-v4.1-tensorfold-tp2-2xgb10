@@ -1,0 +1,55 @@
+{
+ "answered": {
+  "solo": 8,
+  "of": 28
+ },
+ "by_case": {
+  "k20": 4,
+  "k56": 4,
+  "k0": 0,
+  "km1": 0,
+  "k0all": 0,
+  "k100": 0,
+  "k1000": 0
+ },
+ "burst": {
+  "equal_to_solo": 8,
+  "of": 28
+ },
+ "staggered": {
+  "equal_to_solo": 8,
+  "of": 28
+ },
+ "verdict": "FAIL (answered 8/28; burst == solo 8/28; staggered == solo 8/28)"
+}
+di_sampler_check: FAIL (answered 8/28; burst == solo 8/28; staggered == solo 8/28)
+{
+ "answered": {
+  "solo": 28,
+  "of": 28
+ },
+ "by_case": {
+  "k20": 4,
+  "k56": 4,
+  "k0": 4,
+  "km1": 4,
+  "k0all": 4,
+  "k100": 4,
+  "k1000": 4
+ },
+ "burst": {
+  "equal_to_solo": 28,
+  "of": 28
+ },
+ "staggered": {
+  "equal_to_solo": 28,
+  "of": 28
+ },
+ "equal_to_reference": {
+  "equal": 8,
+  "of_answered_there": 8
+ },
+ "verdict": "PASS"
+}
+di_sampler_check: PASS
+selftest: PASS (as served: 8/28 answer, FAIL as it must; candidate: PASS, 8/8 == as served)

@@ -1,0 +1,422 @@
+{
+ "cmd": "concurrent",
+ "base": "http://127.0.0.1:18896",
+ "model": "DeepSeek-V4.1-Flash-1017-TP2",
+ "unix": 1793658675.2561896,
+ "result": [
+  {
+   "streams": 2,
+   "rep": 0,
+   "max_tokens": 256,
+   "total_tokens": 512,
+   "wall_s": 5.411897716112435,
+   "aggregate_tps": 94.60637041894954,
+   "per_stream_decode_tps": [
+    72.085,
+    50.076
+   ],
+   "per_stream_tokens": [
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.2,
+    0.32
+   ]
+  },
+  {
+   "streams": 2,
+   "rep": 1,
+   "max_tokens": 256,
+   "total_tokens": 512,
+   "wall_s": 5.365909943822771,
+   "aggregate_tps": 95.41718093674191,
+   "per_stream_decode_tps": [
+    75.001,
+    48.559
+   ],
+   "per_stream_tokens": [
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.283,
+    0.114
+   ]
+  },
+  {
+   "streams": 2,
+   "rep": 2,
+   "max_tokens": 256,
+   "total_tokens": 512,
+   "wall_s": 5.375156970927492,
+   "aggregate_tps": 95.25303219408188,
+   "per_stream_decode_tps": [
+    74.714,
+    48.473
+   ],
+   "per_stream_tokens": [
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.283,
+    0.114
+   ]
+  },
+  {
+   "streams": 2,
+   "rep": 3,
+   "max_tokens": 256,
+   "total_tokens": 512,
+   "wall_s": 5.360645763110369,
+   "aggregate_tps": 95.51088108141022,
+   "per_stream_decode_tps": [
+    75.024,
+    48.611
+   ],
+   "per_stream_tokens": [
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.282,
+    0.115
+   ]
+  },
+  {
+   "streams": 2,
+   "rep": 4,
+   "max_tokens": 256,
+   "total_tokens": 512,
+   "wall_s": 5.406907874858007,
+   "aggregate_tps": 94.69367924332276,
+   "per_stream_decode_tps": [
+    74.734,
+    48.167
+   ],
+   "per_stream_tokens": [
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.28,
+    0.113
+   ]
+  },
+  {
+   "streams": 2,
+   "rep": 5,
+   "max_tokens": 256,
+   "total_tokens": 512,
+   "wall_s": 5.375344136962667,
+   "aggregate_tps": 95.24971554459489,
+   "per_stream_decode_tps": [
+    72.359,
+    50.074
+   ],
+   "per_stream_tokens": [
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.162,
+    0.283
+   ]
+  },
+  {
+   "streams": 2,
+   "rep": 6,
+   "max_tokens": 256,
+   "total_tokens": 512,
+   "wall_s": 5.360914241056889,
+   "aggregate_tps": 95.50609783659972,
+   "per_stream_decode_tps": [
+    72.519,
+    50.204
+   ],
+   "per_stream_tokens": [
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.161,
+    0.281
+   ]
+  },
+  {
+   "streams": 2,
+   "rep": 7,
+   "max_tokens": 256,
+   "total_tokens": 512,
+   "wall_s": 5.362338595092297,
+   "aggregate_tps": 95.48072933488218,
+   "per_stream_decode_tps": [
+    75.095,
+    48.57
+   ],
+   "per_stream_tokens": [
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.279,
+    0.112
+   ]
+  },
+  {
+   "streams": 2,
+   "rep": 8,
+   "max_tokens": 256,
+   "total_tokens": 512,
+   "wall_s": 5.390042476123199,
+   "aggregate_tps": 94.9899749896326,
+   "per_stream_decode_tps": [
+    74.524,
+    48.343
+   ],
+   "per_stream_tokens": [
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.282,
+    0.115
+   ]
+  },
+  {
+   "streams": 4,
+   "rep": 0,
+   "max_tokens": 256,
+   "total_tokens": 1024,
+   "wall_s": 7.553172902902588,
+   "aggregate_tps": 135.57216459409923,
+   "per_stream_decode_tps": [
+    48.866,
+    35.076,
+    78.62,
+    49.323
+   ],
+   "per_stream_tokens": [
+    256,
+    256,
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.448,
+    0.283,
+    0.564,
+    0.162
+   ]
+  },
+  {
+   "streams": 4,
+   "rep": 1,
+   "max_tokens": 256,
+   "total_tokens": 1024,
+   "wall_s": 7.5097794940229505,
+   "aggregate_tps": 136.35553491484055,
+   "per_stream_decode_tps": [
+    47.539,
+    34.476,
+    75.168,
+    53.584
+   ],
+   "per_stream_tokens": [
+    256,
+    256,
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.289,
+    0.113,
+    0.403,
+    0.564
+   ]
+  },
+  {
+   "streams": 4,
+   "rep": 2,
+   "max_tokens": 256,
+   "total_tokens": 1024,
+   "wall_s": 7.499872676096857,
+   "aggregate_tps": 136.53565123360443,
+   "per_stream_decode_tps": [
+    49.185,
+    35.358,
+    79.462,
+    49.62
+   ],
+   "per_stream_tokens": [
+    256,
+    256,
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.461,
+    0.288,
+    0.577,
+    0.168
+   ]
+  },
+  {
+   "streams": 4,
+   "rep": 3,
+   "max_tokens": 256,
+   "total_tokens": 1024,
+   "wall_s": 7.494933189125732,
+   "aggregate_tps": 136.62563416651983,
+   "per_stream_decode_tps": [
+    50.097,
+    35.35,
+    75.222,
+    49.421
+   ],
+   "per_stream_tokens": [
+    256,
+    256,
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.563,
+    0.281,
+    0.396,
+    0.16
+   ]
+  },
+  {
+   "streams": 4,
+   "rep": 4,
+   "max_tokens": 256,
+   "total_tokens": 1024,
+   "wall_s": 7.518574915127829,
+   "aggregate_tps": 136.1960227249515,
+   "per_stream_decode_tps": [
+    50.419,
+    35.822,
+    72.814,
+    49.735
+   ],
+   "per_stream_tokens": [
+    256,
+    256,
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.565,
+    0.399,
+    0.278,
+    0.163
+   ]
+  },
+  {
+   "streams": 4,
+   "rep": 5,
+   "max_tokens": 256,
+   "total_tokens": 1024,
+   "wall_s": 7.495977483922616,
+   "aggregate_tps": 136.6066002994642,
+   "per_stream_decode_tps": [
+    49.056,
+    36.851,
+    72.944,
+    49.575
+   ],
+   "per_stream_tokens": [
+    256,
+    256,
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.455,
+    0.575,
+    0.285,
+    0.169
+   ]
+  },
+  {
+   "streams": 4,
+   "rep": 6,
+   "max_tokens": 256,
+   "total_tokens": 1024,
+   "wall_s": 7.488078092923388,
+   "aggregate_tps": 136.75071056854117,
+   "per_stream_decode_tps": [
+    50.234,
+    35.389,
+    75.171,
+    49.561
+   ],
+   "per_stream_tokens": [
+    256,
+    256,
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.566,
+    0.282,
+    0.398,
+    0.162
+   ]
+  },
+  {
+   "streams": 4,
+   "rep": 7,
+   "max_tokens": 256,
+   "total_tokens": 1024,
+   "wall_s": 7.5373530860524625,
+   "aggregate_tps": 135.85671101104,
+   "per_stream_decode_tps": [
+    50.109,
+    35.718,
+    69.056,
+    50.512
+   ],
+   "per_stream_tokens": [
+    256,
+    256,
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.565,
+    0.398,
+    0.111,
+    0.278
+   ]
+  },
+  {
+   "streams": 4,
+   "rep": 8,
+   "max_tokens": 256,
+   "total_tokens": 1024,
+   "wall_s": 7.518138128099963,
+   "aggregate_tps": 136.20393540957627,
+   "per_stream_decode_tps": [
+    49.119,
+    36.685,
+    72.831,
+    49.579
+   ],
+   "per_stream_tokens": [
+    256,
+    256,
+    256,
+    256
+   ],
+   "ttft_s": [
+    0.445,
+    0.566,
+    0.277,
+    0.162
+   ]
+  }
+ ]
+}

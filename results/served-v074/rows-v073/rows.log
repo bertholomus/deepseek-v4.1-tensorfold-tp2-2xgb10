@@ -1,0 +1,9 @@
+2026-11-02T23:02:58Z tp2_rows: rows v073a2a4-rows: rows 1 2 3 4 5 6 7 on node0 127.0.0.1:18896 (engine 6579b756dcd7, window 2097152, streams 8, parallel 8, rows 16)
+2026-11-02T23:02:58Z tp2_rows: v073a2a4-rows: row 1: kit_bench.py decode --tokens 512 --reps 3 --set a
+2026-11-02T23:03:55Z tp2_rows: v073a2a4-rows: row 2: kit_bench.py decode --tokens 384 --reps 3 --set b
+2026-11-02T23:04:33Z tp2_rows: v073a2a4-rows: row 3: kit_bench.py concurrent --streams 2,4 --tokens 256 --reps 9 --set b
+2026-11-02T23:06:30Z tp2_rows: v073a2a4-rows: row 4: kit_bench.py sustained --streams 4 --tokens 256 --seconds 90 --set b
+2026-11-02T23:08:08Z tp2_rows: v073a2a4-rows: row 5: kit_bench.py prefill --lengths 8192,32768,65536,131072 --reps 3 --fixed-words
+2026-11-02T23:12:52Z tp2_rows: v073a2a4-rows: row 6: kit_bench.py depth --lengths 131072,131072,131072 --tokens 256 --seed 1023
+2026-11-02T23:15:39Z tp2_rows: v073a2a4-rows: row 7: kit_bench.py sustained --streams 8 --tokens 256 --seconds 90 --set b
+2026-11-02T23:17:19Z tp2_rows: rows v073a2a4-rows: rows 1 2 3 4 5 6 7: 7 of 7 ran; lowest MemAvailable node0/node1 16.4/18.6 GiB (floor 9) (table.md)

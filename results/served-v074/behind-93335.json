@@ -1,0 +1,210 @@
+{
+ "summary": {
+  "mode": "behind",
+  "reps": 3,
+  "url": "http://127.0.0.1:18896",
+  "body": "prompt-93335.txt",
+  "median_short_ttft_s": 38.69460398890078,
+  "delay_s": 1.0
+ },
+ "rows": [
+  {
+   "long": {
+    "ttft_s": 39.61299821198918,
+    "total_s": 39.61318454798311,
+    "usage": {
+     "prompt_tokens": 93335,
+     "completion_tokens": 1,
+     "total_tokens": 93336,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     },
+     "completion_tokens_details": {
+      "reasoning_tokens": 0
+     }
+    },
+    "tensorfold": {
+     "enable_thinking": false,
+     "reasoning_effort": "none",
+     "engine": "lanes",
+     "tokens_per_second": 0.0,
+     "seconds": 0.000876371,
+     "prefill_seconds": 39.559876887,
+     "prefill_widths": [],
+     "prefill_raised": [],
+     "time_to_first_token": 39.610866574,
+     "sampling": "greedy",
+     "drafts": true,
+     "token_sha": "44cb730c4204",
+     "token_sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a",
+     "min_rows": 0
+    },
+    "text": "I"
+   },
+   "short": {
+    "ttft_s": 38.682042768923566,
+    "total_s": 38.754845563089475,
+    "usage": {
+     "prompt_tokens": 8,
+     "completion_tokens": 8,
+     "total_tokens": 16,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     },
+     "completion_tokens_details": {
+      "reasoning_tokens": 0
+     }
+    },
+    "tensorfold": {
+     "enable_thinking": false,
+     "reasoning_effort": "none",
+     "engine": "lanes",
+     "tokens_per_second": 95.24492177208022,
+     "seconds": 0.073494732,
+     "prefill_seconds": 0.06952416,
+     "prefill_widths": [],
+     "prefill_raised": [],
+     "time_to_first_token": 38.680714734,
+     "sampling": "greedy",
+     "drafts": true,
+     "token_sha": "808abea0e8de",
+     "token_sha256": "808abea0e8de84a037f4b1b85f08ca46581a36eabe8d6476e6e8609c3d44837b",
+     "min_rows": 4
+    },
+    "text": "Red, blue, and green."
+   }
+  },
+  {
+   "long": {
+    "ttft_s": 39.730819708900526,
+    "total_s": 39.73091908497736,
+    "usage": {
+     "prompt_tokens": 93335,
+     "completion_tokens": 1,
+     "total_tokens": 93336,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     },
+     "completion_tokens_details": {
+      "reasoning_tokens": 0
+     }
+    },
+    "tensorfold": {
+     "enable_thinking": false,
+     "reasoning_effort": "none",
+     "engine": "lanes",
+     "tokens_per_second": 0.0,
+     "seconds": 0.000179793,
+     "prefill_seconds": 39.68061005,
+     "prefill_widths": [],
+     "prefill_raised": [],
+     "time_to_first_token": 39.729432393,
+     "sampling": "greedy",
+     "drafts": true,
+     "token_sha": "44cb730c4204",
+     "token_sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a",
+     "min_rows": 0
+    },
+    "text": "I"
+   },
+   "short": {
+    "ttft_s": 38.80082232202403,
+    "total_s": 38.872720930026844,
+    "usage": {
+     "prompt_tokens": 8,
+     "completion_tokens": 8,
+     "total_tokens": 16,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     },
+     "completion_tokens_details": {
+      "reasoning_tokens": 0
+     }
+    },
+    "tensorfold": {
+     "enable_thinking": false,
+     "reasoning_effort": "none",
+     "engine": "lanes",
+     "tokens_per_second": 96.32547088603238,
+     "seconds": 0.072670291,
+     "prefill_seconds": 0.069477465,
+     "prefill_widths": [],
+     "prefill_raised": [],
+     "time_to_first_token": 38.799539086,
+     "sampling": "greedy",
+     "drafts": true,
+     "token_sha": "808abea0e8de",
+     "token_sha256": "808abea0e8de84a037f4b1b85f08ca46581a36eabe8d6476e6e8609c3d44837b",
+     "min_rows": 4
+    },
+    "text": "Red, blue, and green."
+   }
+  },
+  {
+   "long": {
+    "ttft_s": 39.626327064819634,
+    "total_s": 39.62645511282608,
+    "usage": {
+     "prompt_tokens": 93335,
+     "completion_tokens": 1,
+     "total_tokens": 93336,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     },
+     "completion_tokens_details": {
+      "reasoning_tokens": 0
+     }
+    },
+    "tensorfold": {
+     "enable_thinking": false,
+     "reasoning_effort": "none",
+     "engine": "lanes",
+     "tokens_per_second": 0.0,
+     "seconds": 0.000511169,
+     "prefill_seconds": 39.588032586,
+     "prefill_widths": [],
+     "prefill_raised": [],
+     "time_to_first_token": 39.625073045,
+     "sampling": "greedy",
+     "drafts": true,
+     "token_sha": "44cb730c4204",
+     "token_sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a",
+     "min_rows": 0
+    },
+    "text": "I"
+   },
+   "short": {
+    "ttft_s": 38.69460398890078,
+    "total_s": 38.76756140892394,
+    "usage": {
+     "prompt_tokens": 8,
+     "completion_tokens": 8,
+     "total_tokens": 16,
+     "prompt_tokens_details": {
+      "cached_tokens": 0
+     },
+     "completion_tokens_details": {
+      "reasoning_tokens": 0
+     }
+    },
+    "tensorfold": {
+     "enable_thinking": false,
+     "reasoning_effort": "none",
+     "engine": "lanes",
+     "tokens_per_second": 95.20549739391271,
+     "seconds": 0.073525166,
+     "prefill_seconds": 0.068665262,
+     "prefill_widths": [],
+     "prefill_raised": [],
+     "time_to_first_token": 38.693033889,
+     "sampling": "greedy",
+     "drafts": true,
+     "token_sha": "808abea0e8de",
+     "token_sha256": "808abea0e8de84a037f4b1b85f08ca46581a36eabe8d6476e6e8609c3d44837b",
+     "min_rows": 4
+    },
+    "text": "Red, blue, and green."
+   }
+  }
+ ]
+}
