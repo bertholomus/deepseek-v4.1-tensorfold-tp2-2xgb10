@@ -1,0 +1,8 @@
+ok   a consistent change passes
+ok   no families fails
+ok   a depth keeping more than it reached fails
+ok   depth 1 short of drafted fails
+ok   a per-position count off the depth's fails
+ok   depths keeping more than the total fails
+ok   the rates read kept of drafted and kept when reached
+di_acceptstats_check selftest: PASS

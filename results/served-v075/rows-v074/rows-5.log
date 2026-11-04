@@ -1,0 +1,13 @@
+{"length": 8192, "rep": 0, "prompt_tokens": 8192, "ttft_s": 3.3697141040029237, "prefill_tps": 2431.0667751512287}
+{"length": 8192, "rep": 1, "prompt_tokens": 8192, "ttft_s": 3.36217893200228, "prefill_tps": 2436.515178304747}
+{"length": 8192, "rep": 2, "prompt_tokens": 8192, "ttft_s": 3.3522564210070414, "prefill_tps": 2443.7271411174047}
+{"length": 32768, "rep": 0, "prompt_tokens": 32768, "ttft_s": 12.76863968300313, "prefill_tps": 2566.2874678513213}
+{"length": 32768, "rep": 1, "prompt_tokens": 32768, "ttft_s": 12.713730873001623, "prefill_tps": 2577.3709013759944}
+{"length": 32768, "rep": 2, "prompt_tokens": 32768, "ttft_s": 12.687327159997949, "prefill_tps": 2582.734691615322}
+{"length": 65536, "rep": 0, "prompt_tokens": 65536, "ttft_s": 25.297983784999815, "prefill_tps": 2590.562179064203}
+{"length": 65536, "rep": 1, "prompt_tokens": 65536, "ttft_s": 25.259793258999707, "prefill_tps": 2594.4788751052206}
+{"length": 65536, "rep": 2, "prompt_tokens": 65536, "ttft_s": 25.289947525998286, "prefill_tps": 2591.3853689347684}
+{"length": 131072, "rep": 0, "prompt_tokens": 131072, "ttft_s": 51.21615617900534, "prefill_tps": 2559.1924458737376}
+{"length": 131072, "rep": 1, "prompt_tokens": 131072, "ttft_s": 51.20381293500395, "prefill_tps": 2559.809367446473}
+{"length": 131072, "rep": 2, "prompt_tokens": 131072, "ttft_s": 51.25428212900442, "prefill_tps": 2557.288767992076}
+

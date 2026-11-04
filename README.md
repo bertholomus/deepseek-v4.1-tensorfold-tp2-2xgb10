@@ -24,6 +24,70 @@ DeepSeek-V4.1 recipes or kits was read or copied.
 and the launch (`scripts/serve.sh`, `config.env.example`). Our measurements: [`results/`](results/README.md). The
 four-node recipe: [bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10).
 
+## v0.7.5 (2026-11-04): rounds of 64 rows, pools of 32 streams
+
+- **Five engine commits:** over v0.7.4's, the S5 engine changes — rounds of up to 64 rows (`TF_DS_ROUND_ROWS` accepts
+  16..64, a 64-row decode window; rows 49-64 need the kit's `_rowmm_parts` cubins, so the kit gains the RB 49..64
+  entries) and pools of 32 streams (a Markov step of more than NP streams runs `_bias` in NP-row pieces; a drafter
+  pass of more than 128 block rows runs in passes). The weights stay v0.7.0's; `TF_SEED_RANDOM` and `TF_TOP_K_MAX`
+  stay opt-in and off; the window grows to 7,340,032 positions (the release gate's pool check). `config.env.example`
+  decodes 32 streams and serves 32 requests at once (`STREAMS` and `PARALLEL`, from 16 to 32; `ROUND_ROWS` from 32 to
+  64), the release gate's shape and gains `TF_DS_ROUND_MS`, the 64-entry round_ms64 table the release gate measured
+  (the 16/16/48 hybrid step in between was private and is superseded by 32/32/64).
+- **Exactness:** the bench's six greedy replies and the three texts written after 131,072-token prompts (seeds 1023 to
+  1025) are v0.7.4's published ones, byte for byte (`results/served-v075/rows/`).
+- Memory: the gate's 1M rows left 10.3 GiB on rank 0's node and 13.0 GiB on rank 1's at the lowest (floor 9); the
+  memtrace run one sample a second (v0.7.2's m5 pattern) is still not run — it needs a node slot and stays an open
+  item.
+
+Gates, all passed (43 checks, `results/served-v075/gate/result.txt`): launch A is v0.7.4's build at its own settings,
+launch B the release build at v0.7.5's, on the same two nodes; the same checks as v0.7.4's: exact chat 71/71 against
+DeepSeek's reference encoding; the six API gates; 16 replies as a burst and staggered == solo; images 6/6, 9/9, and
+four at a time 18/18 == solo; forced tool calls 10/10 and automatic ones 6/6, each forced row a call of an offered
+tool within its schema; structured output 11/11, and bursts and staggered runs of 12 == solo; the prompt shield 14/14;
+the keepalive; kept states, the fill and the resume probe; and 1M: 3/3 needles found in a 1,039,836-token prompt, the
+second and third asks resuming 1,038,336 tokens of it from the kept state in 2.4 s and 2.4 s on launch B (v0.7.4,
+launch A: 2.3 s and 2.3 s). Launch B, the release build at the v0.7.5 settings, gave the same replies as launch A on
+every check. The lowest free memory during the 1M prompt: 10.3 GiB on rank 0's node, 13.0 GiB on rank 1's in launch
+B's samples, one every 15 s (v0.7.4, launch A: 16.1 and 18.8 GiB). Start to ready: 29.0 s for v0.7.5 (launch B), 36.0
+s for v0.7.4 (launch A) on the same two nodes.
+
+The gate's 93,335-token prefill bench ran on both launches: A, v0.7.4's build at its own settings, 2,369 tok/s (median
+TTFT 39.4 s), B, the release build, 2,382 tok/s (median TTFT 39.2 s) (`results/served-v075/prefill-93335.json`,
+`prefill-93335-a.json`). The release bench's quality set and rigmark were not run for v0.7.5; v0.7.4's stand (72 of 75
+and 15 rows).
+
+Measured on two GB10 nodes (TP2), the release build at the release settings, our own client (`tools/kit_bench.py`),
+greedy, DSpark drafting, median of 3 unless noted (`results/served-v075/rows/`). The v0.7.4 column is v0.7.4's build
+at its own settings, measured the same day in the same sweeps — the rows ran in two halves on different pairs of the
+same four nodes, and each row's two arms share its pair (`results/served-v075/rows-v074/`) — on the same prompts:
+
+| `--context 1048576 --parallel 32` | v0.7.4 tok/s | v0.7.5 tok/s |
+|---|---|---|
+| Decode, set a: code / prose / structured (512 tokens) | 106.3 / 61.1 / 119.4 | 106.5 / 60.7 / 118.9 |
+| Decode, set b: code / prose / structured (384 tokens) | 112.2 / 68.3 / 160.1 | 113.5 / 68.3 / 159.7 |
+| 2 streams, set b, aggregate (median of 9) | 96.3 | 96.2 |
+| 4 streams, set b, aggregate (median of 9) | 137.4 | 137.7 |
+| 4 streams sustained 90 s, set b, aggregate | 152.9 | 153.0 |
+| 8 streams sustained 90 s, set b, aggregate | 172.4 | 172.9 |
+| 16 streams sustained 90 s, set b, aggregate | 200.0 | 217.9 |
+| 24 streams sustained 90 s, set b, aggregate | 195.7 | 242.2 |
+| 32 streams sustained 90 s, set b, aggregate | 198.2 | 248.6 |
+| Prompt 8K / 32K / 64K / 128K | 2,437 / 2,577 / 2,591 / 2,559 | 2,434 / 2,550 / 2,573 / 2,543 |
+| Decode after a 128K prompt (median of 3 prompts, seeds 1023-1025) | 99.4 | 100.1 |
+| Prompt 93,335 tokens | 2,369 | 2,382 |
+
+The prompt rows repeat each length's words behind a fresh prefix (`--fixed-words`), so the second and third reps read
+Engram rows the first one warmed; the first reps alone gave 2,441 / 2,531 / 2,566 / 2,543 tok/s (v0.7.4: 2,431 / 2,566
+/ 2,591 / 2,559). The three prompts after 128K decoded at 53.6 / 115.0 / 100.1 tok/s (v0.7.4: 53.8 / 114.6 / 99.4),
+each with v0.7.4's text. The 93,335-token prompt is the gate's own bench (`results/served-v075/prefill-93335.json`).
+Method: the release rows ran as one sweep per half (rows 1-5, then 6-10), four launches each — the release build with
+the table (the release rows), v0.7.4's build at its own settings twice (the old column, and again as the drift arm,
+which read LEVEL against it), and the release build without the table, whose 8-stream sustained row fell 14.0 % and
+which is the check that the table is needed (its other numbers are not release rows). The prompt rows' 32K read A
+2,577.4, the repeated v0.7.4 arm 2,544.4 and the release build 2,550.0 tok/s — -1.1 % against A, -0.4 % against the
+two A arms' mean, +0.2 % against the repeat: level within the measured drift.
+
 ## v0.7.4 (2026-11-02): opt-in seeds and a top_k clamp, the 8192 split
 
 - **One engine commit:** over v0.7.3's, a contributed server change of tonyd2wild's (MIT, kept with its author line):

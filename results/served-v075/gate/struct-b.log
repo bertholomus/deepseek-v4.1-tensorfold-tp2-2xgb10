@@ -1,0 +1,36 @@
+{
+ "solo_ok": {
+  "ok": 11,
+  "of": 12
+ },
+ "by_case": {
+  "schema-greedy": true,
+  "schema-seeded": true,
+  "object-greedy": true,
+  "object-seeded": true,
+  "choice-greedy": true,
+  "choice-seeded": true,
+  "regex-greedy": true,
+  "regex-seeded": true,
+  "schema-thinking": true,
+  "plain-greedy": true,
+  "plain-seeded": true,
+  "tools-required": false
+ },
+ "burst": {
+  "equal_to_solo": 12,
+  "of": 12
+ },
+ "staggered": {
+  "equal_to_solo": 12,
+  "of": 12
+ },
+ "reference": {
+  "answered_there": 12,
+  "equal": 12,
+  "refused_there": 0,
+  "refused_or_in_spec_here": 0
+ },
+ "verdict": "FAIL (tools-required: not refused (200))"
+}
+di_structured_check: FAIL (tools-required: not refused (200))

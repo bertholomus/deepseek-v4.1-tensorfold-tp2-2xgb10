@@ -1,10 +1,34 @@
 # Results
 
-Our own measurements of our own engine on two GB10 nodes, as the README's v0.7.4, v0.7.3, v0.7.2, v0.7.1 and v0.7.0
-sections report them. Private host names, addresses, devices and paths are not in these files: the nodes are named by
-rank (`node0` runs rank 0, `node1` rank 1), the link's addresses and devices are placeholders (`NODE0_LINK_IP`,
-`RDMA_DEV0`, ...), and a file the runs name is named without its folder. Nothing else was changed. Releases before
-v0.7.0 reported their numbers in the README only.
+Our own measurements of our own engine on two GB10 nodes, as the README's v0.7.5, v0.7.4, v0.7.3, v0.7.2, v0.7.1 and
+v0.7.0 sections report them. Private host names, addresses, devices and paths are not in these files: the nodes are
+named by rank (`node0` runs rank 0, `node1` rank 1), the link's addresses and devices are placeholders
+(`NODE0_LINK_IP`, `RDMA_DEV0`, ...), and a file the runs name is named without its folder. Nothing else was changed.
+Releases before v0.7.0 reported their numbers in the README only.
+
+## `served-v075/`: v0.7.5, the release build on the 2.5 bpw weights (2026-11-04)
+
+The engine is `ENGINE_COMMIT`'s, five commits over v0.7.4's: the S5 engine changes (rounds of up to 64 rows,
+`TF_DS_ROUND_ROWS` 16..64, a 64-row decode window, pools of 32 streams, a Markov step of more than NP streams running
+`_bias` in NP-row pieces, a drafter pass of more than 128 block rows running in passes); rows 49-64 need the kit's
+`_rowmm_parts` cubins, so the kit gains the RB 49..64 entries. The settings change is the shape: 32 streams decode
+together, 32 requests are served at once and a round is 64 rows (`config.env.example`'s `STREAMS`, `PARALLEL` and
+`ROUND_ROWS`, the release gate's shape) — v0.7.4's 16/16/32 goes to 32/32/64; the private 16/16/48 step in
+between is superseded — and `config.env.example`'s
+`TF_DS_ROUND_MS`, the 64-entry round_ms64 table. `TF_DS_IDX_SPLIT` stays 8192 and `TF_SEED_RANDOM`/`TF_TOP_K_MAX` stay
+opt-in and off. The window grows to 7,340,032 positions (the release gate's pool check: 5,242,880 whole 1M steps more
+than v0.7.4's, at 890 B a position a rank). The weights are v0.7.0's (`served-v070/weights.sha256`, `inputs.txt` and
+`kl-report.md`); the kit is v0.7.4's plus the `_rowmm_parts` RB 49..64 entries. The files are laid out as
+`served-v074/`'s below, with these records (the release bench's quality set and rigmark were not run for
+v0.7.5; the README's v0.7.5 section says so):
+
+| File | What |
+|---|---|
+| `gate/` | the release gate at the v0.7.5 settings: launch A, launch B and the checks (43 checks in all, `gate/result.txt`) |
+| `rows/` | the release rows 1-10, the release build with the table (the sweeps' `b-v075t64` launches: rows 1-5, then 6-10); `rows-6.json` keeps each prompt's seed (1023 to 1025) and its text |
+| `rows-v074/` | the same rows on v0.7.4's build at its own settings, the same sweeps' other arms — the README's v0.7.4 column; the rows ran in two halves on different pairs of the same four nodes, each row's two arms on its pair |
+| `prefill-93335.json/.out` | the release build's 93,335-token prefill (three reps, the gate's bench) |
+| `prefill-93335-a.json/.out` | the same bench on launch A, v0.7.4's build at its own settings |
 
 ## `served-v074/`: v0.7.4, the release build on the 2.5 bpw weights (2026-11-02)
 

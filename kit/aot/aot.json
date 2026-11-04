@@ -3,7 +3,8 @@
  "merged": {
   "primary": "the four-node recipe v0.3.1's kit/aot",
   "extra": "our two-node kit v0.6.1's kit/aot with recipe #13",
-  "added": 5
+  "added": 5,
+  "v075_addition": "v0.7.5: the sixteen _rowmm_parts cubins for round rows 49-64 (K 5120, N 384) compiled from the dsv41 family's kernels.py, Triton 3.7.1, sm_121a, no GPU; the method checked against the served build: the RB 48 cubin's SASS is the same."
  },
  "kernels": [
   {
@@ -32204,6 +32205,1078 @@
     },
     "KK": {
      "int": 128
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "d427bdfcbd71036c385d5b3f498a347c81296ca7826d36016ca286fce1e44ae4",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 49
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "98f227633a2ef01ad253d34b2d667a8257bfde6451ecaa0fd78c12aaa266b10e",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 50
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "ebedc69183006b42e7d1c17a8e21e46bdba8a0bdf050bb7f959bebcf79830c52",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 51
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "ec2f29c5599d589a53ddc5abe5a1e5de0b33b1a2aef9ad48243cfd9cb31e1c8b",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 52
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "3accae68ad4eda0fbb3cc8274e41afbd703545cc87ef044c77522d2507180809",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 53
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "51b50ad3efa175de31d92d8282f7778a6fb1dabba2011e5f8a163d3f2c25cbd1",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 54
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "49598752fd41181cbcadd5918604fa3104473fb82c81ac48be6917c71afb13c0",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 55
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "47cbe066da00cac9ca3aa007517c9cb952b56852ef3951adc0196e056dc55f37",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 56
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "f997abb434c943daa5d582a91bec06cc653783d1ec0b8731d2139c4c20b13a01",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 57
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "f11be99d41bb6b262f35fb6dd2e6b173b270d8a7bdc2673cb76a905e819e196f",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 58
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "f63d0893b153dde98cddace5243261d9712391ac39c7f27173823077d2dd6d79",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 59
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "398bdd6d879410bd463a7f252c4943867e92e7be34919c7bc23c4ec1497c4bd1",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 60
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "5c1de4a9a333f9e16102b0bca28cf2f2ded441d4495ece5a22220553db48af9c",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 61
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "200d7a414f0460d0b25ac064cc54b4fb77d1503383dfb100d37b016da26cf04f",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 62
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "096e10864fce8d7f3662ef6ffd6895e037b50c94d032cdb0d6cd0193b98a8d98",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": false,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 63
+    },
+    "PDL": {
+     "int": 1
+    }
+   }
+  },
+  {
+   "fn": "_rowmm_parts",
+   "hash": "e377ace4780bd47b7b1904fc66215eef110067958fe212ccd8d240d306f1ab3f",
+   "name": "_rowmm_parts",
+   "num_warps": 2,
+   "num_ctas": 1,
+   "shared": 32,
+   "global_scratch": 0,
+   "global_align": 1,
+   "profile_scratch": 0,
+   "pdl": true,
+   "params": [
+    {
+     "name": "X",
+     "type": "*bf16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "xs",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "W",
+     "type": "*fp16",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "S",
+     "type": "*fp32",
+     "div16": true,
+     "nospec": false
+    },
+    {
+     "name": "rows",
+     "type": "i32",
+     "div16": true,
+     "nospec": false
+    }
+   ],
+   "consts": {
+    "K": {
+     "int": 5120
+    },
+    "N": {
+     "int": 384
+    },
+    "BN": {
+     "int": 8
+    },
+    "BK": {
+     "int": 256
+    },
+    "CPG": {
+     "int": 1
+    },
+    "RB": {
+     "int": 64
     },
     "PDL": {
      "int": 1

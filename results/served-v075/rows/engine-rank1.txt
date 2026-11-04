@@ -1,0 +1,1 @@
+b5d7e10293a4 v0.7.5: v0.7.4's engine + the five S5 commits (rounds of up to 64 rows, a 64-row decode window, pools of 32 streams, Markov's _bias in NP-row pieces, the drafter's passes); the kit gains the _rowmm_parts RB 49..64 entries.

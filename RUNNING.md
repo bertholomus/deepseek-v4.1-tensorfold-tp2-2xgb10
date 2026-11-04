@@ -2,21 +2,22 @@
 
 What follows is how we run the served build. `scripts/serve.sh` is our served launch with the site values moved to
 `config.env`: the four-node recipe's script (v0.3.3) for two nodes, whose preflight also checks each node's RoCE
-address (section 2). v0.7.4 changes the engine and one launch setting (README, v0.7.4); v0.7.3 changed the launch
-settings only, v0.7.2 changed the engine, v0.7.1 changed the engine and added one variable to the launch, and v0.7.0
-the engine, the weights, the kernel kit and the launch.
+address (section 2). v0.7.5 changes the engine and the shape (README, v0.7.5); v0.7.4 changed the engine and one
+launch setting, v0.7.3 changed the launch settings only, v0.7.2 changed the engine, v0.7.1 changed the engine and
+added one variable to the launch, and v0.7.0 the engine, the weights, the kernel kit and the launch.
 
 ## 1. The engine
 
 Clone our TensorFold fork at the commit in `ENGINE_COMMIT` (branch `deepseek-v41-zig-tp2`). Its parent holds the
-release build's source: the tree of `6579b75` plus the one v0.7.4 server change (opt-in per-request seeds,
-`TF_SEED_RANDOM`, and a top_k clamp, `TF_TOP_K_MAX`), but for the fork's README.md, NOTICE and ATTRIBUTION.md, which
-no build step reads, and `ENGINE_COMMIT` brings those documents up to date. The branch is the four-node branch
-`deepseek-v41-zig-tp4` at its v0.3.1 with the two-node recipe's changes on top, merged with that branch's v0.3.2
-(README, v0.7.1), and two changes of ours in the tokenizer (README, v0.7.2), and v0.7.4 one contributed server change
-of tonyd2wild's, kept with its author line (README, v0.7.4; the branch's ATTRIBUTION.md). It is not the engine of
-v0.6.1 (branch `deepseek-v41-zig`): run the same build on both nodes. Build the native engine for the GB10's aarch64 +
-sm_121 with Zig 0.17.0 and the CUDA toolchain of `nvcr.io/nvidia/pytorch:26.07-py3`:
+release build's source: v0.7.4's tree plus the five S5 commits (rounds of up to 64 rows with `TF_DS_ROUND_ROWS`
+16..64, a 64-row decode window, pools of 32 streams, a Markov step of more than NP streams running `_bias` in NP-row
+pieces, a drafter pass of more than 128 block rows running in passes), but for the fork's README.md, NOTICE and
+ATTRIBUTION.md, which no build step reads, and `ENGINE_COMMIT` brings those documents up to date. The branch is the
+four-node branch `deepseek-v41-zig-tp4` at its v0.3.1 with the two-node recipe's changes on top, merged with that
+branch's v0.3.2 (README, v0.7.1), and two changes of ours in the tokenizer (README, v0.7.2), and v0.7.4 one
+contributed server change of tonyd2wild's, kept with its author line (README, v0.7.4; the branch's ATTRIBUTION.md). It
+is not the engine of v0.6.1 (branch `deepseek-v41-zig`): run the same build on both nodes. Build the native engine for
+the GB10's aarch64 + sm_121 with Zig 0.17.0 and the CUDA toolchain of `nvcr.io/nvidia/pytorch:26.07-py3`:
 
 ```sh
 zig build install native -Dtarget=aarch64-linux-gnu.2.28 -Doptimize=ReleaseFast -Dnvcc=/usr/local/cuda/bin/nvcc -Dsm=121
@@ -130,11 +131,13 @@ them.
 `TENSORFOLD_REPLY_IDS`, `TF_FILL_CHUNKS`, `TF_FILL_MANY`, `TF_DS_PASS_FROM`, `TF_DS_SOLO_OVERHEAD` and
 `TF_DS_NO_COPIES` unset to serve as we do; the README says what each does when set. `TF_SEED_RANDOM` and
 `TF_TOP_K_MAX` are opt-in and off unless set: nothing about the default sampled output changes until you set them
-(v0.7.4). `TF_DS_NEIGHBOR_RDMA` is for a physical four-node ring.
+(v0.7.4). `TF_DS_ROUND_MS` holds the 64-entry round_ms64 table the release gate measured on the release build
+(v0.7.5); leave it set to serve as we do. `TF_DS_NEIGHBOR_RDMA` is for a physical four-node ring.
 
-The served window, 2,097,152 positions (`WINDOW`), holds one 1,048,576-token request with room for the other streams.
-It left 15.0 GiB free on rank 0's node and 18.0 GiB on rank 1's at the lowest on ours, during a 1M-token prompt; each
-1,048,576 positions less frees 0.87 GiB a node.
+The served window, 7,340,032 positions (`WINDOW`), holds one 1,048,576-token request with room for the other streams:
+the release gate's pool check grew it by 5,242,880 whole 1M steps over v0.7.4's (890 B a position a rank). It left
+10.3 GiB free on rank 0's node and 13.0 GiB on rank 1's at the lowest on ours, during a 1M-token prompt; each
+1,048,576 positions less frees NEEDS GATE a node.
 
 ## 4. Check
 
@@ -147,9 +150,9 @@ haystack; with `--shared` the follow-up questions resume from the kept prompt), 
 four-node lane, whose `lane-ref.json` and `lane-probe.json` were recorded on other weights and do not apply here). One
 client is ours and new: `long_cold.py` runs `long_check.py`'s cases again, each one alone from a cold start (its own
 `cache_salt`, so no kept prompt is reused), against a `long_check.py` run's replies to the same prompts sent together
-(`--burst` that run's `--out` file). `results/served-v074/`, `served-v073/`, `served-v072/`, `served-v071/` and
-`served-v070/` were made with `kit_bench.py`, `gates.py`, `needle.py`, `long_check.py` and `long_cold.py`. The
-exact-chat check (71 cases with DeepSeek's reference renderings), the 16-reply check, the image checks (solo and four
-at a time) and the checks of structured output, forced tool calls, the prompt shield, kept states, the fill, the
-memory and the copied replies are our lane tools and are not in this release; their reports are in
-`results/served-v074/`, `served-v073/`, `served-v072/`, `served-v071/` and `served-v070/`.
+(`--burst` that run's `--out` file). `results/served-v075/`, `served-v074/`, `served-v073/`, `served-v072/`,
+`served-v071/` and `served-v070/` were made with `kit_bench.py`, `gates.py`, `needle.py`, `long_check.py` and
+`long_cold.py`. The exact-chat check (71 cases with DeepSeek's reference renderings), the 16-reply check, the image
+checks (solo and four at a time) and the checks of structured output, forced tool calls, the prompt shield, kept
+states, the fill, the memory and the copied replies are our lane tools and are not in this release; their reports are
+in `results/served-v075/`, `served-v074/`, `served-v073/`, `served-v072/`, `served-v071/` and `served-v070/`.

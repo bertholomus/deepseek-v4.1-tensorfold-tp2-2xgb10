@@ -1,0 +1,49 @@
+check launch A: PASS start-a.log names the pin 4fcb94c09717 tp2/v074: 6579b756d (v0.7.3) + bd4311
+check settings A: PASS rank 0 names a 2.0 GiB prompt cache, the shield and the stats line
+check gates A: PASS gates 6 ok=True
+check parallel A: PASS solo 16 replies, burst 16/16, staggered 16/16 == solo
+check solo done A: PASS 16 of 16 done lines
+check vision A: PASS vision gate 6/6, visionref 9/9 answered
+check exact chat A: PASS exact chat: 71 of 71 equal
+check shield A: PASS shield recorded 14 conversations: 14/14 answered; /tokenize of 120018 bytes 0.0106 s
+check sampler A: PASS di_sampler_check: PASS
+check structured A: PASS structured: 11/11 other requests as specified, tool_choice "required" a call (finish tool_calls), burst 12 and staggered 12 of 12 == solo
+check grammar A: PASS rank 0: structured output: xgrammar over 129280 tokens
+check reply ids A: PASS di_replyids_check: recorded 16 rows -> zkept-replyids-a.json
+check dsml A: PASS dsml recorded: 10/10 forced rows answered, 6/6 auto rows answered
+check acceptstats A: PASS di_acceptstats_check: PASS (the depth families add up)
+check stats lines A: PASS 4 stats lines in rank 0's log
+check resume probe A: PASS cached 0/4096/4096/6144 of 4396/6444/6204/8492 tokens
+check keepalive A: PASS first tokens 38.21 and 76.44 s, 2 and 5 comments, 97510 and 97510 prompt tokens
+check keptcheck A: PASS 8 of 8 answered
+check fillcheck A: PASS 2 of 2 answered
+check memory A: PASS lowest MemAvailable node0/node1 16.4/18.9 GiB during the 93K prefill bench (floor 9)
+row 1M A: PASS 1M: 3/3 needles found in a 1,039,836-token haystack (asks of 506.8/2.3/2.3 s), the 2nd and 3rd asks resumed 1,038,336/1,038,336 of it from the kept state (2/2), lowest MemAvailable node0/node1 16.1/18.8 GiB
+pool: node0 lowest 16.1 GiB, node1 lowest 18.8 GiB at window 2,097,152: 5.1 GiB past the floor 9 + margin 2 GiB = 6,168,925 positions at 890 B a position a rank, in whole 1M steps 5,242,880: window 7,340,032 (predicted lowest 11.8 GiB)
+check launch B: PASS start-b.log names the pin b5d7e10293a4 tp2/v075: 4fcb94c09 (v0.7.4) + the fi
+check launch B: env: PASS the launch names the shape 32/32/64 (node0: TF_DS_STREAMS=32 TF_DS_ROUND_ROWS=64 --parallel 32; node1: --streams 32 --round-rows 64) and 'TF_DS_ROUND_MS=30.0,35.2,39.9,44.9,48.6,52.1,55.6,59.1,62.7,66.3,69.6,72.9,75.5,78.2,81.3,84.4,87.5,90.6,93.7,96.8,99.9,103.0,106.1,109.2,112.2,115.3,122.0,123.9,125.5,127.2,130.5,134.6,138.8,142.9,145.9,148.2,150.6,152.9,155.3,157.6,160.0,162.3,164.7,167.0,169.4,171.7,174.1,176.4,179.0,181.6,184.2,186.9,189.5,192.1,194.7,197.3,199.9,202.5,205.1,207.8,210.4,213.0,215.6,218.2'
+check launch B: pool: PASS node0's tp2-25-lane command line names TF_DS_WINDOW=7340032, node1's --pool 7340032
+check settings B: PASS rank 0 names a 2.0 GiB prompt cache, the shield and the stats line
+check gates B: PASS gates 6 ok=True
+check parallel B: PASS solo 16 replies, burst 16/16, staggered 16/16 == solo, solo 16/16 == A's
+check solo done B: PASS solo done lines 16/16 == A's (sha, rounds, accepted; drafted differs on 3)
+check vision B: PASS vision PASS: vision gate 6/6, visionref 9/9 equal to A's, four at a time 18/18 equal to A's
+check exact chat B: PASS exact chat: 71 of 71 equal
+check shield B: PASS PASS: 14/14 cases (5 clean equal, 9 injected shielded); 14/14 conversations' ids, text and greedy replies == A's
+check sampler B: PASS di_sampler_check: PASS
+check structured B: PASS structured: 11/11 other requests as specified, tool_choice "required" a call (finish tool_calls), burst 12 and staggered 12 of 12 == solo, 12/12 == A's
+check grammar B: PASS rank 0: structured output: xgrammar over 129280 tokens
+check reply ids B: PASS reply ids: 16/16 rows == A's (reasoning, content, calls, finish, tokens)
+check dsml B: PASS di_dsmlreq_check: PASS (16 rows: forced rows call offered tools within their schema, auto rows equal the reference); DSML forced and auto rows: 16/16 rows == A's (reasoning, content, calls, finish, tokens)
+check acceptstats B: PASS di_acceptstats_check: PASS (the depth families add up)
+check stats lines B: PASS 4 stats lines in rank 0's log
+check resume probe B: PASS PASS: replies 4/4 == as served, cached as served 0/4096/4096/6144, candidate 0/4096/4096/6144, as served did not show the near-end case (q ran from 0, q2 resumed 4096): judged on equal replies alone
+check keepalive B: PASS PASS: replies 2/2 == as served, as served 2 and 5 comments, 15.0 and 15.1 s silent before the first token; candidate 2 and 5, 15.0 and 15.1 s, first tokens 38.2/76.4 s as served, 38.2/76.5 s candidate (97510 and 97510 prompt tokens)
+check keptcheck B: PASS keptcheck PASS: replies 8/8 == the served build's, geometry S 2822, image span 186, img1 6267, A 67827 (last chunk end 67584), candidate cached img2 4096, img3 2048, b1 2048, a2 67584 (served 4096, 2048, 2048, 67584)
+check fillcheck B: PASS fillcheck PASS: replies 2/2 == the served build's, Y 65010 tokens; X's longest stop in the wait 25.3 s as served (2 chunks of X), 25.1 s candidate (2), Y's first token 25.4 s as served (lane 25.4), 25.2 s candidate (lane 25.2, -0.7 %)
+check memory B: PASS lowest MemAvailable node0/node1 10.7/13.1 GiB during the 93K prefill bench (floor 9)
+row 1M B: PASS 1M: 3/3 needles found in a 1,039,836-token haystack (asks of 505.8/2.4/2.4 s), the 2nd and 3rd asks resumed 1,038,336/1,038,336 of it from the kept state (2/2), lowest MemAvailable node0/node1 10.3/13.0 GiB
+check prefill bench: PASS cmp1021_bench.py prefill 3 on the 93,335-token prompt on A and on B
+prefill 93,335 tokens: A 2369.1 tok/s (median TTFT 39.40 s), B 2382.5 tok/s (median TTFT 39.18 s), B/A +0.6 %
+mem: after the prefill A 16.4/18.9 GiB, B 10.7/13.2 GiB (node0/node1); lowest during it A 16.4/18.9 GiB, B 10.7/13.1 GiB; at 1M: see the 1M rows (floor 9)
+tp2_gate v075a2a4: PASS (43 checks: A 20, B 23 with B's replies == A's; the 1M rows; B's window 7340032, shape 32/32/64; prefill A 2369.1 tok/s (median TTFT 39.40 s), B 2382.5 tok/s (median TTFT 39.18 s), B/A +0.6 %; lowest MemAvailable A 16.4/18.9 / B 10.7/13.1 GiB)
