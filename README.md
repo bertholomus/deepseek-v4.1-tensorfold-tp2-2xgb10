@@ -210,6 +210,14 @@ each with v0.7.2's text. The 93,335-token prompt is the served port's own bench 
   [#34](https://github.com/bertholomus/TensorFold/pull/34) (in the engine, off unless set, since v0.7.0), stay unset:
   the first prices a lone stream's head windows at the fixed draft allowance, the second drops a drafted stream's
   suffix-lookup copy windows, so the draft head proposes alone.
+  Whether `TF_DS_NO_COPIES=1` pays depends on the text
+  ([#30](https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp2-2xgb10/issues/30)). The predictor is the share
+  of decode steps where a copy proposal fires and is accepted. On our code and prose text it measured level to 1-2 %
+  faster. On highly repetitive prompts, where copy proposals pay most, it costs decode:
+  [@plyldavid-maker](https://github.com/plyldavid-maker) measured 4 streams at 104.2 and 104.5 tok/s against 110.8
+  and 111.0 on two baselines the same night (-5.9 % and -6.0 %), one stream 2 to 4 % lower, a 224K-token prefill
+  -3.6 % and a 642K-token prefill level, with byte-identical greedy replies on all 8 legs. Leave it unset unless your
+  replies rarely copy from their prompt.
 - NCCL's channel count, set, did not beat NCCL's own choice on our pair (at most 2 channels: lower in a row, -1.2 % on
   average; at most 4: level or better, -0.2 % on average; at least 8: level or better, +0.0 % on average;
   `results/served-v072/nccl/`), so we leave it unset.
