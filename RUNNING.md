@@ -92,11 +92,11 @@ as a fatbin for sm_121; without `TF_DS_RDMA_KERNELS` the engine uses its embedde
   - in `CACHE_DIR`: `rank-cache/rank0of2-<hash>.bin` and `dsv41_token_map.json`;
   - in `KIT_DIR`: the kit (`aot/aot.json` and the rest of it); in `ENGINE_DIR`: `tensorfold-native` and
     `rdma_gather.fatbin`; `ENGRAM_DIR`.
-- The link, on both nodes. The engine's RDMA ring opens GID index 5 of each device in `RDMA_HCA` (port 1), and the
-  launch sets `NCCL_IB_GID_INDEX=5` to match; `show_gids` lists each device's GIDs, and index 5 must be the link
-  address's RoCE v2 entry. The engine branch before this one, `deepseek-v41-zig`, reads another index from
-  `TF_RDMA_GID_INDEX`; this engine line does not, so a link whose RoCE v2 address sits at another index needs that
-  branch.
+- The link, on both nodes. The engine's RDMA ring opens GID index `GID_INDEX` (`config.env`, 5 when unset) of each
+  device in `RDMA_HCA` (port 1): the launch passes it as `TF_RDMA_GID_INDEX`, and sets `NCCL_IB_GID_INDEX` to the
+  same index. `show_gids` lists each device's GIDs, and that index must be the link address's RoCE v2 entry. An index
+  other than 5 needs an engine that reads `TF_RDMA_GID_INDEX` (the `deepseek-v41-zig` branch does; the commit in
+  `ENGINE_COMMIT` opens 5 whatever the setting).
 
 `scripts/serve.sh start` checks these on rank 0's node, and the GID on both nodes, first. When one is missing, it
 names it and starts nothing (it does not stop a running lane either). `scripts/serve.sh preflight` runs the check

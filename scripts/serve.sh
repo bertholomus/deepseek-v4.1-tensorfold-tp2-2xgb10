@@ -5,7 +5,7 @@
 # that runs this script: no ssh key to itself needed).
 #   scripts/serve.sh start      preflight, stop any tp2-lane, start the two ranks, wait for /v1/models, then check
 #   scripts/serve.sh preflight  exit 0 when every file rank 0 opens at start is there and both nodes' RDMA devices have
-#                               a RoCE v2 address at GID index 5 (RUNNING.md section 2), else name each miss; start
+#                               a RoCE v2 address at GID_INDEX (RUNNING.md section 2), else name each miss; start
 #                               runs it first and starts nothing when one is missing
 #   scripts/serve.sh stop       remove tp2-lane on the two nodes
 #   scripts/serve.sh check      exit 0 when rank 0 lists the model and answers a 4-token chat
@@ -19,15 +19,19 @@ CFG=${DSV41_CONFIG:-$here/../config.env}
 # shellcheck source=/dev/null
 source "$CFG"
 if grep -v '^[[:space:]]*#' "$CFG" | grep -q '<[A-Z0-9_]*>'; then echo "$CFG still holds a <PLACEHOLDER>" >&2; exit 1; fi
+GID_INDEX=${GID_INDEX:-5}   # a config.env from before GID_INDEX keeps the served 5
+if ! [[ $GID_INDEX =~ ^(0|[1-9][0-9]?[0-9]?)$ ]] || (( GID_INDEX > 255 )); then
+  echo "GID_INDEX must be a decimal in 0..255" >&2; exit 1
+fi
 read -ra N <<< "$NODES"
 [ ${#N[@]} = 2 ] || { echo "NODES must name two nodes, rank 0 first" >&2; exit 1; }
 U=http://127.0.0.1:$PORT
 PRINT=0
 SITE="IMAGE=$IMAGE ENGINE_DIR=$ENGINE_DIR KIT_DIR=$KIT_DIR MODEL_DIR=$MODEL_DIR ENGRAM_DIR=$ENGRAM_DIR CACHE_DIR=$CACHE_DIR LOG_DIR=$LOG_DIR"
 # Both ranks: the shape (rank 1's flags below say the same; the ranks' settings check stops a launch whose ranks
-# differ), the served switches, and the link. The RDMA ring opens GID index 5 of each device; NCCL uses the same one.
+# differ), the served switches, and the link. The RDMA ring opens GID_INDEX of each device; NCCL uses the same one.
 SHAPE="TF_DS_STREAMS=$STREAMS TF_DS_ROUND_ROWS=$ROUND_ROWS TF_DS_WINDOW=$WINDOW $ENGINE_ENV"
-LINK="TF_RDMA_DEVICES=$RDMA_HCA TF_DS_RDMA_KERNELS=/engine/rdma_gather.fatbin NCCL_IB_HCA=$RDMA_HCA NCCL_SOCKET_IFNAME=$NET_IF NCCL_IB_GID_INDEX=5"
+LINK="TF_RDMA_DEVICES=$RDMA_HCA TF_DS_RDMA_KERNELS=/engine/rdma_gather.fatbin NCCL_IB_HCA=$RDMA_HCA NCCL_SOCKET_IFNAME=$NET_IF NCCL_IB_GID_INDEX=$GID_INDEX TF_RDMA_GID_INDEX=$GID_INDEX"
 
 # This host's names and addresses: a node in NODES that is one of them runs here, not over ssh to itself.
 SELF=" localhost 127.0.0.1 ::1 $(hostname 2>/dev/null) $(hostname -s 2>/dev/null) $(hostname -f 2>/dev/null) $(hostname -I 2>/dev/null) "
@@ -51,7 +55,7 @@ rank() {   # rank NODE ENVS CMD: CMD in tp2-lane on NODE with ENVS (VAR=value wo
 }
 # Every file rank 0 opens at start (RUNNING.md section 2): the model folder's small files, each file the index maps a
 # vision tower tensor to (model-00041-of-00041.safetensors in the download), the node's weight file, the token map, the
-# kit's kernel set and the engine; and on both nodes, a RoCE v2 address at GID index 5 of each RDMA device. Checked
+# kit's kernel set and the engine; and on both nodes, a RoCE v2 address at GID_INDEX of each RDMA device. Checked
 # before anything starts or stops.
 preflight() {
   local miss h g bad=0
@@ -79,18 +83,18 @@ EOF
     bad=1
   fi
   for h in "${N[@]}"; do
-    g=$(via "$h" "bash -s -- '$RDMA_HCA'" <<'EOF'
+    g=$(via "$h" "bash -s -- '$RDMA_HCA' '$GID_INDEX'" <<'EOF'
 for d in ${1//,/ }; do
   p=/sys/class/infiniband/$d/ports/1
-  t=$(cat "$p/gid_attrs/types/5" 2>/dev/null); a=$(cat "$p/gids/5" 2>/dev/null)
+  t=$(cat "$p/gid_attrs/types/$2" 2>/dev/null); a=$(cat "$p/gids/$2" 2>/dev/null)
   if [ "$t" != "RoCE v2" ] || [ -z "$a" ] || [ "$a" = 0000:0000:0000:0000:0000:0000:0000:0000 ]; then
-    echo "$d: GID index 5 is ${t:-not there}${a:+ ($a)}"
+    echo "$d: GID index $2 is ${t:-not there}${a:+ ($a)}"
   fi
 done
 EOF
     ) || { echo "preflight: could not reach $h" >&2; return 1; }
     if [ -n "$g" ]; then
-      echo "preflight: $h has no RoCE v2 address at GID index 5, which the engine's ring opens; nothing was started or stopped:" >&2
+      echo "preflight: $h has no RoCE v2 address at GID index $GID_INDEX, which the engine's ring opens; nothing was started or stopped:" >&2
       echo "$g" | sed 's/^/  /' >&2
       bad=1
     fi
@@ -136,7 +140,7 @@ start() {
 }
 case ${1:?start|stop|check|print|inputs|preflight} in
   start) start ;;
-  preflight) preflight && echo "preflight: rank 0 (${N[0]}) has every file it opens at start; both nodes have a RoCE v2 address at GID index 5" ;;
+  preflight) preflight && echo "preflight: rank 0 (${N[0]}) has every file it opens at start; both nodes have a RoCE v2 address at GID index $GID_INDEX" ;;
   stop) stop ;;
   check) check ;;
   print) PRINT=1; start ;;
