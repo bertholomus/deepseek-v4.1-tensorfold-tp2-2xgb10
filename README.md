@@ -1,5 +1,7 @@
 # DeepSeek-V4.1-Flash-1017 on 2× DGX Spark (GB10) — our TensorFold TP2 engine
 
+> **Maintenance mode.** This recipe is stable at v0.7.5. We still answer issues and review bug-fix pull requests, but we are not adding new features. Our active work is on [GLM-5.3 on four DGX Sparks](https://github.com/bertholomus/glm-5.3-exlr8-4x-spark).
+
 **Bertholomus AI recipe: DeepSeek-V4.1-Flash-1017 served tensor-parallel over two NVIDIA DGX Spark / GB10 nodes by the
 model family we wrote for [TensorFold](https://github.com/ashhart/TensorFold) (by ashhart).**
 
